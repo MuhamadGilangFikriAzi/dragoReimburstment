@@ -112,11 +112,8 @@
         <div class="sidebar">
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                @if(Auth::user()->image != null)
-                  <img src="{{asset('img/user/'Auth::user()->image)}}" class="img-circle elevation-2" alt="User Image">
-                @else
-                    <img src="{{asset('img/user/')}}" class="img-circle elevation-2" alt="User Image">
-                @endif
+
+                  <img src="{{asset('img/user/')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
               <a href="#" class="d-block"></a>

@@ -12,32 +12,22 @@ use Image;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index() 
+    public function index()
     {
         // $role = Role::findById(2);
         // return auth()->user()->removeRole($role);
-        // auth()->user()->assignRole('admin'); 
-          
+        // auth()->user()->assignRole('admin');
+
         // $role = Role::create(['name' => 'HRD']);
         // $permission = Permission::create(['name' => 'update post']);
 
         // $permission->assignRole($role);
-        
+
 
         // $role = Role::findById(1);
         // $permission = Permission::findById(1);
@@ -65,52 +55,48 @@ class HomeController extends Controller
 
         $post = Reimbursement::orderBy('date', 'DESC')->limit(5)->get();
         $sumpost = $post->sum('total');
-        return view('home.dashboard', compact('month','countmonth','data','sum','sumall','post','sumpost'));
-
+        return view('home.dashboard', compact('month', 'countmonth', 'data', 'sum', 'sumall', 'post', 'sumpost'));
     }
 
     public function edit(User $id)
     {
         $roles = Role::query()->get();
-        return view('home.edit_profile',compact('id','roles'));
+        return view('home.edit_profile', compact('id', 'roles'));
     }
 
     public function update(Request $request, $id)
     {
-         $data = request()->validate([
+        $data = request()->validate([
             'name' => 'required',
             'email' => 'required',
             'password' => 'sometimes|nullable',
             'role_id' => 'sometimes|nullable'
         ]);
 
-        if($request->password != null){
+        if ($request->password != null) {
             $data = [
                 'name' => $data['name'],
-                'email'=> $data['email'],
-                'password'=> bcrypt($data['password']),
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
             ];
-        }
-        else {
+        } else {
             unset($data['password']);
         }
 
-        if(!empty($request->photo)){
+        if (!empty($request->photo)) {
             $path = public_path('/img/user/');
-            $originalImage= $request->photo;
+            $originalImage = $request->photo;
             $Image = Image::make($originalImage);
-            $Image->resize(540,360);
-            $fileName = time().$originalImage->getClientOriginalName();
-            $Image->save($path.$fileName);
+            $Image->resize(540, 360);
+            $fileName = time() . $originalImage->getClientOriginalName();
+            $Image->save($path . $fileName);
             $data['photo'] = $fileName;
-
         }
 
         $user = User::findOrFail($id);
 
-        if($request->role_id)
-        {
-            $role = Role::where('id',$request->role_id)->first();
+        if ($request->role_id) {
+            $role = Role::where('id', $request->role_id)->first();
             $user->syncRoles($role->name);
         }
 
@@ -119,7 +105,7 @@ class HomeController extends Controller
     }
     public function filter()
     {
-        
+
         $currentMonth = date('m');
         //mengambil data berdasarkan bulan ini
         $month = Reimbursement::whereRaw('MONTH(date) = ?', [$currentMonth])->get();
@@ -128,6 +114,6 @@ class HomeController extends Controller
         //menghitung jumlah data yang ada pada bulan ini
         $countmonth = $month->count();
 
-        return view('reimbursement.filter_reimburse',compact('month','sum','countmonth'));
+        return view('reimbursement.filter_reimburse', compact('month', 'sum', 'countmonth'));
     }
 }
