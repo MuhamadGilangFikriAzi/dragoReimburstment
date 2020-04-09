@@ -134,9 +134,15 @@
                 </a>
 
                 <li class="nav-item">
-                    <a href="{{ route('index') }}" class="nav-link">
+                    <a href="{{ route('reimburstment') }}" class="nav-link">
                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                       <p>Reimbursement</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('pettyCash') }}" class="nav-link">
+                        <i class="fas fa-hand-holding-usd nav-icon"></i>
+                      <p>Petty Cash</p>
                     </a>
                   </li>
                   <li class="nav-item">
