@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
+<section class="content">
+<div class="container-fluid">
 <div class="row justify-content-center">
 	<div class="col-md-12">
 		<div class="card">
@@ -34,7 +35,22 @@
                                 <span class="text-danger">{{ $errors->first('user_id') }}</span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label>Retrun Type</label>
+                                <div class="input-group mb-3">
+                                    <select name="return_type" class="custom-select" id="return_type">
+                                        <option selected>Choose...</option>
+                                        @foreach( $return_type as $key => $value )
+                                        <option value="{{$key}}" >{{$value}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @if($errors->has('return_type'))
+                                <span class="text-danger">{{ $errors->first('return_type') }}</span>
+                                @endif
+                            </div>
                         </div>
+
                         <div class="col">
                           <div class="form-group">
                             <label>Date</label>
@@ -43,7 +59,13 @@
                             <span class="text-danger">{{ $errors->first('date') }}</span>
                             @endif
                           </div>
-                          <div>
+                            <div class="form-group" id="origin">
+                                <label>Origin Funds</label>
+                                <select name="origin_funds" class="custom-select" id="origin_funds">
+                                    <option value="">choose</option>
+                                </select>
+                            </div>
+                          <div class="form-group">
                               <label>Total</label>
                               <input type="number" name="total" class="form-control" id="total" readonly>
                           </div>
@@ -52,7 +74,8 @@
 
 			</div>
         </div>
-
+	</div>
+    <div class="container-fluid">
         <div class="card">
             <div class="card-header">
                 Detail Reimburst
@@ -74,7 +97,6 @@
                         </tr>
                     </thead>
                     <tbody id="append_detail">
-
                     </tbody>
                     <tfoot>
                         <tr>
@@ -92,12 +114,20 @@
     </div>
     </form>
 </div>
+</div></section>
 
 
 <script type="text/javascript">
 
       $(document).ready(function() {
-        var i = 1;
+        var i = 0;
+
+        $('#return_type').change(function(){
+            val = $(this).children("option:selected").val();
+
+            select(val);
+        });
+
 
         $('#add_detail').click(function(e){
           e.preventDefault();
@@ -107,7 +137,7 @@
               <td><input type="text" class="form-control text-right title" name="Detail['+i+'][title]"></td>\
               <td><input type="number" class="form-control used" name="Detail['+i+'][used]"></td>\
               <td><input type="file" class="form-control image" name="Detail['+i+'][image]"></td>\
-              <td><textarea class="form-control description" name="Detail['+i+'][desccription]" rows="3"></textarea></td>\
+              <td><textarea class="form-control description" name="Detail['+i+'][description]" rows="3"></textarea></td>\
               <td width="25px"><button class="btn btn-xs btn-danger btn-remove btn-flat"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></button></td>\
             </tr>'
           );
@@ -119,14 +149,26 @@
                 count();
             });
 
+            $( "#append_detail" ).on('change','.description', function() {
+                row = $(this);
+                console.log(row);
+                console.log(row.val());
+
+
+                // $('.row_detail').each(function(){
+                //     console.log('masuk');
+
+                // });
+            });
+
             $('#append_detail').on('change', '.used',function() {
                 count();
+
             });
 
         });
       });
 function count(){
-    console.log('masuk');
     sum = 0;
     $('.used').each(function(){
         sum = sum+Number($(this).val());
@@ -134,6 +176,60 @@ function count(){
 
     $('#sum').val(sum);
     $('#total').val(sum);
+}
+
+function select(val){
+    funds = $('#origin').children().remove();
+    console.log(val);
+
+    if(val == 'Choose...'){
+        $('#origin').append(
+            '<div class="form-group" id="origin">\
+            <label>Origin Funds</label>\
+            <select name="origin_funds" class="custom-select" id="origin_funds">\
+            <option value="">Choose...</option>\
+            </select>\
+            </div>'
+
+        );
+    }
+
+    if(val == 'direct'){
+        $('#origin').append(
+            '<div class="form-group" id="origin">\
+            <label>Origin Funds</label>\
+            <select name="origin_funds" class="custom-select" id="origin_funds">\
+            <option value="">Choose...</option>\
+            <option value="petty_cash" >Petty Cash</option>\
+            <option value="personal_cash" >Personal Cash</option>\
+            </select>\
+            </div>'
+
+        );
+    }
+
+    if(val == 'transfer'){
+        $('#origin').append(
+            '<div class="form-group" id="origin">\
+            <label>Origin Funds</label>\
+            <select name="origin_funds" class="custom-select" id="origin_funds">\
+            <option value="">Choose...</option>\
+            <option value="BCA" >BCA</option>\
+            <option value="Cimb Niaga" >Cimb Niaga</option>\
+            </select>\
+            </div>'
+
+        );
+    }
+
+    if(val == 'return'){
+        $('#origin').append(
+        '<div class="form-group" id="origin">\
+        <label>Money Early</label>\
+        <input type="number" class="form-control" name="early">\
+        </div>'
+        );
+    }
 }
 </script>
 @endsection

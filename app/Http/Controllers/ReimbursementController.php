@@ -33,17 +33,20 @@ class ReimbursementController extends Controller
     public function allreimburstement()
     {
         $all = Reimbursement::with('user')->get();
-        //menjumlahkan seluruh isi dari table total
         $sumall = $all->sum('total');
         return view('reimbursement/allreimbursement', compact('sumall', 'all'));
     }
 
     public function create()
     {
-        $page_title = "Add Reimburstment";
-        $data = User::all();
-        // dd($data);
-        return view('reimbursement/create', compact('data', 'page_title'));
+        $data['page_title'] = "Add Reimburstment";
+        $data['data'] = User::all();
+        $data['return_type'] = array(
+            'direct' => 'Direct',
+            'transfer' => 'Transfer',
+            'return' => 'Return'
+        );
+        return view('reimbursement/create', $data);
     }
 
     public function store(Request $request)
