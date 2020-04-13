@@ -154,7 +154,7 @@
                   <li class="nav-item">
                     <a href="{{ url('report') }}" class="nav-link">
                         <i class="fas fa-clipboard-list nav-icon"></i>
-                      <p>Report</p>
+                      <p>Laporan</p>
                     </a>
                   </li>
 

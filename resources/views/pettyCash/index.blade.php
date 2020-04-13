@@ -49,7 +49,7 @@
                                 <td class="text-right">{{ number_format($value->total,0,',','.') }}</td>
 								<td class="text-right">
                                     @php
-                                        if($value->type == 'masuk'){
+                                        if($value->tipe == "masuk"){
                                             $total = $total+$value->total;
                                         }else{
                                             $total = $total-$value->total;
