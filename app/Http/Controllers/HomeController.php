@@ -47,13 +47,13 @@ class HomeController extends Controller
         $data = $all->count();
         $currentMonth = date('m');
         //mengambil data berdasarkan bulan ini
-        $month = Reimbursement::whereRaw('MONTH(date) = ?', [$currentMonth])->get();
+        $month = Reimbursement::whereRaw('MONTH(tanggal) = ?', [$currentMonth])->get();
         //menjumlahkan seluruh isi dari table total berdasarkan bulan ini
         $sum = $month->sum('total');
         //menghitung jumlah data yang ada pada bulan ini
         $countmonth = $month->count();
 
-        $post = Reimbursement::orderBy('date', 'DESC')->limit(5)->get();
+        $post = Reimbursement::orderBy('tanggal', 'DESC')->limit(5)->get();
         $sumpost = $post->sum('total');
         return view('home.dashboard', compact('month', 'countmonth', 'data', 'sum', 'sumall', 'post', 'sumpost'));
     }

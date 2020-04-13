@@ -18,7 +18,7 @@
 				{{-- <a href="{{ route('trash')}}">
 					<button type="button" class="btn btn-outline-dark">Trash</button>
                 </a> --}}
-                <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#add_petty_cash"><i class="fas fa-plus"></i>&nbsp;Add Petty Cash</button>
+                <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#add_petty_cash"><i class="fas fa-plus"></i>&nbsp;Tambah Petty Cash</button>
                 {{-- <a href="" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Add Petty Cash</a> --}}
 			</div>
 			<div class="card-body text-center">
@@ -27,11 +27,11 @@
 						<thead class="thead-light">
 							<tr>
 								<th><b>No</b></th>
-								<th><b>Name</b></th>
-								<th><b>Date</b></th>
-                                <th><b>Type</b></th>
-                                <th><b>Description</b></th>
-                                <th class="text-right"><b>Funds</b></th>
+								<th><b>Nama</b></th>
+								<th><b>Tanggal</b></th>
+                                <th><b>Tipe</b></th>
+                                <th><b>Deskripsi</b></th>
+                                <th class="text-right"><b>Dana</b></th>
                                 <th class="text-right"><b>Total</b></th>
 							</tr>
 						</thead>
@@ -43,13 +43,13 @@
 							<tr>
                                 <td><b>{{$key+1}}</b></td>
                                 <td>{{$value->user['name']}}</td>
-                                <td>{{$value->date}}</td>
-                                <td>{{$value->type}}</td>
-                                <td>{{$value->description}}</td>
+                                <td>{{$value->tanggal}}</td>
+                                <td>{{$value->tipe}}</td>
+                                <td>{{$value->deskripsi}}</td>
                                 <td class="text-right">{{ number_format($value->total,0,',','.') }}</td>
 								<td class="text-right">
                                     @php
-                                        if($value->type == 'in'){
+                                        if($value->type == 'masuk'){
                                             $total = $total+$value->total;
                                         }else{
                                             $total = $total-$value->total;
@@ -78,22 +78,22 @@
       <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Form Add Petty Cash</h4>
+                <h4 class="modal-title">Form Tambah Petty Cash</h4>
                 <button type="button" class="close text-right" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form action="{{route('pettyCash.store')}}" method="post">
                     {{ csrf_field() }}
                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                    <input type="hidden" name="type" value="in">
-                    <input type="hidden" name="description" value="Add petty cash by {{ Auth::user()->name }}">
+                    <input type="hidden" name="tipe" value="masuk">
+                    <input type="hidden" name="deskripsi" value="Add petty cash by {{ Auth::user()->name }}">
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Date</label>
-                        <input type="date" name="date" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">Tanggal</label>
+                        <input type="date" name="tanggal" class="form-control" id="recipient-name">
                     </div>
 
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Funds</label>
+                        <label for="recipient-name" class="col-form-label">Total</label>
                         <input type="number" name="total" class="form-control" id="recipient-name">
                     </div>
 

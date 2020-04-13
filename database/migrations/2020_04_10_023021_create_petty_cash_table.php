@@ -17,7 +17,7 @@ class CreatePettyCashTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
             $table->date('tanggal');
-            $table->enum('tipe', ['in', 'out']);
+            $table->enum('tipe', ['masuk', 'keluar']);
             $table->double('total');
             $table->text('deskripsi');
             $table->timestamps();

@@ -77,7 +77,7 @@
 									<i class="fa fa-strikethrough" aria-hidden="true"></i>
 								</div>
 								<div class="info">
-										<h6 class="title my-2">TOTAL REIMBURSEMENT IN THIS MONTH</h6>
+										<h6 class="title my-2">TOTAL REIMBURSEMENT PADA BULAN INI</h6>
 										<h3 class="text-center"><b>{{ $countmonth }}</b></h3>
 										<h6>Total:<b> Rp. {{ number_format($sum,2,",",".") }}</b></h6><hr>
 										<a href="{{route('total')}}"><i>View Details</i></a>
@@ -95,7 +95,7 @@
           		<div class="col-md-6">
             		<div class="card">
               			<div class="card-header">
-               				 <h3 class="card-title">list of the last 5 transactions</h3>
+               				 <h3 class="card-title">list 5 transaksi terkhir</h3>
               			</div>
 
               			<div class="card-body">
@@ -111,7 +111,7 @@
 						                    </tr>
 						                  </thead>
 						                  <tbody>
-						                      @foreach( $post as $key => $p )
+						                      {{-- @foreach( $post as $key => $p )
 						                      <tr>
 						                        <td><b>{{ $key+1 }}</b></td>
 						                        <td>{{ $p->title}}</td>
@@ -119,7 +119,7 @@
 						                        <td>{{ $p->date}}</td>
 						                        <td>{{number_format($p->total,2,",",".")}}</td>
 						                      </tr>
-						                      @endforeach
+						                      @endforeach --}}
 						                    </tbody>
 					            </table>
 				            </div>
