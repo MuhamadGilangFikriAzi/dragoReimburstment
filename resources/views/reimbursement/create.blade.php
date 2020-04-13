@@ -3,7 +3,9 @@
 @section('content')
 <section class="content">
 <div class="container-fluid">
-<div class="row justify-content-center">
+    <form action="{{ route('reimburstment.store') }}" method="post" enctype="multipart/form-data">
+    <div class="row justify-content-center">
+
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
@@ -16,7 +18,7 @@
 					{{ session('status') }}
 				</div>
 				@endif
-				<form action="{{ route('store') }}" method="post" enctype="multipart/form-data">
+
 					@csrf
 
                     <div class="form-row">
@@ -36,16 +38,16 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label>Retrun Type</label>
+                                <label>Tipe Pengembalian</label>
                                 <div class="input-group mb-3">
-                                    <select name="return_type" class="custom-select" id="return_type">
+                                    <select name="tipe_pengembalian" class="custom-select" id="return_type">
                                         <option selected>Choose...</option>
                                         @foreach( $return_type as $key => $value )
                                         <option value="{{$key}}" >{{$value}}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                @if($errors->has('return_type'))
+                                @if($errors->has('tipe_pengembalian'))
                                 <span class="text-danger">{{ $errors->first('return_type') }}</span>
                                 @endif
                             </div>
@@ -53,15 +55,15 @@
 
                         <div class="col">
                           <div class="form-group">
-                            <label>Date</label>
-                            <input type="date" class="form-control" name="date" class="form-control">
-                            @if($errors->has('date'))
-                            <span class="text-danger">{{ $errors->first('date') }}</span>
+                            <label>Tanggal</label>
+                            <input type="date" class="form-control" name="tanggal" class="form-control">
+                            @if($errors->has('tanggal'))
+                            <span class="text-danger">{{ $errors->first('tanggal') }}</span>
                             @endif
                           </div>
                             <div class="form-group" id="origin">
-                                <label>Origin Funds</label>
-                                <select name="origin_funds" class="custom-select" id="origin_funds">
+                                <label>Asal Dana</label>
+                                <select name="asal_dana" class="custom-select" id="origin_funds">
                                     <option value="">choose</option>
                                 </select>
                             </div>
@@ -89,10 +91,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Title</th>
+                            <th></th>
                             <Th>Total</Th>
-                            <th>Image</th>
-                            <th width="500px">Description</th>
+                            <th>Bukti</th>
+                            <th width="500px">Deskripsi</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -110,11 +112,15 @@
                     <input class="btn btn-primary" type="submit" name="submit" value="submit">
                 </div>
             </div>
+
         </div>
+
     </div>
-    </form>
+</form>
+
 </div>
-</div></section>
+</div>
+</section>
 
 
 <script type="text/javascript">
@@ -134,10 +140,10 @@
 
           $('#append_detail').append(
             '<tr class="row_detail">\
-              <td><input type="text" class="form-control text-right title" name="Detail['+i+'][title]"></td>\
-              <td><input type="number" class="form-control used" name="Detail['+i+'][used]"></td>\
-              <td><input type="file" class="form-control image" name="Detail['+i+'][image]"></td>\
-              <td><textarea class="form-control description" name="Detail['+i+'][description]" rows="3"></textarea></td>\
+              <td><input type="text" class="form-control text-right title" name="Detail['+i+'][prihal]"></td>\
+              <td><input type="number" class="form-control used" name="Detail['+i+'][digunakan]"></td>\
+              <td><input type="file" class="form-control image" name="Detail['+i+'][foto]"></td>\
+              <td><textarea class="form-control description" name="Detail['+i+'][deskripsi]" rows="3"></textarea></td>\
               <td width="25px"><button class="btn btn-xs btn-danger btn-remove btn-flat"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></button></td>\
             </tr>'
           );
@@ -185,8 +191,8 @@ function select(val){
     if(val == 'Choose...'){
         $('#origin').append(
             '<div class="form-group" id="origin">\
-            <label>Origin Funds</label>\
-            <select name="origin_funds" class="custom-select" id="origin_funds">\
+            <label>Asal Dana</label>\
+            <select name="asal_dana" class="custom-select" id="origin_funds">\
             <option value="">Choose...</option>\
             </select>\
             </div>'
@@ -197,8 +203,8 @@ function select(val){
     if(val == 'direct'){
         $('#origin').append(
             '<div class="form-group" id="origin">\
-            <label>Origin Funds</label>\
-            <select name="origin_funds" class="custom-select" id="origin_funds">\
+            <label>Asal Dana</label>\
+            <select name="asal_dana" class="custom-select" id="origin_funds">\
             <option value="">Choose...</option>\
             <option value="petty_cash" >Petty Cash</option>\
             <option value="personal_cash" >Personal Cash</option>\
@@ -211,8 +217,8 @@ function select(val){
     if(val == 'transfer'){
         $('#origin').append(
             '<div class="form-group" id="origin">\
-            <label>Origin Funds</label>\
-            <select name="origin_funds" class="custom-select" id="origin_funds">\
+            <label>Asal Dana</label>\
+            <select name="asal_dana" class="custom-select" id="origin_funds">\
             <option value="">Choose...</option>\
             <option value="BCA" >BCA</option>\
             <option value="Cimb Niaga" >Cimb Niaga</option>\
@@ -225,8 +231,8 @@ function select(val){
     if(val == 'return'){
         $('#origin').append(
         '<div class="form-group" id="origin">\
-        <label>Money Early</label>\
-        <input type="number" class="form-control" name="early">\
+        <label>Uang Yang Digunakan</label>\
+        <input type="number" class="form-control" name="digunakan">\
         </div>'
         );
     }
