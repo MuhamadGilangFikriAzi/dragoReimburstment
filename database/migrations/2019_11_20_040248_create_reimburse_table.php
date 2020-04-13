@@ -20,7 +20,7 @@ class CreateReimburseTable extends Migration
             $table->string('asal_dana', 50)->nullable();
             $table->date('tanggal')->nullable();
             $table->enum('status', ['Diajukan', 'Diterima', 'Ditolak']);
-            $table->double('total')
+            $table->double('total');
             $table->timestamps();
         });
     }
