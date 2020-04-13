@@ -3,8 +3,22 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-12">
+        @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+        @endif
+        @if ($message = Session::get('danger'))
+        <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+        @endif
         <div class="card">
-            <div class="card-header"><b>Roles</b></div>
+            <div class="card-header"><b>Roles</b>
+                <button type="button" class="btn btn-link btn-sm float-right" data-toggle="modal" data-target="#add_role"><i class="fas fa-plus"></i>&nbsp;Add Role</button>
+            </div>
 
             <div class="card-body">
                 @if (session('status'))
@@ -12,9 +26,6 @@
                     {{ session('status') }}
                 </div>
                 @endif
-
-                <a class="btn btn-sm btn-dark mb-2 float-right" href="{{ route('create_role') }}" role="button">New Role</a>
-                <a class="btn btn-sm btn-dark mb-2 mr-2 float-right" href="{{ route('createRoleHasPermission') }}" role="button">New Role Has Permission</a>
 
                 <table class="table table-striped">
                     <thead>
@@ -32,7 +43,7 @@
                         <td>{{ $roles->guard_name }}</td>
                         <td>
                             @forelse($roles->permissions as $permission)
-                            <span class="badge badge-pill badge-success">{{$permission->name}}</span>
+                            <span class="badge badge-pill badge-info">{{$permission->name}}</span>
                             @if($loop->iteration%4 == 0)
                             <br>
                             @endif
@@ -40,21 +51,39 @@
                             @endforelse
                         </td>
                         <td>
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Setting
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{{ route('show_role',$roles->id) }}">Show</a>
-                                    <a class="dropdown-item" href="{{ route('edit_role',$roles->id) }}">Edit</a>
-                                    <a class="dropdown-item" href="{{ route('delete_role',$roles->id) }}">Delete</a>
-                                </div>
+                            <div>
+                                <a href="{{ route('role.show',$roles->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">View</a>
+                                <a href="{{ route('role.delete',$roles->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Delete</a>
                             </div>
                         </td>
                     </tr>
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="add_role" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Form Add Role</h4>
+                <button type="button" class="close text-right" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('role.store')}}" method="post">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" class="form-control form-control-sm">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-info pull-right btn-save">Submit</button>
+                </form>
             </div>
         </div>
     </div>

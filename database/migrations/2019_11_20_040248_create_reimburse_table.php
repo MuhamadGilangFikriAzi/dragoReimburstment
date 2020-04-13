@@ -13,14 +13,14 @@ class CreateReimburseTable extends Migration
      */
     public function up()
     {
-        Schema::create('reimburse', function (Blueprint $table) {
+        Schema::create('reimburstment', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title',50)->nullable();
-            $table->string('staff',50)->nullable();
-            $table->date('date')->nullable();
-            $table->text('description')->nullable();
-            $table->double('total')->nullable();
-            $table->text('proof')->nullable();
+            $table->bigInteger('user_id');
+            $table->enum('tipe_pengembalian', ['langusng', 'transfer', 'pengembalian']);
+            $table->string('asal_dana', 50)->nullable();
+            $table->date('tanggal')->nullable();
+            $table->enum('status', ['Diajukan', 'Diterima', 'Ditolak']);
+            $table->double('total')
             $table->timestamps();
         });
     }

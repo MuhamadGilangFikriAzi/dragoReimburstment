@@ -55,17 +55,17 @@ Route::get('/home/filter', 'HomeController@filter')->name('filter');
 Route::prefix('user')->group(function () {
     Route::get('/', 'UserController@index')->name('user');
     Route::get('list', 'UserController@store')->name('list');
-    Route::get('add', 'UserController@add')->name('add_data');
-    Route::post('save', 'UserController@create')->name('create_user');
-    Route::get('edit/{id}', 'UserController@edit')->name('edit');
-    Route::get('delete/{id}', 'UserController@destroy')->name('destroy');
-    Route::post('update/{id}', 'UserController@update')->name('update');
-    Route::get('show/{id}', 'UserController@show')->name('show');
-    Route::get('trash', 'UserController@trash')->name('trash_user');
-    Route::get('restore/{id}', 'UserController@restore')->name('restore_user');
-    Route::get('del_permanent/{id}', 'UserController@delete')->name('delete_user');
-    Route::get('restore_all', 'UserController@restore_all')->name('restore_all_user');
-    Route::get('delete_all', 'UserController@delete_all')->name('delete_all_user');
+    Route::get('create', 'UserController@add')->name('user.create');
+    Route::post('store', 'UserController@create')->name('user.store');
+    Route::get('edit/{user}', 'UserController@edit')->name('user.edit');
+    Route::get('delete/{id}', 'UserController@destroy')->name('user.delete');
+    Route::post('update/{id}', 'UserController@update')->name('user.update');
+    Route::get('show/{id}', 'UserController@show')->name('user.show');
+    Route::get('trash', 'UserController@trash')->name('user.trash');
+    Route::get('restore/{id}', 'UserController@restore')->name('user.trash.store');
+    Route::get('del_permanent/{id}', 'UserController@delete')->name('user.trash.delete');
+    Route::get('restore_all', 'UserController@restore_all')->name('user.trash.restoreAll');
+    Route::get('delete_all', 'UserController@delete_all')->name('user.trash.deleteAll');
 });
 
 
@@ -98,4 +98,18 @@ Route::get('result', 'HasilController@result');
 Route::prefix('pettyCash')->group(function () {
     Route::get('/', 'PettyCashController@index')->name('pettyCash');
     Route::post('store', 'PettyCashController@store')->name('pettyCash.store');
+});
+
+Route::prefix('role')->group(function () {
+    Route::get('/', 'RoleController@index')->name('role');
+    Route::get('create', 'RoleController@create')->name('role.create');
+    Route::post('create/store', 'RoleController@store')->name('role.store');
+    Route::post('hasPermission', 'RoleController@hasPermission')->name('role.hasPermission');
+    Route::get('show/{role}', 'RoleController@show')->name('role.show');
+    Route::get('delete/{role}', 'RoleController@delete')->name('role.delete');
+});
+
+Route::prefix('permission')->group(function () {
+    Route::get('/', 'PermissionController@index')->name('permission');
+    Route::post('store', 'PermissionController@store')->name('permission.store');
 });

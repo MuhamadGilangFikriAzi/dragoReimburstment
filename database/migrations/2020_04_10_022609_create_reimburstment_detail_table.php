@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateScheduleTable extends Migration
+class CreateReimburstmentDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateScheduleTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedule', function (Blueprint $table) {
+        Schema::create('reimburstment_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('klien',100);
-            $table->date('date');
-            $table->time('time');
-            $table->text('agenda');
+            $table->bigInteger('reimburstment_id');
+            $table->string('prihal', 50);
+            $table->double('digunakan');
+            $table->string('foto', 255);
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateScheduleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedule');
+        Schema::dropIfExists('reimburstment_detail');
     }
 }

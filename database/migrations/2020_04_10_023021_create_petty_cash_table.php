@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMeetingReportTable extends Migration
+class CreatePettyCashTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateMeetingReportTable extends Migration
      */
     public function up()
     {
-        Schema::create('meeting_report', function (Blueprint $table) {
+        Schema::create('petty_cash', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->time('time_finished');
-            $table->string('client_person',150);
-            $table->text('document');
+            $table->bigInteger('user_id');
+            $table->date('tanggal');
+            $table->enum('tipe', ['in', 'out']);
+            $table->double('total');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateMeetingReportTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meeting_report');
+        Schema::dropIfExists('petty_cash');
     }
 }

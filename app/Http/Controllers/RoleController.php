@@ -12,58 +12,66 @@ class RoleController extends Controller
     public function index()
     {
         $role = Role::query()->get();
+        // dd($role->first()->permissions);
         $permission = Permission::query()->get();
-        return view('role.index',compact('role','permission'));
+        return view('role.index', compact('role', 'permission'));
     }
 
     public function create()
     {
-       return view('role.create');
+        return view('role.create');
     }
 
     public function store(Request $request)
     {
-    	$role = Role::create(['name' => $request->name]);
-    	return redirect('/role');
+        $role = Role::create(['name' => $request->name]);
+        return redirect('/role')->with(['success' => 'Data has been saved']);;
     }
 
     public function show(Role $role)
-    {	
-    	return view('role.show',compact('role'));
+    {
+        // dd($role->permissions);
+        $permission = Permission::all()->pluck('name', 'id');
+        return view('role.show', compact('role', 'permission'));
     }
 
     public function edit(Role $role)
     {
         $permission = Permission::all();
-    	return view('role.edit',compact('permission','role'));
+        return view('role.edit', compact('permission', 'role'));
     }
 
     public function update(Request $request, $id)
     {
-    	$data = request()->validate(
-    		['name' => 'required' ,]);
+        $data = request()->validate(
+            ['name' => 'required',]
+        );
 
-    	$role = Role::find($id);
+        $role = Role::find($id);
 
-    	$role->update($data);
-    	return redirect('/role');
+        $role->update($data);
+        return redirect(route('role'));
     }
 
-    public function destroy(Role $role)
+    public function delete(Role $role)
     {
         $role->delete();
-        return redirect('/role');
+        return redirect()->back()->with(['danger' => 'Data has been deleted']);
     }
 
-    public function createRoleHasPermission()
+    public function hasPermission(Request $request)
     {
-        $role = Role::query()->get();
-        $permission = Permission::query()->get();
-
-        return view('role.createRoleHasPermission',compact('role','permission'));
+        $role = Role::find($request->id);
+        $permission = $request->permission;
+        if ($request->checked == "true") {
+            $role->givePermissionTo($permission);
+        } else {
+            $role->revokePermissionTo($permission);
+        }
+        return with(['success' => 'Data Berhasil Disimpan']);
     }
 
-    public function storeRoleHasPermission(Request $request)
+    public function hasPermissionstore(Request $request)
     {
         $role = Role::findOrFail($request->role);
         $permission = Permission::findOrFail($request->permission);

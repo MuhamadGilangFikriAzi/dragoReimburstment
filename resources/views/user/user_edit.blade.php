@@ -35,9 +35,9 @@
                                <option value="">-- Choose Role--</option>
                                 @foreach($role as $key => $value)
                                 @if($id->role_id == $value->id)
-                                    <option value="{{$value->id}}" selected="">{{ $value->name }}</option>
+                                    <option value="{{$value->name}}" selected="">{{ $value->name }}</option>
                                 @else
-                                    <option value="{{$value->id}}">{{ $value->name }}</option>
+                                    <option value="{{$value->name}}">{{ $value->name }}</option>
                                 @endif
                                 @endforeach
                             </select>
@@ -46,7 +46,7 @@
                         <div class="text-right">
                             <input class="btn btn-primary" type="submit"  name="submit" value="Save Change">
                             <input class="btn btn-dark" type="reset" name="reset" value="Reset">
-                        </div> 
+                        </div>
                     </form>
                 </div>
             </div>

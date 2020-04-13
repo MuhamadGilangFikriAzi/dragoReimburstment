@@ -11,9 +11,9 @@
                 @endif
 
                 <div class="card">
-                    <div class="card-header">Create Role</div>
+                    <div class="card-header"><label>Create New Role</label></div>
                     <div class="card-body">
-                        <form action="{{ route('store_role') }}" method="post">
+                        <form action="{{ route('role.store') }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label>Name</label>

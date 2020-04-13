@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row justify-content-between">
-    <div class="offset-3 col-6">
+    <div class=" col-12">
             <div class="card-body">
                 @if (session('status'))
                 <div class="alert alert-success" role="alert">
@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-header">Edit Role</div>
                     <div class="card-body">
-                        <form action="{{ route('update_role',$role->id) }}" method="post">
+                        <form action="{{ route('role.update',$role->id) }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label>Name</label>

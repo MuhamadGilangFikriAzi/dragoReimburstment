@@ -28,7 +28,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
   <!-- Core JS files -->
-  <script src="{{ url('limitless/global_assets/js/main/jquery.min.js') }}"></script>
+  <script src="{{ asset('limitless/global_assets/js/main/jquery.min.js') }}"></script>
   <script src="{{ url('limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ url('limitless/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
   <script src="{{ url('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script>
@@ -46,9 +46,9 @@
   <script src="{{ url('js/BrowserPrint-1.0.4.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('js/DevDemo.js') }}" type="text/javascript"></script>
   <script type="text/javascript" src="{{ url('webcamjs/webcam.min.js') }}"></script>
-  <script type="text/javascript">
+  {{-- <script type="text/javascript">
     $(document).ready(setup_web_print);
-  </script>
+  </script> --}}
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" style="height: auto;">
@@ -77,6 +77,13 @@
             @else
           <!-- Messages Dropdown Menu -->
           <li class="nav-item dropdown">
+            <div class="user-panel d-flex">
+                <div class="image">
+                      <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                  <a href="#" class="d-block"></a>
+                </div>
             <a class="nav-link" data-toggle="dropdown" href="#">
               {{ Auth::user()->name }} <i class="fas fa-angle-down"></i>
             </a>
@@ -112,8 +119,7 @@
         <div class="sidebar">
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-
-                  <img src="{{asset('img/user/')}}" class="img-circle elevation-2" alt="User Image">
+                  <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
               <a href="#" class="d-block"></a>
@@ -163,9 +169,21 @@
                     </a>
                     <ul class="nav-item nav-treeview">
                       <li class="nav-item">
-                        <a href="{{ url('user') }}" class="nav-link">
+                        <a href="{{ route('user') }}" class="nav-link">
                             <i class="fas fa-users-cog"></i>
                           <p>User</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ route('role') }}" class="nav-link">
+                            <i class="fas fa-users-cog"></i>
+                          <p>Role</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ route('permission') }}" class="nav-link">
+                            <i class="fas fa-users-cog"></i>
+                          <p>Permission</p>
                         </a>
                       </li>
                     </ul>
@@ -179,6 +197,7 @@
       </div>
     </div>
   </div>
+
 <!-- jQuery -->
 <script src="{{ url('adminlte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->

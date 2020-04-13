@@ -27,14 +27,14 @@ class ReimbursementController extends Controller
         $list = $list->paginate('4');
 
         $data = Reimbursement::all()->count();
-        return view('reimbursement/reimbursement', compact('list', 'data'));
+        return view('reimbursement.index', compact('list', 'data'));
     }
 
     public function allreimburstement()
     {
         $all = Reimbursement::with('user')->get();
         $sumall = $all->sum('total');
-        return view('reimbursement/allreimbursement', compact('sumall', 'all'));
+        return view('reimbursement.allreimbursement', compact('sumall', 'all'));
     }
 
     public function create()
@@ -46,7 +46,7 @@ class ReimbursementController extends Controller
             'transfer' => 'Transfer',
             'return' => 'Return'
         );
-        return view('reimbursement/create', $data);
+        return view('reimbursement.create', $data);
     }
 
     public function store(Request $request)
@@ -85,14 +85,14 @@ class ReimbursementController extends Controller
     public function show(Reimbursement $id)
     {
         $id->with('user')->get();
-        return view('reimbursement/show', compact('id'));
+        return view('reimbursement.show', compact('id'));
     }
 
     public function edit(Reimbursement $id)
     {
         $id->with('user')->get();
         $data = userModel::all();
-        return view('reimbursement/edit', compact('id', 'data'));
+        return view('reimbursement.edit', compact('id', 'data'));
     }
 
     public function update(Request $request, $id)
@@ -120,7 +120,7 @@ class ReimbursementController extends Controller
             $data['proof'] = $fileName;
             $data->save();
         }
-        return redirect('/reimbursement');
+        return redirect('.reimbursement');
     }
 
     public function destroy($id)
@@ -134,7 +134,7 @@ class ReimbursementController extends Controller
     {
         $trash = Reimbursement::onlyTrashed()->with('user')->get();
         $data = Reimbursement::onlyTrashed()->count();
-        return view('reimbursement/trash_gilang', compact('trash', 'data'));
+        return view('reimbursement.trash_gilang', compact('trash', 'data'));
     }
 
     public function restore_all()
@@ -173,6 +173,6 @@ class ReimbursementController extends Controller
     {
         $month = Reimbursement::with('user')->get();
         $sum = $month->sum('total');
-        return view('/reimbursement/total_reimbursement', compact('month', 'sum'));
+        return view('reimbursement.total_reimbursement', compact('month', 'sum'));
     }
 }
