@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<section class="content">
+    <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -12,7 +14,7 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                
+
                     <form action="" method="get">
                     @csrf
                     <div class="table-responsive">
@@ -46,5 +48,7 @@
             </div>
         </div>
     </div>
+    </div>
+</section>
 
 @endsection

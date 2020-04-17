@@ -9,7 +9,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
-                <b>Add Reimburst</b>
+                <b>Pengajuan Reimburstment</b>
 			</div>
 
 			<div class="card-body">
@@ -27,7 +27,7 @@
                                 <label>Name</label>
                                 <div class="input-group mb-3">
                                     <select name="user_id" class="custom-select" id="inputGroupSelect01">
-                                        <option selected>Choose...</option>
+                                        <option selected>Pilih...</option>
                                         @foreach( $data as $key => $value )
                                         <option value="{{ $value->id }}" @if(Auth::user()->id == $value->id) selected @endif>{{ $value->name}}</option>
                                         @endforeach
@@ -48,7 +48,7 @@
                                     </select>
                                 </div>
                                 @if($errors->has('tipe_pengembalian'))
-                                <span class="text-danger">{{ $errors->first('return_type') }}</span>
+                                <span class="text-danger">{{ $errors->first('tipe_pengembalian') }}</span>
                                 @endif
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                             <div class="form-group" id="origin">
                                 <label>Asal Dana</label>
                                 <select name="asal_dana" class="custom-select" id="origin_funds">
-                                    <option value="">choose</option>
+                                    <option value="">Pilih...</option>
                                 </select>
                             </div>
                           <div class="form-group">
@@ -80,10 +80,10 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                Detail Reimburst
+                Detail Reimburstment
                 <div class="input-group input-group-sm float-right" style="width: 150px;">
                     <div class="input-group-btn pul">
-                      <button type="submit" class="btn btn-default float-right" id="add_detail"><i class="fa fa-plus"></i>&nbsp;Tambah Baris</button>
+                      <button type="submit" class="btn btn-default float-right" id="add_detail"><i class="fa fa-plus"></i>&nbsp;Tambah Detail</button>
                     </div>
                   </div>
             </div>
@@ -91,7 +91,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>Prihal</th>
                             <Th>Total</Th>
                             <th>Bukti</th>
                             <th width="500px">Deskripsi</th>
@@ -109,7 +109,7 @@
                 </table>
                 <div class="text-right">
                     <input class="btn btn-dark" type="reset" name="reset" value="reset">
-                    <input class="btn btn-primary" type="submit" name="submit" value="submit">
+                    <input class="btn btn-primary" type="submit" name="submit" value="Simpan">
                 </div>
             </div>
 
@@ -159,12 +159,6 @@
                 row = $(this);
                 console.log(row);
                 console.log(row.val());
-
-
-                // $('.row_detail').each(function(){
-                //     console.log('masuk');
-
-                // });
             });
 
             $('#append_detail').on('change', '.used',function() {
@@ -193,21 +187,21 @@ function select(val){
             '<div class="form-group" id="origin">\
             <label>Asal Dana</label>\
             <select name="asal_dana" class="custom-select" id="origin_funds">\
-            <option value="">Choose...</option>\
+            <option value="">Pilih...</option>\
             </select>\
             </div>'
 
         );
     }
 
-    if(val == 'direct'){
+    if(val == 'langsung'){
         $('#origin').append(
             '<div class="form-group" id="origin">\
             <label>Asal Dana</label>\
             <select name="asal_dana" class="custom-select" id="origin_funds">\
-            <option value="">Choose...</option>\
-            <option value="petty_cash" >Petty Cash</option>\
-            <option value="personal_cash" >Personal Cash</option>\
+            <option value="">Pilih...</option>\
+            <option value="petty cash" >Petty Cash</option>\
+            <option value="personal cash" >Uang Pribadi</option>\
             </select>\
             </div>'
 
@@ -219,7 +213,7 @@ function select(val){
             '<div class="form-group" id="origin">\
             <label>Asal Dana</label>\
             <select name="asal_dana" class="custom-select" id="origin_funds">\
-            <option value="">Choose...</option>\
+            <option value="">Pilih...</option>\
             <option value="BCA" >BCA</option>\
             <option value="Cimb Niaga" >Cimb Niaga</option>\
             </select>\
@@ -228,7 +222,7 @@ function select(val){
         );
     }
 
-    if(val == 'return'){
+    if(val == 'pengembalian'){
         $('#origin').append(
         '<div class="form-group" id="origin">\
         <label>Uang Yang Digunakan</label>\

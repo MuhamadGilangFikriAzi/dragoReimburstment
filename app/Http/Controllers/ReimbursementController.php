@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reimbursement;
+use App\Models\ReimburstmentDetail;
 use App\User;
 use Illuminate\Support\Facades\Hash;
-use Image;
+use Image, DB;
 
 class ReimbursementController extends Controller
 {
+
     public function index(Request $request)
     {
         $list = Reimbursement::query()->with('user');
@@ -42,44 +44,65 @@ class ReimbursementController extends Controller
         $data['page_title'] = "Add Reimburstment";
         $data['data'] = User::all();
         $data['return_type'] = array(
-            'direct' => 'Direct',
+            'langsung' => 'Langsung',
             'transfer' => 'Transfer',
-            'return' => 'Return'
+            'pengembalian' => 'Pengembalian'
         );
         return view('reimbursement.create', $data);
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
         $message = [
             'user_id.required' => '*Name Must be Filled',
-            'date.required' => '*Date Must be Filled',
-            'Detail.*.price' => 'required',
+            'tanggal.required' => '*Date Must be Filled'
+            // 'Detail.*.price' => 'required',
         ];
         $this->validate($request, [
 
             'user_id' => 'required',
-            'date' => 'required',
-            'Detail.*.price.required' => 'Harga wajib di input',
+            'tanggal' => 'required'
+            // 'Detail.*.price.required' => 'Harga wajib di input',
         ], $message);
         // dd($request);
-        $data = $request->except('_token', 'submit');
 
-        if (request()->proof) {
-            $path = public_path('/img/proof/');
-            $originalImage = $request->proof;
+        DB::beginTransaction();
+        try {
+            $reimburst = new Reimbursement;
+            $reimburst->user_id = $request->user_id;
+            $reimburst->tipe_pengembalian = $request->tipe_pengembalian;
+            $reimburst->tanggal = $request->tanggal;
+            $reimburst->asal_dana = $request->asal_dana;
+            $reimburst->status = "Diajukan";
+            $reimburst->total = $request->total;
+            $reimburst->save();
 
-            $Image = Image::make($originalImage);
-            $Image->resize(540, 360);
-            $fileName = time() . $originalImage->getClientOriginalName();
-            $Image->save($path . $fileName);
-            $data['proof'] = $fileName;
+            $detail = $request->Detail;
+            $path = public_path('/img/bukti/');
+
+            foreach ($detail as $key => $value) {
+                $originalImage = $value['foto'];
+                $Image = Image::make($originalImage);
+                $Image->resize(540, 360);
+                $fileName = time() . $originalImage->getClientOriginalName();
+                $Image->save($path . $fileName);
+
+                $reDetail = new ReimburstmentDetail;
+                $reDetail->reimburstment_id = $reimburst->id;
+                $reDetail->prihal = $value['prihal'];
+                $reDetail->digunakan = $value['digunakan'];
+                $reDetail->foto = $fileName;
+                $reDetail->deskripsi = $value['deskripsi'];
+                $reDetail->save();
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+
+            DB::rollback();
         }
 
-
-        Reimbursement::create($data);
-        return redirect('/reimbursement');
+        return redirect()->route('reimburstment');
     }
 
     public function show(Reimbursement $id)
