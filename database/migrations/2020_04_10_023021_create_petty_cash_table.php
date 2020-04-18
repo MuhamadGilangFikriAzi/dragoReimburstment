@@ -15,7 +15,7 @@ class CreatePettyCashTable extends Migration
     {
         Schema::create('petty_cash', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('id_user');
             $table->date('tanggal');
             $table->enum('tipe', ['masuk', 'keluar']);
             $table->double('total');

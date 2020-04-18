@@ -15,7 +15,7 @@ class CreateReimburstmentDetailTable extends Migration
     {
         Schema::create('reimburstment_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('reimburstment_id');
+            $table->bigInteger('id_reimburstment');
             $table->string('prihal', 50);
             $table->double('digunakan');
             $table->string('foto', 255);

@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('foto', 255)->nullable();
-            $table->string('bank', 255)->nullable();
             $table->string('no_rekening', 255)->nullable();
             $table->timestamps();
         });
