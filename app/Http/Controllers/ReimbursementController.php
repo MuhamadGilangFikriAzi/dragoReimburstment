@@ -16,20 +16,29 @@ class ReimbursementController extends Controller
     {
         $list = Reimbursement::query()->with('user');
 
-        if ($request->title) {
-            $list = $list->where('title', 'like', '%' . $request->title . '%');
-        }
-        if ($request->staff) {
-            $list = $list->where('staff', 'like', '%' . $request->staff . '%');
-        }
-        if ($request->date) {
-            $list = $list->where('date', $request->date);
+        if ($request->nama) {
+            $user = User::where('name', 'like', '%' . $request->nama . '%')->first();
+            if ($user != null) {
+                $list = $list->where('id_user', $user->id);
+            } else {
+                $list = $list->where('id_user', 0);
+            }
         }
 
-        $list = $list->paginate('4');
-
-        $data = Reimbursement::all()->count();
-        return view('reimbursement.index', compact('list', 'data'));
+        if ($request->tanggal) {
+            $list = $list->where('tanggal', $request->tanggal);
+        }
+        if ($request->tipe_pengembalian) {
+            $list = $list->where('tipe_pengembalian', $request->tipe_pengembalian);
+        }
+        if ($request->status) {
+            $list = $list->where('status', $request->status);
+        }
+        $data['tipe_pengembalian'] = ['langsung', 'transfer', 'pengembalian'];
+        $data['status'] = ['Diajukan', 'Diterima', 'Ditolak'];
+        $data['list'] = $list->paginate('4');
+        $data['data'] = Reimbursement::all()->count();
+        return view('reimbursement.index', $data);
     }
 
     public function allreimburstement()
@@ -88,7 +97,7 @@ class ReimbursementController extends Controller
                 $Image->save($path . $fileName);
 
                 $reDetail = new ReimburstmentDetail;
-                $reDetail->reimburstment_id = $reimburst->id;
+                $reDetail->id_reimburstment = $reimburst->id;
                 $reDetail->prihal = $value['prihal'];
                 $reDetail->digunakan = $value['digunakan'];
                 $reDetail->foto = $fileName;

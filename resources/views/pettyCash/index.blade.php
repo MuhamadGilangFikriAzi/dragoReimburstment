@@ -21,7 +21,7 @@
                 <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#add_petty_cash"><i class="fas fa-plus"></i>&nbsp;Tambah Petty Cash</button>
                 {{-- <a href="" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Add Petty Cash</a> --}}
 			</div>
-			<div class="card-body text-center">
+			<div class="card-body">
 				<div class="table-responsive ">
 					<table class="table table-striped table-sm">
 						<thead class="thead-light">
@@ -32,10 +32,9 @@
                                 <th><b>Tipe</b></th>
                                 <th><b>Deskripsi</b></th>
                                 <th class="text-right"><b>Dana</b></th>
-                                <th class="text-right"><b>Total</b></th>
 							</tr>
 						</thead>
-						<tbody class="table-sm">
+						<tbody>
                             @php
                                 $total = 0;
                             @endphp
@@ -47,23 +46,19 @@
                                 <td>{{$value->tipe}}</td>
                                 <td>{{$value->deskripsi}}</td>
                                 <td class="text-right">{{ number_format($value->total,0,',','.') }}</td>
-								<td class="text-right">
-                                    @php
-                                        if($value->tipe == "masuk"){
-                                            $total = $total+$value->total;
-                                        }else{
-                                            $total = $total-$value->total;
-                                        }
-                                    @endphp
-                                    {{ number_format($total,0,',','.') }}
-                                </td>
 							</tr>
 							@endforeach
 						</tbody>
 						<tfoot>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td class="text-right">Jumlah : {{ number_format($sum,0,',','.') }}</td>
+                            </tr>
+                        <tr>
                             <td colspan="3" class="float-left">
                                 {{ $pettyCash->links() }}
                             </td>
+                        </tr>
                         </tfoot>
 					</table>
 				</div>
@@ -84,7 +79,7 @@
             <div class="modal-body">
                 <form action="{{route('pettyCash.store')}}" method="post">
                     {{ csrf_field() }}
-                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
                     <input type="hidden" name="tipe" value="masuk">
                     <input type="hidden" name="deskripsi" value="Add petty cash by {{ Auth::user()->name }}">
                     <div class="form-group">

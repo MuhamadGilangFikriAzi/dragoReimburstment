@@ -20,29 +20,47 @@
 						<thead class="thead-light">
 							<tr>
 								<th><b>No</b></th>
-                                <th><b>Name</b></th>
+                                <th><b>Nama</b></th>
                                 <th><b>Tipe pengembalian</b></th>
-                                <th><b>Date</b></th>
+                                <th><b>Tanggal</b></th>
                                 <th><b>Status</b></th>
 								<th class="text-right"><b>Total</b></th>
 								<th class="text-center"><b>Action</b></th>
 							</tr>
 						</thead>
 						<tbody class="table-sm">
+                            <form action="#" method="get">
 							<tr>
 								<td></td>
 								<td>
-									<input type="text" name="staff" class="form-control form-control-sm">
+									<input type="text" name="nama" class="form-control form-control-sm" value="{{ Request::input('nama') }}">
+                                </td>
+                                <td>
+                                    <select name="tipe_pengembalian" id="" class="form-control form-control-sm">
+                                        <option value="">Pilih tipe...</option>
+                                        @foreach ($tipe_pengembalian as $value)
+                                            <option @if($value == Request::input('tipe_pengembalian')) selected @endif value="{{$value}}">{{$value}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+								<td>
+									<input type="date" name="tanggal" class="form-control form-control-sm" value="{{ Request::input('tanggal') }}">
 								</td>
 								<td>
-									<input type="date" name="date" class="form-control form-control-sm">
-								</td>
-								<td colspan="3"></td>
-								<td>
+                                    <select name="status" id="" class="form-control form-control-sm">
+                                        <option value="">Pilih status...</option>
+                                        @foreach ($status as $value)
+                                            <option @if($value == Request::input('status')) selected  @endif value="{{$value}}">{{$value}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td></td>
+								<td class="text-center">
                                     <a href="{{route('reimburstment')}}" class="btn btn-sm btn-outline-dark mr-2">Reset</a>
 									<input type="submit" value="Search" name="submit" class="btn btn-sm btn-outline-dark">
 								</td>
-							</tr>
+                            </tr>
+                        </form>
                             @foreach( $list as $key => $value )
                             @php
                                 if($value->status == 'Diajukan'){
@@ -59,7 +77,7 @@
 								<td><b>{{ $key +1 }}</b></td>
                                 <td>{{ $value->user['name'] }}</td>
                                 <td>{{ $value->tipe_pengembalian}}</td>
-                                <td>{{ date('d-m-Y', strtotime($value->date)) }}</td>
+                                <td>{{ $value->tanggal }}</td>
                                 <td>
                                     <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
                                 </td>
@@ -94,20 +112,24 @@
                                             <td>Foto</td>
                                             <td>Deskripsi</td>
                                         </tr>
+                                        @foreach($value->detail as $no => $detail)
+
+                                        @endforeach
                                     </table>
                                   </div>
                                 </td>
                             </tr>
-                            </tr>
 							@endforeach
 						</tbody>
 						<tfoot>
+                            <tr>
                                 <td colspan="6">
                                     {{ $list->links() }}
                                 </td>
                                 <td style="color: grey; font-family: sans-serif;">
                                     Total entries {{ $data }}
                                 </td>
+                            </tr>
                             </tfoot>
 
 					</table>

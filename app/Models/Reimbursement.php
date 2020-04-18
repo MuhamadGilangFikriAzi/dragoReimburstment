@@ -13,6 +13,11 @@ class Reimbursement extends Model
 
     public function user()
     {
-        return $this->HasOne('App\User', 'id', 'user_id');
+        return $this->HasOne('App\User', 'id', 'id_user');
+    }
+
+    public function detail()
+    {
+        return $this->hasMany('App\Models\ReimburstmentDetail', 'id_reimburstment');
     }
 }

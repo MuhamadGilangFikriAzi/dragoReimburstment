@@ -10,7 +10,9 @@ class PettyCashController extends Controller
     public function index()
     {
         $query = PettyCash::query();
-        // dd($query->get()->first());
+        $masuk = PettyCash::where('tipe', 'masuk')->sum('total');
+        $keluar = PettyCash::where('tipe', 'keluar')->sum('total');
+
         if (request()->name) {
             $query->where('name', 'LIKE', '%' . request()->name . '%');
         }
@@ -20,6 +22,7 @@ class PettyCashController extends Controller
         }
 
         $pettyCash = $query->paginate(10);
+        $data['sum'] = $masuk - $keluar;
         $data['pettyCash'] = $pettyCash;
         $data['pageTitle'] = 'Petty Cash';
 
