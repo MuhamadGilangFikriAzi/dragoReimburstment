@@ -78,7 +78,7 @@ class ReimbursementController extends Controller
         DB::beginTransaction();
         try {
             $reimburst = new Reimbursement;
-            $reimburst->user_id = $request->user_id;
+            $reimburst->id_user = $request->user_id;
             $reimburst->tipe_pengembalian = $request->tipe_pengembalian;
             $reimburst->tanggal = $request->tanggal;
             $reimburst->asal_dana = $request->asal_dana;
@@ -114,10 +114,10 @@ class ReimbursementController extends Controller
         return redirect()->route('reimburstment');
     }
 
-    public function show(Reimbursement $id)
+    public function show(Reimbursement $reimburst)
     {
-        $id->with('user')->get();
-        return view('reimbursement.show', compact('id'));
+        $data['data'] = $reimburst;
+        return view('reimbursement.show', $data);
     }
 
     public function edit(Reimbursement $id)

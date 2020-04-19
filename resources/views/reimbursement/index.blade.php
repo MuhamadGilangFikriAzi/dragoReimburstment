@@ -83,41 +83,22 @@
                                 </td>
 								<td class="text-right">{{number_format($value->total,0,",",".")}}</td>
 								<td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Dropdown button
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                          <a class="dropdown-item" href="#">Action</a>
+                                          <a class="dropdown-item" href="#">Another action</a>
+                                          <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                      </div>
 						 			<div>
-                                        <a href="#" class="btn btn-xs btn-flat" data-toggle="collapse" data-target="#detailItem{{$key}}"><i class="fa fa-arrow-down"></i></a>
                                         <a href="{{ route('reimburstment.view',$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">View</a>
                                         <a href="{{ route('reimburstment.edit',$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah data">Edit</a>
                                         <a href="{{ route('reimburstment.delete',$value->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Delete</a>
-
-										{{-- <a href="{{ url('/reimbursement/show/'.$l->id.'') }} ">
-											<button class="btn btn-danger">Show</button>
-										</a>
-										<a href="{{ url('/reimbursement/edit/'.$l->id.'') }}">
-											<button class="btn btn-success">Edit</button>
-										</a>
-										<a href="{{ url('/reimbursement/destroy/'.$l->id.'') }}">
-											<button  class="btn btn-info">Delete</button>
-										</a> --}}
 									</div>
 								</td>
-                            </tr>
-                            <tr>
-                                <td colspan="7" class="p-2">
-                                  <div id="detailItem{{$key}}" class="collapse">
-                                    <table class="table table-sm table-bordered">
-                                        <tr>
-                                            <td></th>
-                                            <td>Prihal</td>
-                                            <td>Digunakan</td>
-                                            <td>Foto</td>
-                                            <td>Deskripsi</td>
-                                        </tr>
-                                        @foreach($value->detail as $no => $detail)
-
-                                        @endforeach
-                                    </table>
-                                  </div>
-                                </td>
                             </tr>
 							@endforeach
 						</tbody>

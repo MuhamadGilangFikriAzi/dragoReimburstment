@@ -29,9 +29,9 @@
 
   <!-- Core JS files -->
   <script src="{{ asset('limitless/global_assets/js/main/jquery.min.js') }}"></script>
-  <script src="{{ url('limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ url('limitless/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
-  <script src="{{ url('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script>
+  {{-- <script src="{{ asset('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script> --}}
   <!-- /core JS files -->
 
   <!-- Theme JS files -->
@@ -45,7 +45,7 @@
   <!-- Plug in JS -->
   <script src="{{ url('js/BrowserPrint-1.0.4.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('js/DevDemo.js') }}" type="text/javascript"></script>
-  <script type="text/javascript" src="{{ url('webcamjs/webcam.min.js') }}"></script>
+  {{-- <script type="text/javascript" src="{{ url('webcamjs/webcam.min.js') }}"></script> --}}
   {{-- <script type="text/javascript">
     $(document).ready(setup_web_print);
   </script> --}}
@@ -221,6 +221,7 @@
 <!-- <script src="adminlte/plugins/moment/moment.min.js"></script> -->
 <script src="{{ url('adminlte/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
+<script src="{{ url('adminlte/plugins/moment/moment.min.js')}}"></script>
 <script src="{{ url('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 <!-- Summernote -->
 <script src="{{ url('adminlte/plugins/summernote/summernote-bs4.min.js')}}"></script>
@@ -229,7 +230,7 @@
 <!-- AdminLTE App -->
 <script src="{{ url('adminlte/dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ url('adminlte/dist/js/pages/dashboard.js')}}"></script>
+{{-- <script src="{{ url('adminlte/dist/js/pages/dashboard.js')}}"></script> --}}
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url('adminlte/dist/js/demo.js')}}"></script><!-- ./wrapper -->
 </body>
