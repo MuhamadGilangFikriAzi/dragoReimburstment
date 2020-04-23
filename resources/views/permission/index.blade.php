@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<section class="content">
+    <div class="container-fluid">
 <div class="row justify-content-center">
     <div class="col-md-12">
         @if ($message = Session::get('success'))
@@ -32,7 +34,6 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Guard</th>
-                        <th>Permission</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -42,18 +43,8 @@
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->guard_name }}</td>
                         <td>
-                            @forelse($value->permissions as $permission)
-                            <span class="badge badge-pill badge-success">{{$permission->name}}</span>
-                            @if($loop->iteration%4 == 0)
-                            <br>
-                            @endif
-                            @empty
-                            @endforelse
-                        </td>
-                        <td>
                             <div>
-                                <a href="{{ route('role.show',$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">View</a>
-                                <a href="{{ route('role.delete',$value->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Delete</a>
+                                <a href="{{ route('permission.delete',$value->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Delete</a>
                             </div>
                         </td>
                     </tr>
@@ -88,4 +79,6 @@
         </div>
     </div>
 </div>
+    </div>
+</section>
 @endsection

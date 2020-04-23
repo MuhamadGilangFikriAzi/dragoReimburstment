@@ -83,7 +83,7 @@
           <li class="nav-item dropdown">
             <div class="user-panel d-flex">
                 <div class="image">
-                      <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
+                      <img src="{{asset('img/user/'.Auth::user()->foto)}}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                   <a href="#" class="d-block"></a>
@@ -123,7 +123,7 @@
         <div class="sidebar">
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                  <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
+                  <img src="{{asset('img/user/'.Auth::user()->foto)}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
               <a href="#" class="d-block"></a>
@@ -173,7 +173,7 @@
                     </a>
                     <ul class="nav-item nav-treeview">
                       <li class="nav-item">
-                        <a href="{{ route('user') }}" class="nav-link">
+                        <a href="{{ route('user.index') }}" class="nav-link">
                             <i class="fas fa-users-cog"></i>
                           <p>User</p>
                         </a>

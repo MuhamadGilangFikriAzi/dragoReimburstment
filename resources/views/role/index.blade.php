@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<section class="content">
+    <div class="container-fluid">
 <div class="row justify-content-center">
     <div class="col-md-12">
         @if ($message = Session::get('success'))
@@ -88,4 +90,6 @@
         </div>
     </div>
 </div>
+    </div>
+</section>
 @endsection

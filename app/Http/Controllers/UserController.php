@@ -5,77 +5,70 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
-use Image;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
+use Image, DB;
 
 class userController extends Controller
 {
+    protected $index = 'user.index';
+    protected $create = 'user.create';
+    protected $store = 'user.store';
+    protected $show = 'user.show';
+    protected $edit = 'user.edit';
+    protected $update = 'user.update';
+    protected $delete = 'user.delete';
+
     public function index()
     {
-        $list = User::query();
-        $data = User::count();
-        $pageTitle = 'User Index';
+        $data['count'] = User::count();
+        $data['pageTitle'] = 'User Index';
+        $data['data'] = User::paginate('10');
+        $data['urlIndex'] = $this->index;
+        $data['urlStore'] = $this->store;
+        $data['urlEdit'] = $this->edit;
+        $data['urlShow'] = $this->show;
+        $data['urlDelete'] = $this->delete;
 
-        $list = User::paginate('5');
-
-        return view('user.index', compact('list', 'data', 'pageTitle'));
+        return view('user.index', $data);
     }
 
     public function create()
     {
-        return view('user.create');
+        $data['pageTitle'] = 'Tambah User';
+        $data['urlIndex'] = $this->index;
+        $data['urlStore'] = $this->store;
+
+        return view('user.create', $data);
     }
 
     public function store(Request $request)
     {
         $message = [
-            'name.required' => '*Name Must Be Filled',
-            'email.required' => '*email Must Must Be Filled',
-            'password.required' => '*password Must Be Filled',
+            'nama.required' => 'Nama harus diisi',
+            'email.required' => 'email harus diisi',
         ];
         $this->validate($request, [
-            'name' => 'required',
+            'nama' => 'required',
             'email' => 'required',
-            'password' => 'required',
         ], $message);
-        $data = $request->except('_token');
 
-        $data = new User;
-        $data->name = $request->name;
-        $data->email = $request->email;
+        DB::beginTransaction();
+        try {
+            $data = new User;
+            $data->name = $request->nama;
+            $data->email = $request->email;
+            $data->password = Hash::make('drago123456');
+            $data->save();
 
-        // if(request()->photo){
+            DB::commit();
+        } catch (Exception $e) {
 
-        //     $path = public_path('/img/user/');
-        //     $originalImage= $request->photo;
-        //     $Image = Image::make($originalImage);
-        //     $Image->resize(540,360);
-        //     $fileName = time().$originalImage->getClientOriginalName();
-        //     $Image->save($path.$fileName);
-        //     $data->photo = $fileName;
-
-        // }
-        if (request()->password) {
-            $data->password = Hash::make($request->password);
+            DB::rollback();
         }
-        $data->save();
-        return redirect('/user/list');
+
+        return redirect()->route($this->index)->with(['success' => 'User ' . $request->nama . ' berhasil dibuat']);
     }
-
-    // public function store(Request $request)
-    // {
-    //     $list = User::query();
-    //     if ($request->name) {
-    //         $list = $list->where('name', 'like', '%' . $request->name . '%');
-    //     }
-
-    //     $data = User::all()->count();
-
-    //     $list = $list->paginate('4');
-    //     return view('user.list', compact('list', 'data'));
-    // }
 
     public function show(User $id)
     {
@@ -83,10 +76,15 @@ class userController extends Controller
     }
 
 
-    public function edit(User $id)
+    public function edit(User $user)
     {
-        $role = Role::query()->get();
-        return view('user.user_edit', compact('id', 'role'));
+        $data['thisRole'] = $user->roles->first()->id;
+        $data['pageTitle'] = 'Edit user';
+        $data['role'] = Role::pluck('name', 'id');
+        $data['urlUpdate'] = $this->update;
+        $data['urlIndex'] = $this->index;
+        $data['data'] = $user;
+        return view('user.edit', $data);
     }
 
     public function update(Request $request, User $user)
@@ -95,19 +93,41 @@ class userController extends Controller
             'name' => 'required',
             'email' => 'required',
             'password' => 'sometimes|nullable',
-            'role_id' => 'sometimes|nullable'
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if ($request->password != null) {
-            $user->password = bcrypt($data['password']);
+        DB::beginTransaction();
+        try {
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->no_rekening = $request->no_rekening;
+
+            if ($request->password != null) {
+                $user->password = Hash::make($request->password);
+            }
+            if ($request->foto) {
+                $path = public_path('/img/user/');
+                $originalImage = $request->foto;
+                $Image = Image::make($originalImage);
+                $Image->resize(540, 360);
+                $fileName = time() . $originalImage->getClientOriginalName();
+                $Image->save($path . $fileName);
+
+                $user->foto = $fileName;
+            } else {
+                $user->foto = $request->foto_awal;
+            }
+            $user->save();
+
+            $user->assignRole($request->role_id);
+
+            DB::commit();
+        } catch (Exception $e) {
+
+            DB::rollback();
         }
-        $user->save();
 
-        $user->syncRoles($role->name);
-
-        return redirect('/user/list');
+        return redirect()->route($this->index)->with(['success' => 'User ' . $request->nama . ' berhasil diedit']);
     }
 
     public function destroy(User $id)

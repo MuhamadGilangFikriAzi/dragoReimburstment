@@ -261,10 +261,6 @@ class ReimbursementController extends Controller
 
             DB::rollback();
         }
-
-
-
-
         return redirect()->route($this->index)->with(['success' => 'Pengajuan Reimburstment ' . $reimburst->user['name'] . ' Diterima']);
     }
 
