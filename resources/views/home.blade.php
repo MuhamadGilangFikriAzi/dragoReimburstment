@@ -3,50 +3,50 @@
 @section('content')
 <style>
 	/*Boxes*/
-	.box > .icon 
+	.box > .icon
 	{
 		background-color: ;
-		text-align: center; 
+		text-align: center;
 		position: relative;
 	}
-	.box > .icon > .image 
+	.box > .icon > .image
 	{
-		position: relative;  
-		margin: auto; 
-		width: 75px; 
-		height: 75px; 
-		border: 8px solid white; 
-		line-height: 75px; 
-		border-radius: 50%; 
-		background: #314a79; 
-		vertical-align: middle; 
+		position: relative;
+		margin: auto;
+		width: 75px;
+		height: 75px;
+		border: 8px solid white;
+		line-height: 75px;
+		border-radius: 50%;
+		background: #314a79;
+		vertical-align: middle;
 	}
-	.box > .icon:hover > .image 
+	.box > .icon:hover > .image
 	{
-		background: grey; 
+		background: grey;
 	}
-	.box > .icon > .image > i 
+	.box > .icon > .image > i
 	{
 		font-size: 36px !important;
 		color: #fff !important;
 	}
 	.box > .icon:hover > .image > i
-	{ 
-		color: black !important; 
-	}
-	.box > .icon > .info 
 	{
-		margin-top: -20px; 
-		background: rgba(0, 0, 0, 0.04); 
-		border: 1px solid #e0e0e0; 
-		padding: 10px 0 8px 0; 
+		color: black !important;
+	}
+	.box > .icon > .info
+	{
+		margin-top: -20px;
+		background: rgba(0, 0, 0, 0.04);
+		border: 1px solid #e0e0e0;
+		padding: 10px 0 8px 0;
 	}
 	.box > .icon:hover > .info
-	{ 
-		background: rgba(0, 0, 0, 0.04); 
-		border-color: #e0e0e0; 
+	{
+		background: rgba(0, 0, 0, 0.04);
+		border-color: #e0e0e0;
 		color: grey;
-	} 
+	}
 </style>
 
 <!-- content -->
@@ -54,21 +54,21 @@
 		<div class="row">
 				<div class="col-xs-12 col-sm-6 col-lg-6">
 					<div class="card my-2">
-						<div class="box">							
+						<div class="box">
 							<div class="icon">
 								<div class="info">
 										<h6 class=" title my-2">TOTAL REIMBURSEMENT</h6>
 										<h3 class="text-center"><b>{{ $data }}</b></h3>
 										<h6>Total:<b> Rp. {{ number_format($sumall,2,",",".") }}</b></h6><hr>
-										<a href="{{ route('allreimburstement') }}"><i>View Details</i></a>
+										<a href="{{ route('reimburstment.allreimburstement') }}"><i>View Details</i></a>
 								</div>
 							</div>
 						</div>
-					</div> 
+					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-lg-6">
 					<div class="card my-2">
-						<div class="box">							
+						<div class="box">
 							<div class="icon">
 								<div class="image">
 									<i class="fa fa-strikethrough" aria-hidden="true"></i>
@@ -80,7 +80,7 @@
 										<a href="{{route('total')}}"><i>View Details</i></a>
 								</div>
 							</div>
-						</div> 
+						</div>
 					</div>
 				</div>
 		</div>
@@ -94,7 +94,7 @@
               			<div class="card-header">
                				 <h3 class="card-title">list of the last 5 transactions</h3>
               			</div>
-              	
+
               			<div class="card-body">
 							<div class="table-responsive">
 							   	<table class="table table-bordered table-striped">
@@ -119,7 +119,7 @@
 						                      @endforeach
 						                    </tbody>
 					            </table>
-				            </div>            
+				            </div>
 						</div>
               		</div>
             	</div>

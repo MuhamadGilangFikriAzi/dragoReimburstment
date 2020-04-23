@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reimbursement;
 use App\Models\ReimburstmentDetail;
+use App\Models\PettyCash;
 use App\User;
-use Illuminate\Support\Facades\Hash;
 use Image, DB;
 
 class ReimbursementController extends Controller
 {
+
+    protected $index = 'reimburstment.index';
+    protected $create = 'reimburstment.create';
+    protected $store = 'reimburstment.store';
+    protected $show = 'reimburstment.show';
+    protected $edit = 'reimburstment.edit';
+    protected $update = 'reimburstment.update';
+    protected $delete = 'reimburstment.delete';
+    protected $terima = 'reimburstment.terima';
+    protected $tolak = 'reimburstment.tolak';
 
     public function index(Request $request)
     {
@@ -36,8 +46,13 @@ class ReimbursementController extends Controller
         }
         $data['tipe_pengembalian'] = ['langsung', 'transfer', 'pengembalian'];
         $data['status'] = ['Diajukan', 'Diterima', 'Ditolak'];
-        $data['list'] = $list->paginate('4');
+        $data['list'] = $list->paginate('10');
         $data['data'] = Reimbursement::all()->count();
+        $data['urlIndex'] = $this->index;
+        $data['urlCreate'] = $this->create;
+        $data['urlShow'] = $this->show;
+        $data['urlEdit'] = $this->edit;
+        $data['urlDelete'] = $this->delete;
         return view('reimbursement.index', $data);
     }
 
@@ -50,29 +65,42 @@ class ReimbursementController extends Controller
 
     public function create()
     {
-        $data['page_title'] = "Add Reimburstment";
+        $data['page_title'] = "Ajukan Reimburstment";
         $data['data'] = User::all();
         $data['return_type'] = array(
             'langsung' => 'Langsung',
             'transfer' => 'Transfer',
             'pengembalian' => 'Pengembalian'
         );
+        $data['urlIndex'] = $this->index;
+        $data['urlStore'] = $this->store;
+        $data['pageTitle'] = 'Ajukan Reimburstment';
         return view('reimbursement.create', $data);
     }
 
     public function store(Request $request)
     {
         $message = [
-            'user_id.required' => '*Name Must be Filled',
-            'tanggal.required' => '*Date Must be Filled'
-            // 'Detail.*.price' => 'required',
+            'user_id.required' => 'Nama harus diisi',
+            'tanggal.required' => 'Tanggal harus diisi',
+            'tipe_pengembalian.required' => 'Tipe pengembalian harus diisi',
+            'asal_dana.required' => 'Asal dana harus diisi',
+            'Detail.*.prihal.required' => 'Prihal harus diisi',
+            'Detail.*.digunakan.required' => 'Total harus diisi',
+            'Detail.*.foto.required' => 'Foto harus diisi',
+            'Detail.*.deskripsi.required' => 'Deskripsi harus diisi'
         ];
-        $this->validate($request, [
 
+        $rules = [
             'user_id' => 'required',
-            'tanggal' => 'required'
-            // 'Detail.*.price.required' => 'Harga wajib di input',
-        ], $message);
+            'tanggal' => 'required',
+            'tipe_pengembalian' => 'required',
+            'Detail.*.prihal' => 'required',
+            'Detail.*.digunakan' => 'required',
+            'Detail.*.foto' => 'required',
+            'Detail.*.deskripsi' => 'required'
+        ];
+        $this->validate($request, $rules, $message);
         // dd($request);
 
         DB::beginTransaction();
@@ -111,94 +139,141 @@ class ReimbursementController extends Controller
             DB::rollback();
         }
 
-        return redirect()->route('reimburstment');
+        return redirect()->route($this->index);
     }
 
     public function show(Reimbursement $reimburst)
     {
+        // dd($reimburst);
         $data['data'] = $reimburst;
-        return view('reimbursement.show', $data);
+        $data['pageTitle'] = 'Pengajuan Reimburstment';
+        $data['urlIndex'] = $this->index;
+        $data['urlTerima'] = $this->terima;
+        $data['urlTolak'] = $this->tolak;
+        return view('reimbursement.view', $data);
     }
 
-    public function edit(Reimbursement $id)
+    public function edit(Reimbursement $reimburst)
     {
-        $id->with('user')->get();
-        $data = userModel::all();
-        return view('reimbursement.edit', compact('id', 'data'));
+        // dd($reimburst->detail);
+        $data['pageTitle'] = 'Edit Pengajuann Reimburstment';
+        $data['urlIndex'] = $this->index;
+        $data['urlUpdate'] = $this->update;
+
+        $data['data'] = $reimburst;
+        $data['user'] = User::pluck('name', 'id');
+        $data['count'] = count($reimburst->detail);
+        $data['return_type'] = array(
+            'langsung' => 'Langsung',
+            'transfer' => 'Transfer',
+            'pengembalian' => 'Pengembalian'
+        );
+        $data['langsung'] = array(
+            'petty cash' => 'Petty Cash',
+            'uang pribadi' => 'Uang Pribadi'
+        );
+        $data['transfer'] = array(
+            'BCA' => 'BCA',
+            'Cimb Niaga' => 'cimb Niaga'
+        );
+
+        return view('reimbursement.edit', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Reimbursement $reimburst)
     {
-        dd($id);
-        $this->validate($request, [
-            'title' => 'required',
-            'user_id' => 'required',
-            'date' => 'required',
-            'description' => 'required',
-            'total' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'user_id' => 'required',
+        //     'date' => 'required',
+        //     'description' => 'required',
+        //     'total' => 'required',
+        // ]);
 
-        $data = $request->except('_token');
-        $data = Reimbursement::findOrFail($id);
-        $data->update($request->all());
+        DB::beginTransaction();
+        try {
+            $reimburst->detail->each->delete();
 
-        if (!empty($request->proof)) {
-            $path = public_path('/img/reimburstment/');
-            $originalImage = $request->proof;
-            $Image = Image::make($originalImage);
-            $Image->resize(540, 360);
-            $fileName = time() . $originalImage->getClientOriginalName();
-            $Image->save($path . $fileName);
-            $data['proof'] = $fileName;
-            $data->save();
+            $reimburst->id_user = $request->user_id;
+            $reimburst->tipe_pengembalian = $request->tipe_pengembalian;
+            $reimburst->tanggal = $request->tanggal;
+            $reimburst->asal_dana = $request->asal_dana;
+            $reimburst->status = "Diajukan";
+            $reimburst->total = $request->total;
+            $reimburst->save();
+
+
+            $detail = $request->Detail;
+            $path = public_path('/img/bukti/');
+
+            foreach ($detail as $key => $value) {
+                if (!isset($value['foto'])) {
+                    $fileName = $value['foto_awal'];
+                } else {
+                    $originalImage = $value['foto'];
+                    $Image = Image::make($originalImage);
+                    $Image->resize(540, 360);
+                    $fileName = time() . $originalImage->getClientOriginalName();
+                    $Image->save($path . $fileName);
+                }
+
+                $reDetail = new ReimburstmentDetail;
+                $reDetail->id_reimburstment = $reimburst->id;
+                $reDetail->prihal = $value['prihal'];
+                $reDetail->digunakan = $value['digunakan'];
+                $reDetail->foto = $fileName;
+                $reDetail->deskripsi = $value['deskripsi'];
+                $reDetail->save();
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+
+            DB::rollback();
         }
-        return redirect('.reimbursement');
+        return redirect()->route($this->index);
     }
 
-    public function destroy($id)
+    public function delete(Reimbursement $reimburst)
     {
-        $hapus = Reimbursement::find($id);
-        $hapus->delete();
-        return redirect('/reimbursement');
+        $reimburst->detail->each->delete();
+        $reimburst->delete();
+
+        return redirect()->route($this->index);
     }
 
-    public function trash()
+    public function terima(Reimbursement $reimburst)
     {
-        $trash = Reimbursement::onlyTrashed()->with('user')->get();
-        $data = Reimbursement::onlyTrashed()->count();
-        return view('reimbursement.trash_gilang', compact('trash', 'data'));
+        DB::beginTransaction();
+        try {
+            $reimburst->status = 'Diterima';
+            $reimburst->save();
+
+            $pettyCash = new PettyCash;
+            $pettyCash->id_user = $reimburst->id_user;
+            $pettyCash->tanggal = date('Y-m-d');
+            $pettyCash->tipe = 'keluar';
+            $pettyCash->total = $reimburst->total;
+            $pettyCash->deskripsi = 'Menerima pengajuan reimburstment ' . $reimburst->user['name'];
+            $pettyCash->save();
+            DB::commit();
+        } catch (Exception $e) {
+
+            DB::rollback();
+        }
+
+
+
+
+        return redirect()->route($this->index)->with(['success' => 'Pengajuan Reimburstment ' . $reimburst->user['name'] . ' Diterima']);
     }
 
-    public function restore_all()
+    public function tolak(Reimbursement $reimburst)
     {
-        $restore = Reimbursement::onlyTrashed();
-        $restore->restore();
+        $reimburst->status = 'Ditolak';
+        $reimburst->save();
 
-        return redirect('/reimbursement/trash');
-    }
-
-    public function restore($id)
-    {
-        $restore = Reimbursement::onlyTrashed()->where('id', $id);
-        $restore->restore();
-
-        return redirect('/reimbursement/trash');
-    }
-
-    public function delete_all()
-    {
-        $hapus = Reimbursement::onlyTrashed();
-        $hapus->forceDelete();
-
-        return redirect('/reimbursement/trash');
-    }
-
-    public function delete($id)
-    {
-        $hapus = Reimbursement::onlyTrashed()->where('id', $id);
-        $hapus->forceDelete();
-
-        return redirect('/reimbursement/trash');
+        return redirect()->route($this->index)->with(['danger' => 'Pengajuan Reimburstment ' . $reimburst->user['name'] . ' Ditolak']);
     }
 
     public function total(Request $request)

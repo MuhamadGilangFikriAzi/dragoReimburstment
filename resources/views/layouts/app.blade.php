@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Reimbursement</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
@@ -27,11 +29,13 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
+  {{-- <script src="{{ url('adminlte/build/js/AdminLTE.js')}}"></script> --}}
+
   <!-- Core JS files -->
   <script src="{{ asset('limitless/global_assets/js/main/jquery.min.js') }}"></script>
-  <script src="{{ asset('limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url('limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ url('limitless/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
-  {{-- <script src="{{ asset('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script> --}}
+  {{-- <script src="{{ url('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script> --}}
   <!-- /core JS files -->
 
   <!-- Theme JS files -->
@@ -140,7 +144,7 @@
                 </a>
 
                 <li class="nav-item">
-                    <a href="{{ route('reimburstment') }}" class="nav-link">
+                    <a href="{{ route('reimburstment.index') }}" class="nav-link">
                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                       <p>Reimbursement</p>
                     </a>
@@ -207,7 +211,7 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="{{ url('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{ url('adminlte/plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
@@ -221,8 +225,8 @@
 <!-- <script src="adminlte/plugins/moment/moment.min.js"></script> -->
 <script src="{{ url('adminlte/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="{{ url('adminlte/plugins/moment/moment.min.js')}}"></script>
-<script src="{{ url('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<script src="{{ asset('adminlte/plugins/moment/moment.min.js')}}"></script>
+<script src="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 <!-- Summernote -->
 <script src="{{ url('adminlte/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- overlayScrollbars -->
@@ -230,7 +234,9 @@
 <!-- AdminLTE App -->
 <script src="{{ url('adminlte/dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-{{-- <script src="{{ url('adminlte/dist/js/pages/dashboard.js')}}"></script> --}}
+{{-- <script src="{{ asset('limitless/global_assets/js/plugins/visualization/d3.min.js')}}"></script>
+<script src="{{ asset('limitless/global_assets/js/demo_pages/dashboard.js')}}"></script> --}}
+
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url('adminlte/dist/js/demo.js')}}"></script><!-- ./wrapper -->
 </body>

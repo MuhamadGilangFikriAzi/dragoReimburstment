@@ -5,6 +5,17 @@
 <div class="container-fluid">
 <div class="row justify-content-center">
 	<div class="col-md-12">
+        @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+        @elseif($message = Session::get('danger'))
+        <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+        @endif
 		<div class="card">
 			<div class="card-header text-left"><b>Reimbursement</b></div>
 
@@ -12,7 +23,7 @@
 				{{-- <a href="{{ route('trash')}}">
 					<button type="button" class="btn btn-outline-dark">Trash</button>
                 </a> --}}
-                <a href="{{ route('reimburstment.create') }}" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Add Reimburst</a>
+                <a href="{{ route($urlCreate) }}" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Ajukan Reimburst</a>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive ">
@@ -56,7 +67,7 @@
                                 </td>
                                 <td></td>
 								<td class="text-center">
-                                    <a href="{{route('reimburstment')}}" class="btn btn-sm btn-outline-dark mr-2">Reset</a>
+                                    <a href="{{route($urlIndex)}}" class="btn btn-sm btn-outline-dark mr-2">Reset</a>
 									<input type="submit" value="Search" name="submit" class="btn btn-sm btn-outline-dark">
 								</td>
                             </tr>
@@ -83,20 +94,15 @@
                                 </td>
 								<td class="text-right">{{number_format($value->total,0,",",".")}}</td>
 								<td class="text-center">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Dropdown button
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                          <a class="dropdown-item" href="#">Action</a>
-                                          <a class="dropdown-item" href="#">Another action</a>
-                                          <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                      </div>
-						 			<div>
-                                        <a href="{{ route('reimburstment.view',$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">View</a>
-                                        <a href="{{ route('reimburstment.edit',$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah data">Edit</a>
-                                        <a href="{{ route('reimburstment.delete',$value->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Delete</a>
+						 			<div class="btn-group">
+                                        <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">Lihat</a>
+                                        <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah data">Edit</a>
+                                        <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-sm btn-link text-danger" title="Hapus reimburstment">Hapus</button>
+                                        </form>
+                                        {{-- <a href="{{ route($urlDelete,$value->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Hapus</a> --}}
 									</div>
 								</td>
                             </tr>

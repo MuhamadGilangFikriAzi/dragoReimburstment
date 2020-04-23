@@ -9,7 +9,10 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
-                <b>Pengajuan Reimburstment</b>
+                <h5 class="card-title">{{ $pageTitle }}</h5>
+                <div class="header-elements float-right">
+                    <a href="{{ route($urlIndex) }}" class=" btn-link" ><i class="fas fa-arrow-left"></i>&nbsp;Kembali</a>
+                </div>
 			</div>
 
 			<div class="card-body">
@@ -41,7 +44,7 @@
                                 <label>Tipe Pengembalian</label>
                                 <div class="input-group mb-3">
                                     <select name="tipe_pengembalian" class="custom-select" id="return_type">
-                                        <option selected>Choose...</option>
+                                        <option value="">Choose...</option>
                                         @foreach( $return_type as $key => $value )
                                         <option value="{{$key}}" >{{$value}}</option>
                                         @endforeach
@@ -61,12 +64,17 @@
                             <span class="text-danger">{{ $errors->first('tanggal') }}</span>
                             @endif
                           </div>
-                            <div class="form-group" id="origin">
-                                <label>Asal Dana</label>
-                                <select name="asal_dana" class="custom-select" id="origin_funds">
-                                    <option value="">Pilih...</option>
-                                </select>
-                            </div>
+
+                        <div class="form-group" id="origin">
+                            <label>Asal Dana</label>
+                            <select name="asal_dana" class="custom-select" id="origin_funds">
+                                <option value="">Pilih...</option>
+                            </select>
+                            @if($errors->has('asal_dana'))
+                            <span class="text-danger">{{ $errors->first('asal_dana') }}</span>
+                            @endif
+                        </div>
+
                           <div class="form-group">
                               <label>Total</label>
                               <input type="number" name="total" class="form-control" id="total" readonly>
@@ -101,6 +109,28 @@
                     <tbody id="append_detail">
                     </tbody>
                     <tfoot>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <span class="help-block" style="color: red;"> {!! $errors->first('Detail.*.prihal') !!} </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <span class="help-block" style="color: red;"> {!! $errors->first('Detail.*.digunakan') !!} </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <span class="help-block" style="color: red;"> {!! $errors->first('Detail.*.foto') !!} </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <span class="help-block" style="color: red;"> {!! $errors->first('Detail.*.deskripsi') !!} </span>
+                                </div>
+                            </td>
+                        </tr>
                         <tr>
                             <td></td>
                             <td><input type="number" class="form-control" name="sum" id="sum" readonly></td>

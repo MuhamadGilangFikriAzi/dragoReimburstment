@@ -74,20 +74,22 @@ Route::get('/user/givePermission/{id}', 'UserController@givePermission')->name('
 Route::post('/user/givePermission/storegivePermission/{id}', 'UserController@storegivePermission')->name('storegivePermission');
 
 Route::prefix('reimburstment')->group(function () {
-    Route::get('/', 'ReimbursementController@index')->name('reimburstment');
-    Route::get('allreimburstement', 'ReimbursementController@allreimburstement')->name('allreimburstement');
+    Route::get('index', 'ReimbursementController@index')->name('reimburstment.index');
+    Route::get('allreimburstement', 'ReimbursementController@allreimburstement')->name('reimburstment.allreimburstement');
     Route::get('create', 'ReimbursementController@create')->name('reimburstment.create');
     Route::post('create/save', 'ReimbursementController@store')->name('reimburstment.store');
-    Route::get('show/{id}', 'ReimbursementController@show')->name('reimburstment.view');
-    Route::get('edit/{id}', 'ReimbursementController@edit')->name('reimburstment.edit');
-    Route::post('edit/update/{id}', 'ReimbursementController@update')->name('reimburstment.update');
-    Route::get('destroy/{id}', 'ReimbursementController@destroy')->name('reimburstment.delete');
-    Route::get('trash', 'ReimbursementController@trash')->name('trash');
-    Route::get('trash/show/{id}', 'ReimbursementController@show_trash')->name('show_trash');
-    Route::get('trash/restore/{id}', 'ReimbursementController@restore')->name('restore');
-    Route::get('trash/restore_all', 'ReimbursementController@restore_all')->name('restore_all');
-    Route::get('trash/delete/{id}', 'ReimbursementController@delete')->name('delete');
-    Route::get('trash/delete_all', 'ReimbursementController@delete_all')->name('delete_all');
+    Route::get('{reimburst}/show', 'ReimbursementController@show')->name('reimburstment.show');
+    Route::get('{reimburst}/edit', 'ReimbursementController@edit')->name('reimburstment.edit');
+    Route::put('{reimburst}/update', 'ReimbursementController@update')->name('reimburstment.update');
+    Route::delete('{reimburst}/delete', 'ReimbursementController@delete')->name('reimburstment.delete');
+    Route::get('{reimburst}/terima', 'ReimbursementController@terima')->name('reimburstment.terima');
+    Route::get('{reimburst}/tolak', 'ReimbursementController@tolak')->name('reimburstment.tolak');
+    // Route::get('trash', 'ReimbursementController@trash')->name('trash');
+    // Route::get('trash/show/{id}', 'ReimbursementController@show_trash')->name('show_trash');
+    // Route::get('trash/restore/{id}', 'ReimbursementController@restore')->name('restore');
+    // Route::get('trash/restore_all', 'ReimbursementController@restore_all')->name('restore_all');
+    // Route::get('trash/delete/{id}', 'ReimbursementController@delete')->name('delete');
+    // Route::get('trash/delete_all', 'ReimbursementController@delete_all')->name('delete_all');
     Route::get('total', 'ReimbursementController@total')->name('total');
 });
 

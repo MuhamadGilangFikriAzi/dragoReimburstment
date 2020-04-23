@@ -63,7 +63,7 @@
 										<h6 class=" title my-2">TOTAL REIMBURSEMENT</h6>
 										<h3 class="text-center"><b>{{ $data }}</b></h3>
 										<h6>Total:<b> Rp. {{ number_format($sumall,2,",",".") }}</b></h6><hr>
-										<a href="{{ route('allreimburstement')}}"><i>View Details</i></a>
+										<a href="{{ route('reimburstment.allreimburstement')}}"><i>View Details</i></a>
 								</div>
 							</div>
 						</div>
