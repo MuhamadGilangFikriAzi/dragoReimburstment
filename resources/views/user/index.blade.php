@@ -56,7 +56,7 @@
                                     <td><b>{{ $key+1 }}</b></td>
                                     <td>{{ $value->name }}</td>
                                     <td>{{ $value->email }}</td>
-                                    <td></td>
+                                    <td><span class="badge badge-pill badge-secondary">{{$value->roles->first()->name}}</span></td>
                                     <td>
                                         <div>
                                         <a href="{{ route($urlShow, $value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">View</a>

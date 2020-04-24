@@ -16,7 +16,7 @@ class CreateReimburseTable extends Migration
         Schema::create('reimburstment', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('id_user');
-            $table->enum('tipe_pengembalian', ['langusng', 'transfer', 'pengembalian']);
+            $table->enum('tipe_pengembalian', ['langsung', 'transfer', 'pengembalian']);
             $table->string('asal_dana', 50)->nullable();
             $table->date('tanggal')->nullable();
             $table->enum('status', ['Diajukan', 'Diterima', 'Ditolak']);

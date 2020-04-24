@@ -30,7 +30,6 @@
                             <label>Email</label>
                             <input type="email" name="email" class="form-control" value="{{ $data->email }}">
                         </div>
-                        <hr>
                         <div class="form-group">
                             <label>Password Baru</label>
                             <input type="password" name="password" class="form-control">
@@ -52,28 +51,25 @@
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 												<span aria-hidden="true">&times;</span>
 												</button>
-												</div>
-												<div class="modal-body">
-													<img src="{{ asset('img/user/'.$data->foto) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">
-												</div>
+											</div>
+											<div class="modal-body">
+												<img src="{{ asset('img/user/'.$data->foto) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">
 											</div>
 										</div>
 									</div>
-                                </div>
+								</div>
                             <input type="file" name="foto" class="form-control" >
                             <input type="hidden" name="foto_awal" value="{{$data->foto}}">
                         </div>
 
-                         <div class="card">
-                        <div class="card-header">Role</div>
-                        <div class="card-body">
+                        <div class="form-group">
+                            <label>Role</label>
                             <select name="role_id" class="form-control">
-                               <option value="">-- Choose Role--</option>
+                            <option value="">-- Choose Role--</option>
                                 @foreach($role as $key => $value)
                                     <option value="{{$key}}" @if($key == $thisRole) selected @endif >{{ $value }}</option>
                                 @endforeach
                             </select>
-                        </div>
                         </div>
                         <div class="text-right">
                             <input class="btn btn-primary" type="submit"  name="submit" value="Save Change">
@@ -84,5 +80,7 @@
             </div>
         </div>
     </div>
+    </div>
+
 </section>
 @endsection

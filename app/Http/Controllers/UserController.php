@@ -61,6 +61,8 @@ class userController extends Controller
             $data->password = Hash::make('drago123456');
             $data->save();
 
+            $data->assignRole('User');
+
             DB::commit();
         } catch (Exception $e) {
 
@@ -118,6 +120,9 @@ class userController extends Controller
                 $user->foto = $request->foto_awal;
             }
             $user->save();
+
+            $role = $user->roles->first()->name;
+            $user->removeRole($role);
 
             $user->assignRole($request->role_id);
 
