@@ -115,4 +115,5 @@ Route::prefix('role')->group(function () {
 Route::prefix('permission')->group(function () {
     Route::get('/', 'PermissionController@index')->name('permission');
     Route::post('store', 'PermissionController@store')->name('permission.store');
+    Route::delete('{permission}/delete', 'PermissionController@delete')->name('permission.delete');
 });

@@ -94,15 +94,7 @@
             <div class="dropdown-menu dropdown-menu-sm">
               <ul>
                     <a class="dropdown-item" href="{{ route('edit_prof', Auth::user()->id) }}">Edit Profile</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                    </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                    </form>
               </ul>
             </div>
           </li>
@@ -191,6 +183,20 @@
                         </a>
                       </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        <i class="fas fa-power-off"></i>
+                        <p>
+                        {{ __('Logout') }}
+                        </p>
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                        </form>
                 </li>
             </ul>
           </nav>

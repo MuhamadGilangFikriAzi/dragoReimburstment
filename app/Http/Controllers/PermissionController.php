@@ -49,7 +49,7 @@ class PermissionController extends Controller
         return redirect('/permission');
     }
 
-    public function destroy(Permission $permission)
+    public function delete(Permission $permission)
     {
         $permission->delete();
         return redirect('/permission');
