@@ -46,11 +46,13 @@ Route::get('delete-data', 'AuthorizationController@deleteData');
 //     Route::post('edit/update/{id}','PermissionController@update')->name('update_permission');
 //     Route::get('delete/{permission}','PermissionController@destroy')->name('delete_permission');
 // });
+Route::prefix('home')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('{id}/edit', 'HomeController@edit')->name('home.edit');
+    Route::post('{id}/update', 'HomeController@update')->name('home.edit');
+    Route::get('filter', 'HomeController@filter')->name('filter');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home/edit/{id}', 'HomeController@edit')->name('edit_prof');
-Route::post('/home/update/{id}', 'HomeController@update')->name('update_prof');
-Route::get('/home/filter', 'HomeController@filter')->name('filter');
 
 Route::prefix('user')->group(function () {
     Route::get('index', 'UserController@index')->name('user.index');
@@ -58,8 +60,8 @@ Route::prefix('user')->group(function () {
     Route::post('store', 'UserController@store')->name('user.store');
     Route::get('{user}/show', 'UserController@show')->name('user.show');
     Route::get('{user}/edit', 'UserController@edit')->name('user.edit');
-    Route::post('{user}/update', 'UserController@update')->name('user.update');
-    Route::get('{user}/delete', 'UserController@delete')->name('user.delete');
+    Route::put('{user}/update', 'UserController@update')->name('user.update');
+    Route::delete('{user}/delete', 'UserController@delete')->name('user.delete');
 
 
     Route::get('trash', 'UserController@trash')->name('user.trash');
@@ -104,7 +106,7 @@ Route::prefix('pettyCash')->group(function () {
 });
 
 Route::prefix('role')->group(function () {
-    Route::get('index', 'RoleController@index')->name('role');
+    Route::get('index', 'RoleController@index')->name('role.index');
     Route::get('create', 'RoleController@create')->name('role.create');
     Route::post('create/store', 'RoleController@store')->name('role.store');
     Route::post('hasPermission', 'RoleController@hasPermission')->name('role.hasPermission');
@@ -113,7 +115,7 @@ Route::prefix('role')->group(function () {
 });
 
 Route::prefix('permission')->group(function () {
-    Route::get('/', 'PermissionController@index')->name('permission');
+    Route::get('/', 'PermissionController@index')->name('permission.index');
     Route::post('store', 'PermissionController@store')->name('permission.store');
     Route::delete('{permission}/delete', 'PermissionController@delete')->name('permission.delete');
 });

@@ -44,7 +44,11 @@
                         <td>{{ $value->guard_name }}</td>
                         <td>
                             <div>
-                                <a href="{{ route('permission.delete',$value->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Delete</a>
+                                <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-sm btn-link text-red">Hapus</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -64,7 +68,7 @@
                 <button type="button" class="close text-right" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="{{route('permission.store')}}" method="post">
+                <form action="{{route($urlStore)}}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label>Name</label>

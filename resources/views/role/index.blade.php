@@ -19,7 +19,7 @@
         @endif
         <div class="card">
             <div class="card-header"><b>Roles</b>
-                <button type="button" class="btn btn-link btn-sm float-right" data-toggle="modal" data-target="#add_role"><i class="fas fa-plus"></i>&nbsp;Add Role</button>
+                <button type="button" class="btn btn-link btn-sm float-right" data-toggle="modal" data-target="#add_role"><i class="fas fa-plus"></i>&nbsp;Tambah role</button>
             </div>
 
             <div class="card-body">
@@ -54,8 +54,8 @@
                         </td>
                         <td>
                             <div>
-                                <a href="{{ route('role.show',$roles->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">View</a>
-                                <a href="{{ route('role.delete',$roles->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Delete</a>
+                                <a href="{{ route('role.show',$roles->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">Lihat</a>
+                                <a href="{{ route('role.delete',$roles->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Hapus</a>
                             </div>
                         </td>
                     </tr>
@@ -71,7 +71,7 @@
       <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Form Add Role</h4>
+                <h4 class="modal-title">Form tambah role</h4>
                 <button type="button" class="close text-right" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">

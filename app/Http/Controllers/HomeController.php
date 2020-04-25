@@ -12,6 +12,10 @@ use Image;
 
 class HomeController extends Controller
 {
+    protected $index = 'home.index';
+    protected $edit = 'home.edit';
+    protected $update = 'home.update';
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -60,8 +64,14 @@ class HomeController extends Controller
 
     public function edit(User $id)
     {
-        $roles = Role::query()->get();
-        return view('home.edit_profile', compact('id', 'roles'));
+        $data['thisRole'] = $id->roles->first()->id;
+        $data['pageTitle'] = 'Edit user';
+        $data['role'] = Role::pluck('name', 'id');
+        $data['urlUpdate'] = $this->update;
+        $data['urlIndex'] = $this->index;
+        $data['data'] = $id;
+
+        return view('home.edit_profile', $data);
     }
 
     public function update(Request $request, $id)

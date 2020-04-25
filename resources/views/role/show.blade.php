@@ -14,7 +14,7 @@
             <div class="card-header">
                 <label>Show Role</label>
                 <div class="header-elements float-right">
-                    <a href="{{ route('role') }}" class=" btn-link" ><i class="fas fa-arrow-left"></i>&nbsp;Kembali</a>
+                    <a href="{{ route('role.index') }}" class=" btn-link" ><i class="fas fa-arrow-left"></i>&nbsp;Kembali</a>
                 </div>
             </div>
             <div class="card-body">

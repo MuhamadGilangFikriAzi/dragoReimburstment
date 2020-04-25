@@ -22,13 +22,36 @@
 
                     <form action="{{ route($urlUpdate,$data->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label>Nama</label>
                             <input type="text" name="name" class="form-control" value="{{ $data->name }}">
                         </div>
+
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="email" class="form-control" value="{{ $data->email }}">
+                            <label for="recipient-name" class="col-form-label">Jenis kelamin</label>
+                            <select name="jenis_kelamin" id="" class="form-control">
+                                <option value="">...</option>
+                                @foreach ($jenis_kelamin as $key => $value)
+                                    <option value="{{$key}}" @if($key == $data->jenis_kelamin) selected @endif>{{$value}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @if($errors->has('nama'))
+                            <span class="text-danger">{{ $errors->first('nama') }}</span>
+                        @endif
+
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Email</label>
+                            <input type="email" name="email" class="form-control"  value="{{$data->email}}">
+                        </div>
+                        @if($errors->has('email'))
+                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                        @endif
+
+                        <div class="form-group">
+                            <label for="">Alamat</label>
+                            <textarea name="alamat" id="" class="form-control">{{$data->alamat}}</textarea>
                         </div>
                         <div class="form-group">
                             <label>Password Baru</label>
@@ -61,7 +84,7 @@
                             <input type="file" name="foto" class="form-control" >
                             <input type="hidden" name="foto_awal" value="{{$data->foto}}">
                         </div>
-
+                        @role('Super Admin')
                         <div class="form-group">
                             <label>Role</label>
                             <select name="role_id" class="form-control">
@@ -71,6 +94,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        @endrole
                         <div class="text-right">
                             <input class="btn btn-primary" type="submit"  name="submit" value="Save Change">
                             <input class="btn btn-dark" type="reset" name="reset" value="Reset">

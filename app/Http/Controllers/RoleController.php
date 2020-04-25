@@ -9,6 +9,7 @@ use App\User;
 
 class RoleController extends Controller
 {
+    protected $index = 'role.index';
     public function index()
     {
         $role = Role::query()->get();
@@ -25,7 +26,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $role = Role::create(['name' => $request->name]);
-        return redirect('/role')->with(['success' => 'Data has been saved']);;
+        return redirect()->route($this->index)->with(['success' => 'Role' . $request->name . ' telah ditambahkan']);;
     }
 
     public function show(Role $role)
@@ -56,7 +57,7 @@ class RoleController extends Controller
     public function delete(Role $role)
     {
         $role->delete();
-        return redirect()->back()->with(['danger' => 'Data has been deleted']);
+        return redirect()->back()->with(['danger' => 'Role telah dihapus']);
     }
 
     public function hasPermission(Request $request)

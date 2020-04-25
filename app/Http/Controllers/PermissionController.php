@@ -8,50 +8,30 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    protected $index = 'permission.index';
+    protected $store = 'permission.store';
+    protected $delete = 'permission.delete';
     public function index()
     {
-        $permissions = Permission::query()->get();
-        $role = Role::query()->get();
+        $data['permissions'] = Permission::query()->get();
+        $data['role'] = Role::query()->get();
+        $data['urlDelete'] = $this->delete;
+        $data['urlStore'] = $this->store;
 
-        return view('permission.index', compact('permissions', 'role'));
-    }
-    public function create()
-    {
-        return view('permission.create');
+        return view('permission.index', $data);
     }
 
     public function store(Request $request)
     {
         $permission = Permission::create(['name' => $request->permission]);
 
-        return redirect('/permission');
-    }
-
-    public function show(Permission $permission)
-    {
-        return view('permission.show', compact('permission'));
-    }
-
-    public function edit(Permission $permission)
-    {
-        return view('permission.edit', compact('permission'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $data = request()->validate(
-            ['name' => 'required']
-        );
-
-        $permission = Permission::find($id);
-        $permission->update($data);
-
-        return redirect('/permission');
+        return redirect()->route($this->index)->with(['success' => 'Permission ' . $request->permission . ' berhasil ditambahkan']);
     }
 
     public function delete(Permission $permission)
     {
+        $nama = $permission->name;
         $permission->delete();
-        return redirect('/permission');
+        return redirect()->route($this->index)->with(['danger' => 'Permission ' . $nama . ' telah dihapus']);
     }
 }

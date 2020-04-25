@@ -88,15 +88,9 @@
                 <div class="info">
                   <a href="#" class="d-block"></a>
                 </div>
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              {{ Auth::user()->name }} <i class="fas fa-angle-down"></i>
+            <a class="nav-link" href="{{ route('home.edit', Auth::user()->id) }}">
+              {{ Auth::user()->name }}
             </a>
-            <div class="dropdown-menu dropdown-menu-sm">
-              <ul>
-                    <a class="dropdown-item" href="{{ route('edit_prof', Auth::user()->id) }}">Edit Profile</a>
-
-              </ul>
-            </div>
           </li>
           @endguest
         </ul>
@@ -154,7 +148,7 @@
                     </a>
                   </li>
 
-
+                @hasanyrole('Super Admin|Admin')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-sliders-h"></i>
@@ -171,19 +165,20 @@
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ route('role') }}" class="nav-link">
+                        <a href="{{ route('role.index') }}" class="nav-link">
                             <i class="fas fa-users-cog"></i>
                           <p>Role</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ route('permission') }}" class="nav-link">
+                        <a href="{{ route('permission.index') }}" class="nav-link">
                             <i class="fas fa-users-cog"></i>
                           <p>Permission</p>
                         </a>
                       </li>
                     </ul>
                 </li>
+                @endhasanyrole
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
