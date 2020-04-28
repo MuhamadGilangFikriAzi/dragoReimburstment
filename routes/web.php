@@ -54,22 +54,7 @@ Route::prefix('home')->group(function () {
 });
 
 
-Route::prefix('user')->group(function () {
-    Route::get('index', 'UserController@index')->name('user.index');
-    Route::get('create', 'UserController@create')->name('user.create');
-    Route::post('store', 'UserController@store')->name('user.store');
-    Route::get('{user}/show', 'UserController@show')->name('user.show');
-    Route::get('{user}/edit', 'UserController@edit')->name('user.edit');
-    Route::put('{user}/update', 'UserController@update')->name('user.update');
-    Route::delete('{user}/delete', 'UserController@delete')->name('user.delete');
 
-
-    Route::get('trash', 'UserController@trash')->name('user.trash');
-    Route::get('restore/{id}', 'UserController@restore')->name('user.trash.store');
-    Route::get('del_permanent/{id}', 'UserController@delete')->name('user.trash.delete');
-    Route::get('restore_all', 'UserController@restore_all')->name('user.trash.restoreAll');
-    Route::get('delete_all', 'UserController@delete_all')->name('user.trash.deleteAll');
-});
 
 
 //model has permission
@@ -101,21 +86,42 @@ Route::get('report', 'HasilController@report');
 Route::get('result', 'HasilController@result');
 
 Route::prefix('pettyCash')->group(function () {
-    Route::get('/', 'PettyCashController@index')->name('pettyCash');
+    Route::get('index', 'PettyCashController@index')->name('pettyCash.index');
     Route::post('store', 'PettyCashController@store')->name('pettyCash.store');
 });
 
-Route::prefix('role')->group(function () {
-    Route::get('index', 'RoleController@index')->name('role.index');
-    Route::get('create', 'RoleController@create')->name('role.create');
-    Route::post('create/store', 'RoleController@store')->name('role.store');
-    Route::post('hasPermission', 'RoleController@hasPermission')->name('role.hasPermission');
-    Route::get('show/{role}', 'RoleController@show')->name('role.show');
-    Route::get('delete/{role}', 'RoleController@delete')->name('role.delete');
-});
 
-Route::prefix('permission')->group(function () {
-    Route::get('/', 'PermissionController@index')->name('permission.index');
-    Route::post('store', 'PermissionController@store')->name('permission.store');
-    Route::delete('{permission}/delete', 'PermissionController@delete')->name('permission.delete');
+Route::prefix('settings')->group(function () {
+
+    Route::prefix('user')->group(function () {
+        Route::get('index', 'UserController@index')->name('user.index');
+        Route::get('create', 'UserController@create')->name('user.create');
+        Route::post('store', 'UserController@store')->name('user.store');
+        Route::get('{user}/show', 'UserController@show')->name('user.show');
+        Route::get('{user}/edit', 'UserController@edit')->name('user.edit');
+        Route::put('{user}/update', 'UserController@update')->name('user.update');
+        Route::delete('{user}/delete', 'UserController@delete')->name('user.delete');
+
+
+        Route::get('trash', 'UserController@trash')->name('user.trash');
+        Route::get('restore/{id}', 'UserController@restore')->name('user.trash.store');
+        Route::get('del_permanent/{id}', 'UserController@delete')->name('user.trash.delete');
+        Route::get('restore_all', 'UserController@restore_all')->name('user.trash.restoreAll');
+        Route::get('delete_all', 'UserController@delete_all')->name('user.trash.deleteAll');
+    });
+
+    Route::prefix('role')->group(function () {
+        Route::get('index', 'RoleController@index')->name('role.index');
+        Route::get('create', 'RoleController@create')->name('role.create');
+        Route::post('create/store', 'RoleController@store')->name('role.store');
+        Route::post('hasPermission', 'RoleController@hasPermission')->name('role.hasPermission');
+        Route::get('show/{role}', 'RoleController@show')->name('role.show');
+        Route::get('delete/{role}', 'RoleController@delete')->name('role.delete');
+    });
+
+    Route::prefix('permission')->group(function () {
+        Route::get('/', 'PermissionController@index')->name('permission.index');
+        Route::post('store', 'PermissionController@store')->name('permission.store');
+        Route::delete('{permission}/delete', 'PermissionController@delete')->name('permission.delete');
+    });
 });

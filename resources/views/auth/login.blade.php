@@ -38,19 +38,19 @@
                                                 </span>
                                             @enderror                            
                                         </div>
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input class="custom-control-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="remember">
                                                         {{ __('Remember Me') }}
                                                     </label>
                                             </div>
-                                        </div> 
+                                        </div>  --}}
                                         <button type="submit" class="btn btn-dark" style="width: 100%;">
                                             {{ __('Login') }}
                                         </button>
                                     </form>
-                                        <hr>
+                                        {{-- <hr>
                                         <div class="text-center">
                                             @if (Route::has('password.request'))
                                             <a class="small" href="{{ route('password.request') }}">
@@ -62,7 +62,7 @@
                                             @if (Route::has('register'))
                                             <a class="small" href="{{ route('register') }}">Create an Account!</a>        
                                             @endif
-                                        </div>
+                                        </div> --}}
                               
                             </div>
                         </div>

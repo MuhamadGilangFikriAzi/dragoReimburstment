@@ -83,7 +83,12 @@
           <li class="nav-item dropdown">
             <div class="user-panel d-flex">
                 <div class="image">
+                    @if (Auth::user()->foto != null)
                       <img src="{{asset('img/user/'.Auth::user()->foto)}}" class="img-circle elevation-2" alt="User Image">
+                    @else
+                      <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
+                    @endif
+
                 </div>
                 <div class="info">
                   <a href="#" class="d-block"></a>
@@ -109,7 +114,11 @@
         <div class="sidebar">
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                  <img src="{{asset('img/user/'.Auth::user()->foto)}}" class="img-circle elevation-2" alt="User Image">
+              @if (Auth::user()->foto != null)
+                <img src="{{asset('img/user/'.Auth::user()->foto)}}" class="img-circle elevation-2" alt="User Image">
+              @else
+                <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
+              @endif
             </div>
             <div class="info">
               <a href="#" class="d-block"></a>
@@ -121,36 +130,36 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <!-- Add icons to the links using the .nav-icon class
                    with font-awesome or any other icon font library -->
-              <li class="nav-item has-treeview menu-open">
-                <a href="{{ url('/home') }}" class="nav-link active">
+              <li class="nav-item has-treeview">
+                <a href="{{ url('/home') }}" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Dashboard
                   </p>
                 </a>
 
-                <li class="nav-item">
-                    <a href="{{ route('reimburstment.index') }}" class="nav-link">
+                <li class="nav-item {{ (request()->is('reimburstment/*')) ? 'menu-open' : '' }}">
+                    <a href="{{ route('reimburstment.index') }}" class="nav-link {{ (request()->is('reimburstment*')) ? 'active' : '' }}">
                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                       <p>Reimbursement</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('pettyCash') }}" class="nav-link">
+                    <a href="{{ route('pettyCash.index') }}" class="nav-link {{ (request()->is('pettyCash*')) ? 'active' : '' }}">
                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                       <p>Petty Cash</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('report') }}" class="nav-link">
+                    <a href="{{ url('report') }}" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list nav-icon"></i>
                       <p>Laporan</p>
                     </a>
                   </li>
 
                 @hasanyrole('Super Admin|Admin')
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                <li class="nav-item has-treeview {{ (request()->is('settings*')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}">
                       <i class="nav-icon fas fa-sliders-h"></i>
                       <p>
                         Settings
@@ -159,19 +168,19 @@
                     </a>
                     <ul class="nav-item nav-treeview">
                       <li class="nav-item">
-                        <a href="{{ route('user.index') }}" class="nav-link">
+                        <a href="{{ route('user.index') }}" class="nav-link {{ (request()->is('settings/user*')) ? 'active' : '' }}">
                             <i class="fas fa-users-cog"></i>
                           <p>User</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ route('role.index') }}" class="nav-link">
+                        <a href="{{ route('role.index') }}" class="nav-link {{ (request()->is('settings/role*')) ? 'active' : '' }}">
                             <i class="fas fa-users-cog"></i>
                           <p>Role</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ route('permission.index') }}" class="nav-link">
+                        <a href="{{ route('permission.index') }}" class="nav-link {{ (request()->is('settings/permission*')) ? 'active' : '' }}">
                             <i class="fas fa-users-cog"></i>
                           <p>Permission</p>
                         </a>
@@ -179,15 +188,16 @@
                     </ul>
                 </li>
                 @endhasanyrole
+                <br>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
-                        <i class="fas fa-power-off"></i>
+                        <i class="fas fa-power-off nav-icon"></i>
                         <p>
                         {{ __('Logout') }}
                         </p>
-                        </a>
+                    </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
