@@ -54,6 +54,10 @@
                                 <span class="text-danger">{{ $errors->first('tipe_pengembalian') }}</span>
                                 @endif
                             </div>
+
+                            <div class="form-group awal origin" id="awal">
+
+                            </div>
                         </div>
 
                         <div class="col">
@@ -65,7 +69,7 @@
                             @endif
                           </div>
 
-                        <div class="form-group" id="origin">
+                        <div class="form-group origin" id="origin">
                             <label>Asal Dana</label>
                             <select name="asal_dana" class="custom-select" id="origin_funds">
                                 <option value="">Pilih...</option>
@@ -187,8 +191,6 @@
 
             $( "#append_detail" ).on('change','.description', function() {
                 row = $(this);
-                console.log(row);
-                console.log(row.val());
             });
 
             $('#append_detail').on('change', '.used',function() {
@@ -210,9 +212,12 @@ function count(){
 
 function select(val){
     funds = $('#origin').children().remove();
+    pengembalian = $('#awal').children().remove();
+    // console.log($('#awal').children());
+
     console.log(val);
 
-    if(val == 'Choose...'){
+    if(val == ''){
         $('#origin').append(
             '<div class="form-group" id="origin">\
             <label>Asal Dana</label>\
@@ -254,8 +259,21 @@ function select(val){
 
     if(val == 'pengembalian'){
         $('#origin').append(
-        '<div class="form-group" id="origin">\
-        <label>Uang Yang Digunakan</label>\
+            '<div class="form-group" id="origin">\
+            <label>Asal Dana</label>\
+            <select name="asal_dana" class="custom-select" id="origin_funds">\
+            <option value="">Pilih...</option>\
+            <option value="petty cash" >Petty Cash</option>\
+            <option value="personal cash" >Uang Pribadi</option>\
+            <option value="BCA" >BCA</option>\
+            <option value="Cimb Niaga" >Cimb Niaga</option>\
+            </select>\
+            </div>'
+        );
+
+        $('#awal').append(
+        '<div class="form-group origin" id="awal">\
+        <label>Awal</label>\
         <input type="number" class="form-control" name="digunakan">\
         </div>'
         );
