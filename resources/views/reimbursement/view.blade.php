@@ -33,6 +33,14 @@
                                 <label>Tipe Pengembalian</label>
                                 <input type="text" name="" class="form-control" readonly value="{{$data->tipe_pengembalian}}" >
                             </div>
+
+                            @if ($data->tipe_pengembalian == "pengembalian")
+                                <div class="form-group">
+                                    <label>Awal Dana</label>
+                                    <input type="number" name="" class="form-control" id="" readonly value="{{$data->total_asal_dana}}">
+                                </div>
+                            @endif
+
                         </div>
 
                         <div class="col">
@@ -41,18 +49,10 @@
                             <input type="date" class="form-control" name="tanggal" readonly class="form-control" value="{{$data->tanggal}}">
                         </div>
 
-                        @if ($data->tipe_pengembalian == 'pengembalian')
-                            <div class="form-group" id="origin">
-                                <label>Uang Yang Digunakan</label>
-                                <input type="number" class="form-control" readonly name="{{$data->asal_dana}}">
-                            </div>
-
-                        @else
                             <div class="form-group" id="origin">
                                 <label>Asal Dana</label>
-                                <input type="date" class="form-control" name="tanggal" readonly class="form-control" value="{{$data->asal_dana}}">
+                                <input type="text" class="form-control" name="tanggal" readonly class="form-control" value="{{$data->asal_dana}}">
                             </div>
-                        @endif
 
                         <div class="form-group">
                             <label>Total</label>

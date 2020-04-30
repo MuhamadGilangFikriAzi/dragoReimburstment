@@ -27,7 +27,7 @@
                     <div class="form-row">
                         <div class="col">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nama</label>
                                 <div class="input-group mb-3">
                                     <select name="user_id" class="custom-select" id="inputGroupSelect01">
                                         <option selected>Pilih...</option>
@@ -55,7 +55,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group awal origin" id="awal">
+                            <div class="form-group" id="awal">
 
                             </div>
                         </div>
