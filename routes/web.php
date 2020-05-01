@@ -81,9 +81,13 @@ Route::prefix('reimburstment')->group(function () {
     Route::get('total', 'ReimbursementController@total')->name('total');
 });
 
+Route::prefix('report')->group(function () {
+    Route::get('index', 'ReportController@index')->name('report.index');
+    Route::get('result', 'ReportController@report')->name('report.result');
+    Route::get('exportExcel', 'ReportController@exportExcel')->name('report.export.excel');
+    Route::get('exportPdf', 'ReportController@exportPdf')->name('report.export.pdf');
+});
 
-Route::get('report', 'HasilController@report');
-Route::get('result', 'HasilController@result');
 
 Route::prefix('pettyCash')->group(function () {
     Route::get('index', 'PettyCashController@index')->name('pettyCash.index');

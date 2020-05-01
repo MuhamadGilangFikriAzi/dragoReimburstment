@@ -151,7 +151,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('report') }}" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
+                    <a href="{{ route('report.index') }}" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list nav-icon"></i>
                       <p>Laporan</p>
                     </a>
