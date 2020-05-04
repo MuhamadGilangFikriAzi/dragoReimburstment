@@ -55,16 +55,6 @@
 
             <div class="row mt-4">
                 <div class="col-sm-4">
-                    <div class="card text-white bg-danger mb-3">
-                        <div class="card-header text-center">
-                            Total Reimburstment Ditolak
-                        </div>
-                        <div class="card-body text-center">
-                        <h1 class="card-text"><b><h1>{{$ditolak}}</h1></b></h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
                     <div class="card text-white bg-info mb-3">
                         <div class="card-header text-center">
                             Total Pengajuan Reimburstment
@@ -84,13 +74,26 @@
                         </div>
                       </div>
                 </div>
+                <div class="col-sm-4">
+                    <div class="card text-white bg-danger mb-3">
+                        <div class="card-header text-center">
+                            Total Reimburstment Ditolak
+                        </div>
+                        <div class="card-body text-center">
+                        <h1 class="card-text"><b><h1>{{$ditolak}}</h1></b></h1>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-4">
+
+                </div>
+                <div class="col-sm-4">
                     <div class="card bg-light mb-3">
                         <div class="card-header text-center">
-                            Total Petty Cash
+                            Total Petty Cash saat ini
                         </div>
                         <div class="card-body text-center">
                             <h1 class="card-text">Rp. {{number_format($pettyCash,0,",",".")}}</h1>
