@@ -53,10 +53,6 @@ Route::prefix('home')->group(function () {
     Route::get('filter', 'HomeController@filter')->name('filter');
 });
 
-
-
-
-
 //model has permission
 Route::get('/user/givePermission/{id}', 'UserController@givePermission')->name('givePermission');
 Route::post('/user/givePermission/storegivePermission/{id}', 'UserController@storegivePermission')->name('storegivePermission');
