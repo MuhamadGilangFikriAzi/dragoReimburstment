@@ -105,6 +105,12 @@ class ReimbursementController extends Controller
 
         DB::beginTransaction();
         try {
+            if ($request->no_rek) {
+                $user = User::find($request->user_id);
+                $user->no_rekening = $request->no_rek;
+                $user->save();
+            }
+
             $reimburst = new Reimbursement;
             $reimburst->id_user = $request->user_id;
             $reimburst->tipe_pengembalian = $request->tipe_pengembalian;
@@ -291,5 +297,15 @@ class ReimbursementController extends Controller
         $month = Reimbursement::with('user')->get();
         $sum = $month->sum('total');
         return view('reimbursement.total_reimbursement', compact('month', 'sum'));
+    }
+
+    public function getUser(Request $request)
+    {
+        $user = User::find($request->id_user);
+        $data = array(
+            'no_rek' => $user->no_rekening,
+        );
+
+        return response()->json($data, 200);
     }
 }

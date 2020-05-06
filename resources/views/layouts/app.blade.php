@@ -80,7 +80,7 @@
             @endif
             @else
           <!-- Messages Dropdown Menu -->
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
             <div class="user-panel d-flex">
                 <div class="image">
                     @if (Auth::user()->foto != null)
@@ -96,7 +96,7 @@
             <a class="nav-link" href="{{ route('home.edit', Auth::user()->id) }}">
               {{ Auth::user()->name }}
             </a>
-          </li>
+          </li> --}}
           @endguest
         </ul>
       </nav>
@@ -120,6 +120,8 @@
                 <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
               @endif
             </div>
+            <a class="nav-link" href="{{ route('home.edit', Auth::user()->id) }}">
+              {{ Auth::user()->name }}
             <div class="info">
               <a href="#" class="d-block"></a>
             </div>

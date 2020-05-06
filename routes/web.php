@@ -68,6 +68,7 @@ Route::prefix('reimburstment')->group(function () {
     Route::delete('{reimburst}/delete', 'ReimbursementController@delete')->name('reimburstment.delete');
     Route::get('{reimburst}/terima', 'ReimbursementController@terima')->name('reimburstment.terima');
     Route::get('{reimburst}/tolak', 'ReimbursementController@tolak')->name('reimburstment.tolak');
+    Route::post('getUser', 'ReimbursementController@getUser')->name('reimburstment.get.user');
     // Route::get('trash', 'ReimbursementController@trash')->name('trash');
     // Route::get('trash/show/{id}', 'ReimbursementController@show_trash')->name('show_trash');
     // Route::get('trash/restore/{id}', 'ReimbursementController@restore')->name('restore');
