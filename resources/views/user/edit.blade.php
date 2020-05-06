@@ -59,6 +59,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Bank</label>
+                            <input type="text" name="bank" class="form-control" value="{{ $data->bank }}">
+                        </div>
+
+                        <div class="form-group">
                             <label>No Rekening</label>
                             <input type="text" name="no_rekening" class="form-control" value="{{ $data->no_rekening }}">
                         </div>
@@ -97,7 +102,6 @@
                         @endrole
                         <div class="text-right">
                             <input class="btn btn-primary" type="submit"  name="submit" value="Save Change">
-                            <input class="btn btn-dark" type="reset" name="reset" value="Reset">
                         </div>
                     </form>
                 </div>

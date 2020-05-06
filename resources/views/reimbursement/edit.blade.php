@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <div class="input-group mb-3">
-                                    <select name="user_id" class="custom-select" id="inputGroupSelect01" aria-readonly="true">
+                                    <select name="user_id" class="custom-select" id="user" aria-readonly="true">
                                         <option selected>Pilih...</option>
                                         @foreach( $user as $key => $value )
                                         <option value="{{ $key }}" @if($data->id_user == $key) selected @endif>{{ $value}}</option>
@@ -56,6 +56,16 @@
                                 <span class="text-danger">{{ $errors->first('tipe_pengembalian') }}</span>
                                 @endif
                             </div>
+
+                            <div class="form-group" id="awal">
+                            </div>
+
+                            <div class="form-group" id="bank">
+                            </div>
+
+                            <div class="form-group" id="no_rek">
+                            </div>
+
                         </div>
 
                         <div class="col">
@@ -183,6 +193,15 @@
 
       $(document).ready(function() {
         var i = {!! $count !!};
+        $('#user').change(function(){
+            type = $('#return_type').children("option:selected").val();
+            if (type == 'transfer') {
+                $('#no_rek').children().remove();
+                $('#bank').children().remove();
+                getUser();
+            }
+        });
+
         count();
         $('#return_type').change(function(){
             val = $(this).children("option:selected").val();
@@ -213,8 +232,6 @@
 
             $( "#append_detail" ).on('change','.description', function() {
                 row = $(this);
-                console.log(row);
-                console.log(row.val());
             });
 
             $('#append_detail').on('change', '.used',function() {
@@ -236,10 +253,15 @@ function count(){
 }
 
 function select(val){
-    funds = $('#origin').children().remove();
+    $('#origin').children().remove();
+    $('#awal').children().remove();
+    $('#no_rek').children().remove();
+    $('#bank').children().remove();
+    // console.log($('#awal').children());
+
     console.log(val);
 
-    if(val == 'Choose...'){
+    if(val == ''){
         $('#origin').append(
             '<div class="form-group" id="origin">\
             <label>Asal Dana</label>\
@@ -258,7 +280,7 @@ function select(val){
             <select name="asal_dana" class="custom-select" id="origin_funds">\
             <option value="">Pilih...</option>\
             <option value="petty cash" >Petty Cash</option>\
-            <option value="uang pribadi" >Uang Pribadi</option>\
+            <option value="personal cash" >Uang Pribadi</option>\
             </select>\
             </div>'
 
@@ -277,16 +299,72 @@ function select(val){
             </div>'
 
         );
+            getUser();
     }
 
     if(val == 'pengembalian'){
         $('#origin').append(
-        '<div class="form-group" id="origin">\
-        <label>Uang Yang Digunakan</label>\
+            '<div class="form-group" id="origin">\
+            <label>Asal Dana</label>\
+            <select name="asal_dana" class="custom-select" id="origin_funds">\
+            <option value="">Pilih...</option>\
+            <option value="petty cash" >Petty Cash</option>\
+            <option value="personal cash" >Uang Pribadi</option>\
+            <option value="BCA" >BCA</option>\
+            <option value="Cimb Niaga" >Cimb Niaga</option>\
+            </select>\
+            </div>'
+        );
+
+        $('#awal').append(
+        '<div class="form-group origin" id="awal">\
+        <label>Awal</label>\
         <input type="number" class="form-control" name="digunakan">\
         </div>'
         );
     }
+}
+
+function getUser(){
+    user = $('#user').val();
+    url = '{{route('reimburstment.get.user')}}';
+    dataSend = {
+        'id_user' : user
+    };
+
+    $.ajax({
+        url : url,
+        headers : {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        method : 'POST',
+        dataType : 'JSON',
+        data : dataSend,
+        success : function(data){
+            if(data.no_rek == null){
+                $('#no_rek').append('\
+                <div class="form-group origin">\
+                <label>No rekening</label>\
+                <input type="number" class="form-control" name="no_rek" pleaceholder="Masukan no rekening">\
+                </div>\
+                ');
+            }else{
+                $('#no_rek').children().remove();
+            }
+
+            if(data.bank == null){
+                $('#bank').append('\
+                <div class="form-group origin">\
+                <label>Bank</label>\
+                <input type="text" class="form-control" name="bank" pleaceholder="Masukan nama bank">\
+                </div>\
+                ');
+            }else{
+                $('#bank').children().remove();
+            }
+
+        }
+    });
 }
 </script>
 @endsection

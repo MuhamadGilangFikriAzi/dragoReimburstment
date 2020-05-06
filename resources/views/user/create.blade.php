@@ -37,11 +37,11 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label>Photo</label>
-                            <input type="file" name="photo" class="form-control"><br>
-                            @if($errors->has('photo'))
-                                <span class="text-danger">{{ $errors->first('photo') }}</span>
-                                @endif
+                            <label>Bank</label>
+                            <input type="text" name="bank" class="form-control"><br>
+                            @if($errors->has('bank'))
+                                <span class="text-danger">{{ $errors->first('bank') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label>No Rekening</label>
@@ -50,6 +50,14 @@
                                 <span class="text-danger">{{ $errors->first('no_rekening') }}</span>
                             @endif
                         </div>
+                        <div class="form-group">
+                            <label>Photo</label>
+                            <input type="file" name="photo" class="form-control"><br>
+                            @if($errors->has('photo'))
+                                <span class="text-danger">{{ $errors->first('photo') }}</span>
+                                @endif
+                        </div>
+
                         <div class="text-right">
                             <input class="btn btn-primary" type="submit" name="submit" value="Save Change">
                             <input class="btn btn-dark" type="reset" name="reset" value="Reset">

@@ -105,9 +105,14 @@ class ReimbursementController extends Controller
 
         DB::beginTransaction();
         try {
-            if ($request->no_rek) {
+            if ($request->no_rek || $request->bank) {
                 $user = User::find($request->user_id);
-                $user->no_rekening = $request->no_rek;
+                if ($request->no_rek) {
+                    $user->no_rekening = $request->no_rek;
+                }
+                if ($request->bank) {
+                    $user->bank = $request->bank;
+                }
                 $user->save();
             }
 
@@ -168,7 +173,6 @@ class ReimbursementController extends Controller
         $data['pageTitle'] = 'Edit Pengajuann Reimburstment';
         $data['urlIndex'] = $this->index;
         $data['urlUpdate'] = $this->update;
-
         $data['data'] = $reimburst;
         $data['user'] = User::pluck('name', 'id');
         $data['count'] = count($reimburst->detail);
@@ -201,6 +205,17 @@ class ReimbursementController extends Controller
 
         DB::beginTransaction();
         try {
+            if ($request->no_rek || $request->bank) {
+                $user = User::find($request->user_id);
+                if ($request->no_rek) {
+                    $user->no_rekening = $request->no_rek;
+                }
+                if ($request->bank) {
+                    $user->bank = $request->bank;
+                }
+                $user->save();
+            }
+
             $reimburst->detail->each->delete();
 
             $reimburst->id_user = $request->user_id;
@@ -302,10 +317,11 @@ class ReimbursementController extends Controller
     public function getUser(Request $request)
     {
         $user = User::find($request->id_user);
-        $data = array(
-            'no_rek' => $user->no_rekening,
-        );
 
+        $data = array(
+            'bank' => $user->bank,
+            'no_rek' => $user->no_rekening
+        );
         return response()->json($data, 200);
     }
 }

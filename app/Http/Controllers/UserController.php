@@ -37,38 +37,33 @@ class userController extends Controller
         return view('user.index', $data);
     }
 
-    public function create()
-    {
-        $data['pageTitle'] = 'Tambah User';
-        $data['urlIndex'] = $this->index;
-        $data['urlStore'] = $this->store;
+    // public function create()
+    // {
+    //     $data['pageTitle'] = 'Tambah User';
+    //     $data['urlIndex'] = $this->index;
+    //     $data['urlStore'] = $this->store;
 
-        return view('user.create', $data);
-    }
+    //     return view('user.create', $data);
+    // }
 
     public function store(Request $request)
     {
         $message = [
-            'nama.required' => 'Nama harus diisi',
+            'name.required' => 'Nama harus diisi',
             'email.required' => 'email harus diisi',
-            'jenis_kelamin.required' => 'jenis kelamin harus diisi',
-            'alamat.required' => 'Alamat harus diisi',
+            // 'jenis_kelamin.required' => 'jenis kelamin harus diisi',
+            // 'alamat.required' => 'Alamat harus diisi',
         ];
         $this->validate($request, [
-            'nama' => 'required',
+            'name' => 'required',
             'email' => 'required',
-            'jenis_kelamin' => 'required',
+            // 'jenis_kelamin' => 'required',
         ], $message);
 
         DB::beginTransaction();
         try {
-            $data = new User;
-            $data->name = $request->nama;
-            $data->email = $request->email;
-            $data->password = Hash::make('drago123456');
-            $data->jenis_kelamin = $request->jenis_kelamin;
-            $data->alamat = $request->alamat;
-            $data->no_rekening = $request->no_rekening;
+            $data = $request->except('_token', 'foto');
+            $data['password'] = Hash::make('drago123456');
 
             if ($request->foto) {
                 $path = public_path('/img/user/');
@@ -78,11 +73,11 @@ class userController extends Controller
                 $fileName = time() . $originalImage->getClientOriginalName();
                 $Image->save($path . $fileName);
 
-                $data->foto = $fileName;
+                $data['foto'] = $fileName;
             }
-            $data->save();
+            $user = User::create($data);
 
-            $data->assignRole('User');
+            $user->assignRole('User');
 
             DB::commit();
         } catch (Exception $e) {
@@ -124,11 +119,11 @@ class userController extends Controller
 
         DB::beginTransaction();
         try {
-
             $user->name = $request->name;
             $user->email = $request->email;
             $user->jenis_kelamin = $request->jenis_kelamin;
             $user->alamat = $request->alamat;
+            $user->bank = $request->bank;
             $user->no_rekening = $request->no_rekening;
 
             if ($request->password != null) {

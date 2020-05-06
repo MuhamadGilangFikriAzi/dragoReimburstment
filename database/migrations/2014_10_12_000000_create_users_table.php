@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan'])->nullable();
             $table->string('foto', 255)->nullable();
+            $table->string('bank', 255)->nullable();
             $table->string('no_rekening', 255)->nullable();
             $table->text('alamat')->nullable();
             $table->timestamps();

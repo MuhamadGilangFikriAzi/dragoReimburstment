@@ -101,34 +101,24 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Form Tambah User</h4>
+
                 <button type="button" class="close text-right" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
+                <p class="font-weight-light"><b>* wajib diisi</b></p>
+                <p class="font-weight-light"><b>Password default <span class="text-danger">drago123456</span></b></p>
                 <form action="{{route($urlStore)}}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nama</label>
-                        <input type="text" name="nama" class="form-control" >
+                        <label for="recipient-name" class="col-form-label">*Nama</label>
+                        <input type="text" name="name" class="form-control" >
                     </div>
                     @if($errors->has('nama'))
                         <span class="text-danger">{{ $errors->first('nama') }}</span>
                     @endif
 
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Jenis kelamin</label>
-                        <select name="jenis_kelamin" id="" class="form-control">
-                            <option value="">...</option>
-                            @foreach ($jenis_kelamin as $key => $value)
-                                <option value="{{$key}}">{{$value}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    @if($errors->has('nama'))
-                        <span class="text-danger">{{ $errors->first('nama') }}</span>
-                    @endif
-
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Email</label>
+                        <label for="recipient-name" class="col-form-label">*Email</label>
                         <input type="email" name="email" class="form-control" >
                     </div>
                     @if($errors->has('email'))
@@ -136,25 +126,34 @@
                     @endif
 
                     <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Jenis kelamin</label>
+                        <select name="jenis_kelamin" class="form-control">
+                            <option value="">...</option>
+                            @foreach ($jenis_kelamin as $key => $value)
+                                <option value="{{$key}}">{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="">Alamat</label>
-                        <textarea name="alamat" id="" class="form-control"></textarea>
+                        <textarea name="alamat" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Bank</label>
+                        <input type="text" name="bank" class="form-control" >
                     </div>
 
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">No Rekening</label>
                         <input type="number" name="no_rekening" class="form-control" >
                     </div>
-                    @if($errors->has('no_rekening'))
-                        <span class="text-danger">{{ $errors->first('no_rekening') }}</span>
-                    @endif
 
                     <div class="form-group">
                         <label for="">Foto</label>
                         <input type="file" name="foto" id="" class="form-control">
                     </div>
-                    @if($errors->has('foto'))
-                        <span class="text-danger">{{ $errors->first('foto') }}</span>
-                    @endif
 
             </div>
             <div class="modal-footer">
@@ -177,59 +176,63 @@
                 <button type="button" class="close text-right" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nama</label>
-                        <input type="text" name="nama" class="form-control" value="{{$value->name}}" readonly>
-                    </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Nama</label>
+                    <input type="text" name="nama" class="form-control" value="{{$value->name}}" readonly>
+                </div>
 
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Jenis kelamin</label>
-                        <input type="text" name="" class="form-control" value="{{$value->jenis_kelamin}}" readonly>
-                    </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{$value->email}}" readonly>
+                </div>
 
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{$value->email}}" readonly>
-                    </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Jenis kelamin</label>
+                    <input type="text" name="" class="form-control" value="{{$value->jenis_kelamin}}" readonly>
+                </div>
 
-                    <div class="form-group">
-                        <label for="">Alamat</label>
-                        <textarea name="alamat" id="" class="form-control" readonly>{{$value->alamat}}</textarea>
-                    </div>
+                <div class="form-group">
+                    <label for="">Alamat</label>
+                    <textarea name="alamat" id="" class="form-control">{{$value->alamat}}</textarea>
+                </div>
 
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">No Rekening</label>
-                        <input type="number" name="no_rekening" class="form-control" value="{{$value->no_rekening}}" readonly>
-                    </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Bank</label>
+                    <input type="text" name="no_rekening" class="form-control" value="{{$value->bank}}">
+                </div>
 
-                    <div class="form-group">
-                        <label for="">Foto</label>
-                        <img src="{{ asset('img/user/'.$value->foto) }}" alt="..." class="img-thumbnail"  data-toggle="modal" data-target="#user{{$key}}" style="width: 130px; height: 100px;">
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">No Rekening</label>
+                    <input type="number" name="no_rekening" class="form-control" value="{{$value->no_rekening}}">
+                </div>
 
-                                <div class="modal fade" id="user{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<img src="{{ asset('img/user/'.$value->foto) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">
-											</div>
-										</div>
-									</div>
+                <div class="form-group">
+                    <label for="">Foto</label>
+                    <img src="{{ asset('img/user/'.$value->foto) }}" alt="..." class="img-thumbnail"  data-toggle="modal" data-target="#user{{$key}}" style="width: 130px; height: 100px;">
+                    <div class="modal fade" id="user{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						    <div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
 								</div>
+							<div class="modal-body">
+						<img src="{{ asset('img/user/'.$value->foto) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">
+						</div>
                     </div>
-
+				</div>
             </div>
             <div class="modal-footer">
+
             </div>
         </div>
     </div>
 </div>
-
+</div>
+</div>
 @endforeach
+
 </section>
 
 @endsection

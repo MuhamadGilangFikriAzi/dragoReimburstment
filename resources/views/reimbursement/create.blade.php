@@ -56,10 +56,12 @@
                             </div>
 
                             <div class="form-group" id="awal">
-
                             </div>
-                            <div class="form-group" id="no_rek">
 
+                            <div class="form-group" id="bank">
+                            </div>
+
+                            <div class="form-group" id="no_rek">
                             </div>
                         </div>
 
@@ -168,6 +170,8 @@
         $('#user').change(function(){
             type = $('#return_type').children("option:selected").val();
             if (type == 'transfer') {
+                $('#no_rek').children().remove();
+                $('#bank').children().remove();
                 getUser();
             }
         });
@@ -225,6 +229,7 @@ function select(val){
     $('#origin').children().remove();
     $('#awal').children().remove();
     $('#no_rek').children().remove();
+    $('#bank').children().remove();
     // console.log($('#awal').children());
 
     console.log(val);
@@ -311,13 +316,24 @@ function getUser(){
         success : function(data){
             if(data.no_rek == null){
                 $('#no_rek').append('\
-                <div class="form-group origin" id="awal">\
+                <div class="form-group origin">\
                 <label>No rekening</label>\
                 <input type="number" class="form-control" name="no_rek" pleaceholder="Masukan no rekening">\
                 </div>\
                 ');
             }else{
                 $('#no_rek').children().remove();
+            }
+
+            if(data.bank == null){
+                $('#bank').append('\
+                <div class="form-group origin">\
+                <label>Bank</label>\
+                <input type="text" class="form-control" name="bank" pleaceholder="Masukan nama bank">\
+                </div>\
+                ');
+            }else{
+                $('#bank').children().remove();
             }
 
         }
