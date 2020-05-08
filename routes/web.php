@@ -34,15 +34,32 @@ Route::prefix('reimburstment')->group(function () {
     Route::get('index', 'ReimbursementController@index')->name('reimburstment.index');
     Route::get('allreimburstement', 'ReimbursementController@allreimburstement')->name('reimburstment.allreimburstement');
     Route::get('create', 'ReimbursementController@create')->name('reimburstment.create');
-    Route::post('create/save', 'ReimbursementController@store')->name('reimburstment.store');
+    Route::post('store', 'ReimbursementController@store')->name('reimburstment.store');
+    Route::get('pengembalian', 'ReimbursementController@pengembalian')->name('reimburstment.pengembalian');
+    Route::post('pengembalian/store', 'ReimbursementController@pengembalianStore')->name('reimburstment.pengembalian.store');
+    Route::get('{pengembalian}/pengembalian/view', 'ReimbursementController@pengembalianShow')->name('reimburstment.pengembalian.show');
+    Route::get('{pengembalian}/pengembalian/edit', 'ReimbursementController@pengembalianEdit')->name('reimburstment.pengembalian.edit');
+    Route::get('{pengembalian}/pengembalian/update', 'ReimbursementController@pengembalianupdate')->name('reimburstment.pengembalian.update');
     Route::get('{reimburst}/show', 'ReimbursementController@show')->name('reimburstment.show');
     Route::get('{reimburst}/edit', 'ReimbursementController@edit')->name('reimburstment.edit');
     Route::put('{reimburst}/update', 'ReimbursementController@update')->name('reimburstment.update');
     Route::delete('{reimburst}/delete', 'ReimbursementController@delete')->name('reimburstment.delete');
-    Route::get('{reimburst}/terima', 'ReimbursementController@terima')->name('reimburstment.terima');
-    Route::get('{reimburst}/tolak', 'ReimbursementController@tolak')->name('reimburstment.tolak');
+    Route::put('{reimburst}/terima', 'ReimbursementController@terima')->name('reimburstment.terima');
+    Route::put('{reimburst}/tolak', 'ReimbursementController@tolak')->name('reimburstment.tolak');
     Route::post('getUser', 'ReimbursementController@getUser')->name('reimburstment.get.user');
     Route::get('total', 'ReimbursementController@total')->name('total');
+});
+
+Route::prefix('pengembalian')->group(function () {
+    Route::get('index', 'PengembalianController@index')->name('pengembalian.index');
+    Route::get('create', 'PengembalianController@create')->name('pengembalian.create');
+    Route::post('store', 'PengembalianController@store')->name('pengembalian.store');
+    Route::get('{pengembalian}/show', 'PengembalianController@show')->name('pengembalian.show');
+    Route::get('{pengembalian}/edit', 'PengembalianController@edit')->name('pengembalian.edit');
+    Route::put('{pengembalian}/update', 'PengembalianController@update')->name('pengembalian.update');
+    Route::put('{pengembalian}/terima', 'PengembalianController@terima')->name('pengembalian.terima');
+    Route::put('{pengembalian}/tolak', 'PengembalianController@tolak')->name('pengembalian.tolak');
+    Route::delete('{pengembalian}/delete', 'PengembalianController@delete')->name('pengembalian.delete');
 });
 
 Route::prefix('report')->group(function () {

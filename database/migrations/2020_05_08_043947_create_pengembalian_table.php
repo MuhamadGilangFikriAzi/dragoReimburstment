@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReimburseTable extends Migration
+class CreatePengembalianTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateReimburseTable extends Migration
      */
     public function up()
     {
-        Schema::create('reimburstment', function (Blueprint $table) {
+        Schema::create('pengembalian', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('id_user');
-            $table->enum('tipe_pengembalian', ['langsung', 'transfer']);
             $table->string('asal_dana', 50)->nullable();
             $table->date('tanggal')->nullable();
             $table->enum('status', ['Diajukan', 'Diterima', 'Ditolak']);
-            $table->double('total');
+            $table->double('total_dikembalikan');
+            $table->double('total_asal_dana')->nullable();
+            $table->double('total_digunakan')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateReimburseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reimburse');
+        Schema::dropIfExists('pengembalian');
     }
 }

@@ -120,7 +120,7 @@
                 <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
               @endif
             </div>
-            <a class="nav-link" href="{{ route('home.edit', Auth::user()->id) }}">
+            <a class="nav-link" href="{{ route('home.edit', Auth::user()->id) }}" title="Edit Profile">
               {{ Auth::user()->name }}
             </a>
             <div class="info">
@@ -146,13 +146,22 @@
                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                       <p>Reimbursement</p>
                     </a>
-                  </li>
-                  <li class="nav-item">
+                </li>
+                <li class="nav-item {{ (request()->is('pengembalian/*')) ? 'menu-open' : '' }}">
+                    <a href="{{ route('pengembalian.index') }}" class="nav-link {{ (request()->is('pengembalian*')) ? 'active' : '' }}">
+                        <i class="fas fa-hand-holding-usd nav-icon"></i>
+                      <p>Pengembalian</p>
+                    </a>
+                </li>
+
+                @hasanyrole('Super Admin|Admin')
+                <li class="nav-item">
                     <a href="{{ route('report.index') }}" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list nav-icon"></i>
-                      <p>Laporan</p>
+                        <p>Laporan</p>
                     </a>
-                  </li>
+                </li>
+                @endhasanyrole
 
                 @hasanyrole('Super Admin|Admin')
                 <li class="nav-item has-treeview {{ (request()->is('settings*')) ? 'menu-open' : '' }}">

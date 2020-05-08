@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Reimbursement;
 use App\Models\ReimburstmentDetail;
 use App\User;
-use Image, DB;
+use Image, DB, Auth;
 
 class ReimbursementController extends Controller
 {
@@ -23,7 +23,11 @@ class ReimbursementController extends Controller
 
     public function index(Request $request)
     {
-        $list = Reimbursement::query()->with('user');
+        if (Auth::user()->roles()->first()->name == 'Admin') {
+            $list = Reimbursement::query()->with('user');
+        } else {
+            $list = Reimbursement::query()->where('id_user', Auth::user()->id);
+        }
 
         if ($request->nama) {
             $user = User::where('name', 'like', '%' . $request->nama . '%')->first();
@@ -43,7 +47,10 @@ class ReimbursementController extends Controller
         if ($request->status) {
             $list = $list->where('status', $request->status);
         }
-        $data['tipe_pengembalian'] = ['langsung', 'transfer', 'pengembalian'];
+        $data['tipe_pengembalian'] = [
+            'langsung' => 'Langsung',
+            'transfer' => 'Transfer',
+        ];
         $data['status'] = ['Diajukan', 'Diterima', 'Ditolak'];
         $data['list'] = $list->paginate('10');
         $data['data'] = Reimbursement::all()->count();
@@ -55,21 +62,13 @@ class ReimbursementController extends Controller
         return view('reimbursement.index', $data);
     }
 
-    public function allreimburstement()
-    {
-        $all = Reimbursement::with('user')->get();
-        $sumall = $all->sum('total');
-        return view('reimbursement.allreimbursement', compact('sumall', 'all'));
-    }
-
     public function create()
     {
         $data['page_title'] = "Ajukan Reimburstment";
         $data['data'] = User::all();
         $data['return_type'] = array(
             'langsung' => 'Langsung',
-            'transfer' => 'Transfer',
-            'pengembalian' => 'Pengembalian'
+            'transfer' => 'Transfer'
         );
         $data['urlIndex'] = $this->index;
         $data['urlStore'] = $this->store;
@@ -83,7 +82,6 @@ class ReimbursementController extends Controller
             'user_id.required' => 'Nama harus diisi',
             'tanggal.required' => 'Tanggal harus diisi',
             'tipe_pengembalian.required' => 'Tipe pengembalian harus diisi',
-            'asal_dana.required' => 'Asal dana harus diisi',
             'Detail.*.prihal.required' => 'Prihal harus diisi',
             'Detail.*.digunakan.required' => 'Total harus diisi',
             'Detail.*.foto.required' => 'Foto harus diisi',
@@ -119,12 +117,8 @@ class ReimbursementController extends Controller
             $reimburst->id_user = $request->user_id;
             $reimburst->tipe_pengembalian = $request->tipe_pengembalian;
             $reimburst->tanggal = $request->tanggal;
-            $reimburst->asal_dana = $request->asal_dana;
             $reimburst->status = "Diajukan";
             $reimburst->total = $request->total;
-            if ($request->tipe_pengembalian == "pengembalian") {
-                $reimburst->total_asal_dana = $request->digunakan;
-            }
             $reimburst->save();
 
             $detail = $request->Detail;
@@ -163,6 +157,14 @@ class ReimbursementController extends Controller
         $data['urlIndex'] = $this->index;
         $data['urlTerima'] = $this->terima;
         $data['urlTolak'] = $this->tolak;
+        $data['langsung'] = array(
+            'petty cash' => 'Petty Cash',
+            'uang pribadi' => 'Uang Pribadi'
+        );
+        $data['transfer'] = array(
+            'BCA' => 'BCA',
+            'Cimb Niaga' => 'cimb Niaga'
+        );
         return view('reimbursement.view', $data);
     }
 
@@ -265,10 +267,19 @@ class ReimbursementController extends Controller
         return redirect()->route($this->index);
     }
 
-    public function terima(Reimbursement $reimburst)
+    public function terima(Reimbursement $reimburst, Request $request)
     {
+        $message = [
+            'asal_dana.required' => 'Asal dana harus diisi'
+        ];
+
+        $rules = [
+            'asal_dana' => 'required',
+        ];
+        $this->validate($request, $rules, $message);
         DB::beginTransaction();
         try {
+            $reimburst->asal_dana = $request->asal_dana;
             $reimburst->status = 'Diterima';
             $reimburst->save();
 

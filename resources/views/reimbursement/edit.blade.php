@@ -236,7 +236,6 @@
 
             $('#append_detail').on('change', '.used',function() {
                 count();
-
             });
 
         });

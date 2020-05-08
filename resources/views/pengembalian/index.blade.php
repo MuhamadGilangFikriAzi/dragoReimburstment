@@ -17,14 +17,14 @@
         </div>
         @endif
 		<div class="card">
-			<div class="card-header text-left"><b>Reimbursement</b></div>
+            <div class="card-header text-left"><b>{{$pageTitle}}</b></div>
 
 			<div class="text-right mx-4 my-2">
 				{{-- <a href="{{ route('trash')}}">
 					<button type="button" class="btn btn-outline-dark">Trash</button>
                 </a> --}}
                 @hasanyrole('Super Admin|User')
-                <a href="{{ route($urlCreate) }}" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Ajukan Reimburstment</a>
+                <a href="{{ route($urlCreate) }}" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Pengembalian Dana</a>
                 @endhasanyrole
 			</div>
 			<div class="card-body">
@@ -34,10 +34,10 @@
 							<tr>
 								<th><b>No</b></th>
                                 <th><b>Nama</b></th>
-                                <th><b>Tipe</b></th>
                                 <th><b>Tanggal</b></th>
+                                <th><b>Asal Dana</b></th>
                                 <th><b>Status</b></th>
-								<th class="text-right"><b>Total</b></th>
+								<th class="text-right"><b>Total Dikembalikan</b></th>
 								<th class="text-center"><b>Action</b></th>
 							</tr>
 						</thead>
@@ -48,17 +48,10 @@
 								<td>
 									<input type="text" name="nama" class="form-control form-control-sm" value="{{ Request::input('nama') }}">
                                 </td>
-                                <td>
-                                    <select name="tipe_pengembalian" id="" class="form-control form-control-sm">
-                                        <option value="">Pilih tipe...</option>
-                                        @foreach ($tipe_pengembalian as $key => $value)
-                                            <option @if($key == Request::input('tipe_pengembalian')) selected @endif value="{{$key}}">{{$value}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
 								<td>
 									<input type="date" name="tanggal" class="form-control form-control-sm" value="{{ Request::input('tanggal') }}">
-								</td>
+                                </td>
+                                <td></td>
 								<td>
                                     <select name="status" id="" class="form-control form-control-sm">
                                         <option value="">Pilih status...</option>
@@ -89,12 +82,13 @@
 							<tr>
 								<td><b>{{ $key +1 }}</b></td>
                                 <td>{{ $value->user['name'] }}</td>
-                                <td>{{ $value->tipe_pengembalian}}</td>
                                 <td>{{ $value->tanggal }}</td>
+                                <td>{{ $value->asal_dana}}</td>
+
                                 <td>
                                     <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
                                 </td>
-								<td class="text-right">{{number_format($value->total,0,",",".")}}</td>
+								<td class="text-right">{{number_format($value->total_dikembalikan,0,",",".")}}</td>
 								<td class="text-center">
 						 			<div class="btn-group">
                                         @hasanyrole('Super Admin|Admin')

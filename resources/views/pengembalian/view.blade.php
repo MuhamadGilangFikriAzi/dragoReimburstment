@@ -6,12 +6,6 @@
     <div class="row justify-content-center">
 
 	<div class="col-md-12">
-        @if($errors->has('asal_dana'))
-            <div class="alert alert-danger alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{{ $errors->first('asal_dana') }}</strong>
-            </div>
-        @endif
 		<div class="card">
 			<div class="card-header">
                 <h5 class="card-title">{{ $pageTitle }}</h5>
@@ -26,6 +20,7 @@
 					{{ session('status') }}
 				</div>
 				@endif
+
                     <div class="form-row">
                         <div class="col">
                             <div class="form-group">
@@ -33,17 +28,14 @@
                                 <input type="text" name="" class="form-control" readonly value="{{$data->user['name']}}" >
                             </div>
                             <div class="form-group">
-                                <label>Tipe Pengembalian</label>
-                                <input type="text" name="" class="form-control" readonly value="{{$data->tipe_pengembalian}}" >
+                                <label>Asal Dana</label>
+                                <input type="text" name="" class="form-control" readonly value="{{$data->asal_dana}}" >
                             </div>
 
-                            @if ($data->tipe_pengembalian == "pengembalian")
-                                <div class="form-group">
-                                    <label>Awal Dana</label>
-                                    <input type="number" name="" class="form-control" id="" readonly value="{{$data->total_asal_dana}}">
-                                </div>
-                            @endif
-
+                            <div class="form-group">
+                                <label>Dikembalikan</label>
+                            <input type="number" name="total_dikembalikan" class="form-control text-right" id="kembali" readonly value="{{$data->total_dikembalikan}}">
+                            </div>
                         </div>
 
                         <div class="col">
@@ -52,10 +44,15 @@
                             <input type="date" class="form-control" name="tanggal" readonly class="form-control" value="{{$data->tanggal}}">
                         </div>
 
-                        <div class="form-group">
-                            <label>Total</label>
-                            <input type="number" name="total" class="form-control text-right" id="total" value="{{$data->total}}" readonly>
-                        </div>
+                        <div class="form-group origin">
+                            <label>Awal Dana</label>
+                            <input type="number" class="form-control text-right" name="total_asal_dana" id="awal" value="{{$data->total_asal_dana}}" readonly>
+                            </div>
+
+                          <div class="form-group">
+                              <label>Digunakan</label>
+                                <input type="number" name="total_digunakan" class="form-control text-right" id="total" value="{{$data->total_digunakan}}" readonly>
+                          </div>
                     </div>
                 </div>
 			</div>
@@ -107,18 +104,20 @@
                     </tbody>
 
                 </table>
-                <div class="btn-group float-right">
+                <div class="float-right btn-group">
                     @if ($data->status == 'Diajukan')
                         <form action="{{route($urlTolak,$data->id)}}" method="POST" >
                             @csrf
                             @method('PUT')
-                            <button type="submit" class="btn btn-danger" title="Tolak Pengajuan Reimburstment">Tolak</button>
+                            <button type="submit" class="btn btn-danger" title="Tolak Pengembalian dana">Tolak</button>
                         </form>
-                        <button type="button" class="btn btn-success ml-1" data-toggle="modal" data-target="#exampleModalCenter" title="Terima reimburstment">
-                            Terima
-                        </button>
-
-                        {{-- <a href="{{ route($urlTerima,$data->id) }}" class="btn btn-success" >Terima</a> --}}
+                        <form action="{{route($urlTerima,$data->id)}}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-success ml-1" title="Terima Pengembalian dana">Terima</button>
+                        </form>
+                        {{-- <a href="{{ route($urlTolak,$data->id) }}" class="btn btn-danger">Tolak</a>
+                        <a href="{{ route($urlTerima,$data->id) }}" class="btn btn-success" >Terima</a> --}}
                     @endif
                 </div>
             </div>
@@ -129,47 +128,6 @@
 </form>
 
 </div>
-</div>
-
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Terima Pengajuan Reimburstment</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route($urlTerima,$data->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Asal dana</label>
-                        <select name="asal_dana" class="form-control">
-                            <option value="">Pilih asal dana</option>
-                            @if ($data->tipe_pengembalian == 'langsung')
-                                @foreach ($langsung as $key => $value)
-                                    <option value="{{$key}}">{{$value}}</option>
-                                @endforeach
-                            @else
-                                @foreach ($transfer as $key => $value)
-                                    <option value="{{$key}}">{{$value}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-
-                    </div>
-                    <div class="btn-group float-right">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">keluar</button>
-                        <button type="submit" class="btn btn-primary ml-1">Terima</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
 </div>
 </section>
 @endsection

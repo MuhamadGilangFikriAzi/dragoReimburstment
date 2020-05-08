@@ -140,23 +140,30 @@
                                         <td>Asal dana</td>
                                         <td>Tanggal</td>
                                         <td>Status</td>
-                                        <td class="text-right">Total asal dana</td>
                                         <td class="text-right">Total</td>
                                     </tr>
 
                                     @foreach($limit as $key => $value)
+                                    @php
+                                        if($value->status == 'Diajukan'){
+                                            $badge = 'badge-info';
+                                        }
+                                        elseif($value->status == 'Diterima'){
+                                            $badge = 'badge-success';
+                                        }
+                                        else{
+                                            $badge = 'badge-danger';
+                                        }
+                                    @endphp
                                      <tr>
                                         <td>{{ $key +1 }}</td>
                                         <td>{{ $value->user['name'] }}</td>
                                         <td>{{$value->tipe_pengembalian}}</td>
                                         <td>{{$value->asal_dana}}</td>
                                         <td>{{ $value->tanggal }}</td>
-                                        <td>{{$value->status}}</td>
-                                        @if ($value->tipe_pengembalian == 'pengembalian')
-                                            <td class="text-right">{{ number_format($value->total_asal_dana,0,",",".") }}</td>
-                                        @else
-                                            <td></td>
-                                        @endif
+                                        <td>
+                                            <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
+                                        </td>
                                         <td class="text-right">{{ number_format($value->total,0,",",".") }}</td>
                                      </tr>
                                     @endforeach
