@@ -122,6 +122,7 @@
             </div>
             <a class="nav-link" href="{{ route('home.edit', Auth::user()->id) }}">
               {{ Auth::user()->name }}
+            </a>
             <div class="info">
               <a href="#" class="d-block"></a>
             </div>

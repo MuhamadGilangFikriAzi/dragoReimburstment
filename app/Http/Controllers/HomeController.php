@@ -35,7 +35,6 @@ class HomeController extends Controller
 
     public function edit(User $user)
     {
-        dd($user);
         $data['thisRole'] = $user->roles->first()->id;
         $data['pageTitle'] = 'Edit user';
         $data['role'] = Role::pluck('name', 'id');
@@ -46,43 +45,39 @@ class HomeController extends Controller
         return view('home.edit_profile', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
         $data = request()->validate([
             'name' => 'required',
             'email' => 'required',
             'password' => 'sometimes|nullable',
-            'role_id' => 'sometimes|nullable'
         ]);
 
+        $update = $request->except('_token', '_method', 'submit', 'password', 'foto_awal', 'foto');
         if ($request->password != null) {
-            $data = [
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => bcrypt($data['password']),
-            ];
-        } else {
-            unset($data['password']);
+            $user['password'] = bcrypt($data['password']);
         }
 
-        if (!empty($request->photo)) {
+        if (!empty($request->foto)) {
             $path = public_path('/img/user/');
-            $originalImage = $request->photo;
+            $originalImage = $request->foto;
             $Image = Image::make($originalImage);
             $Image->resize(540, 360);
             $fileName = time() . $originalImage->getClientOriginalName();
             $Image->save($path . $fileName);
-            $data['photo'] = $fileName;
+            $user['foto'] = $fileName;
         }
-
-        $user = User::findOrFail($id);
+        $user['name'] = $request->name;
+        $user['email'] = $request->email;
+        $user['bank'] = $request->bank;
+        $user['no_rekening'] = $request->no_rekening;
+        $user->save();
 
         if ($request->role_id) {
             $role = Role::where('id', $request->role_id)->first();
             $user->syncRoles($role->name);
         }
 
-        User::where('id', $id)->update($data);
         return redirect('/home');
     }
     public function filter()

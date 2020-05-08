@@ -24,9 +24,9 @@ Route::get('update-data', 'AuthorizationController@updateData');
 Route::get('delete-data', 'AuthorizationController@deleteData');
 
 Route::prefix('home')->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('home.index');
     Route::get('{user}/edit', 'HomeController@edit')->name('home.edit');
-    Route::put('{user}/update', 'HomeController@update')->name('home.edit');
+    Route::put('{user}/update', 'HomeController@update')->name('home.update');
     Route::get('filter', 'HomeController@filter')->name('filter');
 });
 
