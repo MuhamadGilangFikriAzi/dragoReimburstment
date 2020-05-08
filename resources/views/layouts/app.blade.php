@@ -147,12 +147,6 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('pettyCash.index') }}" class="nav-link {{ (request()->is('pettyCash*')) ? 'active' : '' }}">
-                        <i class="fas fa-hand-holding-usd nav-icon"></i>
-                      <p>Petty Cash</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
                     <a href="{{ route('report.index') }}" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list nav-icon"></i>
                       <p>Laporan</p>

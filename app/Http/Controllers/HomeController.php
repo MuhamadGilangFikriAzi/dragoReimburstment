@@ -7,7 +7,6 @@ use App\Models\Reimbursement;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\PettyCash;
 use App\User;
 use Image;
 
@@ -24,17 +23,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        $petty = PettyCash::all();
-        $pettyCash = 0;
-        foreach ($petty as $key => $value) {
-            if ($value->tipe == 'masuk') {
-                $pettyCash = $pettyCash + $value->total;
-            } else {
-                $pettyCash = $pettyCash - $value->total;
-            }
-        }
-
-        $data['pettyCash'] = $pettyCash;
         $data['ditolak'] = count(Reimbursement::where('status', 'Ditolak')->get());
         $data['diterima'] = count(Reimbursement::where('status', 'Diterima')->get());
         $data['diajukan'] = count(Reimbursement::all());
@@ -45,14 +33,15 @@ class HomeController extends Controller
         return view('home.dashboard', $data);
     }
 
-    public function edit(User $id)
+    public function edit(User $user)
     {
-        $data['thisRole'] = $id->roles->first()->id;
+        dd($user);
+        $data['thisRole'] = $user->roles->first()->id;
         $data['pageTitle'] = 'Edit user';
         $data['role'] = Role::pluck('name', 'id');
         $data['urlUpdate'] = $this->update;
         $data['urlIndex'] = $this->index;
-        $data['data'] = $id;
+        $data['data'] = $user;
 
         return view('home.edit_profile', $data);
     }

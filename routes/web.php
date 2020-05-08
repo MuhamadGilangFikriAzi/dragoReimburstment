@@ -23,39 +23,12 @@ Route::get('edit-data', 'AuthorizationController@editData');
 Route::get('update-data', 'AuthorizationController@updateData');
 Route::get('delete-data', 'AuthorizationController@deleteData');
 
-// Route::prefix('role')->group(function(){
-//     Route::get('/','RoleController@index')->name('role_list');
-//     Route::get('create','RoleController@create')->name('create_role');
-//     Route::post('create/store','RoleController@store')->name('store_role');
-//     Route::get('show/{role}','RoleController@show')->name('show_role');
-//     Route::get('edit/{role}','RoleController@edit')->name('edit_role');
-//     Route::post('edit/update/{id}','RoleController@update')->name('update_role');
-//     Route::get('delete/{role}','RoleController@destroy')->name('delete_role');
-
-//     //role has permission
-//     Route::get('createRoleHasPermission/','RoleController@createRoleHasPermission')->name('createRoleHasPermission');
-//     Route::post('storeRoleHasPermission/','RoleController@storeRoleHasPermission')->name('storeRoleHasPermission');
-// });
-
-// Route::prefix('permission')->group(function(){
-//     Route::get('/','PermissionController@index')->name('permission_list');
-//     Route::get('create','PermissionController@create')->name('create_permission');
-//     Route::post('create/store','PermissionController@store')->name('store_permission');
-//     Route::get('show/{permission}','PermissionController@show')->name('show_permission');
-//     Route::get('edit/{permission}','PermissionController@edit')->name('edit_permission');
-//     Route::post('edit/update/{id}','PermissionController@update')->name('update_permission');
-//     Route::get('delete/{permission}','PermissionController@destroy')->name('delete_permission');
-// });
 Route::prefix('home')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('{id}/edit', 'HomeController@edit')->name('home.edit');
-    Route::post('{id}/update', 'HomeController@update')->name('home.edit');
+    Route::get('{user}/edit', 'HomeController@edit')->name('home.edit');
+    Route::put('{user}/update', 'HomeController@update')->name('home.edit');
     Route::get('filter', 'HomeController@filter')->name('filter');
 });
-
-//model has permission
-Route::get('/user/givePermission/{id}', 'UserController@givePermission')->name('givePermission');
-Route::post('/user/givePermission/storegivePermission/{id}', 'UserController@storegivePermission')->name('storegivePermission');
 
 Route::prefix('reimburstment')->group(function () {
     Route::get('index', 'ReimbursementController@index')->name('reimburstment.index');
@@ -69,12 +42,6 @@ Route::prefix('reimburstment')->group(function () {
     Route::get('{reimburst}/terima', 'ReimbursementController@terima')->name('reimburstment.terima');
     Route::get('{reimburst}/tolak', 'ReimbursementController@tolak')->name('reimburstment.tolak');
     Route::post('getUser', 'ReimbursementController@getUser')->name('reimburstment.get.user');
-    // Route::get('trash', 'ReimbursementController@trash')->name('trash');
-    // Route::get('trash/show/{id}', 'ReimbursementController@show_trash')->name('show_trash');
-    // Route::get('trash/restore/{id}', 'ReimbursementController@restore')->name('restore');
-    // Route::get('trash/restore_all', 'ReimbursementController@restore_all')->name('restore_all');
-    // Route::get('trash/delete/{id}', 'ReimbursementController@delete')->name('delete');
-    // Route::get('trash/delete_all', 'ReimbursementController@delete_all')->name('delete_all');
     Route::get('total', 'ReimbursementController@total')->name('total');
 });
 
@@ -84,13 +51,6 @@ Route::prefix('report')->group(function () {
     Route::get('exportExcel', 'ReportController@exportExcel')->name('report.export.excel');
     Route::get('exportPdf', 'ReportController@exportPdf')->name('report.export.pdf');
 });
-
-
-Route::prefix('pettyCash')->group(function () {
-    Route::get('index', 'PettyCashController@index')->name('pettyCash.index');
-    Route::post('store', 'PettyCashController@store')->name('pettyCash.store');
-});
-
 
 Route::prefix('settings')->group(function () {
 

@@ -87,22 +87,6 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-4">
-
-                </div>
-                <div class="col-sm-4">
-                    <div class="card bg-light mb-3">
-                        <div class="card-header text-center">
-                            Total Petty Cash saat ini
-                        </div>
-                        <div class="card-body text-center">
-                            <h1 class="card-text">Rp. {{number_format($pettyCash,0,",",".")}}</h1>
-                        </div>
-                      </div>
-                </div>
-            </div>
-
-            <div class="row">
 				<div class="col-sm-6">
 					<div class="card my-2">
 						<div class="box">

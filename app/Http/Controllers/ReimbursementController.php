@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reimbursement;
 use App\Models\ReimburstmentDetail;
-use App\Models\PettyCash;
 use App\User;
 use Image, DB;
 
@@ -272,24 +271,6 @@ class ReimbursementController extends Controller
         try {
             $reimburst->status = 'Diterima';
             $reimburst->save();
-
-            if ($reimburst->tipe_pengembalian == "pengembalian") {
-                $pettyCash = new PettyCash;
-                $pettyCash->id_user = $reimburst->id_user;
-                $pettyCash->tanggal = date('Y-m-d');
-                $pettyCash->tipe = 'masuk';
-                $pettyCash->total = $reimburst->total;
-                $pettyCash->deskripsi = 'Menerima pengembalian ' . $reimburst->user['name'];
-                $pettyCash->save();
-            } elseif ($reimburst->tipe_pengembalian == "langsung" && $reimburst->asal_dana == "petty cash") {
-                $pettyCash = new PettyCash;
-                $pettyCash->id_user = $reimburst->id_user;
-                $pettyCash->tanggal = date('Y-m-d');
-                $pettyCash->tipe = 'keluar';
-                $pettyCash->total = $reimburst->total;
-                $pettyCash->deskripsi = 'Menerima pengajuan reimburstment ' . $reimburst->user['name'];
-                $pettyCash->save();
-            }
 
             DB::commit();
         } catch (Exception $e) {
