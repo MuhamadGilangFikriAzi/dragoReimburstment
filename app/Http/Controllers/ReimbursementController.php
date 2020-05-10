@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Reimbursement;
 use App\Models\ReimburstmentDetail;
 use App\User;
-use Image, DB, Auth;
+use Image, DB, Auth, Mail;
 
 class ReimbursementController extends Controller
 {
@@ -20,6 +20,7 @@ class ReimbursementController extends Controller
     protected $delete = 'reimburstment.delete';
     protected $terima = 'reimburstment.terima';
     protected $tolak = 'reimburstment.tolak';
+    protected $sendEmail = 'reimburstment.send.email';
 
     public function index(Request $request)
     {
@@ -157,6 +158,7 @@ class ReimbursementController extends Controller
         $data['urlIndex'] = $this->index;
         $data['urlTerima'] = $this->terima;
         $data['urlTolak'] = $this->tolak;
+        $data['urlSendEmail'] = $this->sendEmail;
         $data['langsung'] = array(
             'petty cash' => 'Petty Cash',
             'uang pribadi' => 'Uang Pribadi'
@@ -315,5 +317,21 @@ class ReimbursementController extends Controller
             'no_rek' => $user->no_rekening
         );
         return response()->json($data, 200);
+    }
+
+    public function sendEmail(Reimbursement $reimburst, Request $request)
+    {
+        try {
+            $email = $reimburst->user['email'];
+
+            Mail::send('reimbursement.email', ['nama' => 'admin', 'pesan' => 'Coba', 'data' => $reimburst], function ($message) use ($email) {
+                $message->subject('Pengajuan Reimburstment');
+                $message->from('ganangf27@gmail.com', 'Ganang');
+                $message->to($email);
+            });
+            return back()->with('alert-success', 'Berhasil Kirim Email');
+        } catch (Exception $e) {
+            return response(['status' => false, 'errors' => $e->getMessage()]);
+        }
     }
 }

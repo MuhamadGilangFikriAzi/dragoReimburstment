@@ -12,6 +12,16 @@
                 <strong>{{ $errors->first('asal_dana') }}</strong>
             </div>
         @endif
+        @if(\Session::has('alert-failed'))
+                <div class="alert alert-failed">
+                    <div>{{Session::get('alert-failed')}}</div>
+                </div>
+            @endif
+            @if(\Session::has('alert-success'))
+                <div class="alert alert-success">
+                    <div>{{Session::get('alert-success')}}</div>
+                </div>
+            @endif
 		<div class="card">
 			<div class="card-header">
                 <h5 class="card-title">{{ $pageTitle }}</h5>
@@ -36,6 +46,13 @@
                                 <label>Tipe Pengembalian</label>
                                 <input type="text" name="" class="form-control" readonly value="{{$data->tipe_pengembalian}}" >
                             </div>
+                            @if ($data->tipe_pengembalian == 'transfer')
+                                <div class="form-group" id="no_rek">
+                                    <label>No rekening</label>
+                                    <input type="number" class="form-control" name="no_rek" pleaceholder="Masukan no rekening" value="{{$data->user['no_rekening']}}" readonly>
+                                </div>
+                            @endif
+
 
                             @if ($data->tipe_pengembalian == "pengembalian")
                                 <div class="form-group">
@@ -51,6 +68,12 @@
                             <label>Tanggal</label>
                             <input type="date" class="form-control" name="tanggal" readonly class="form-control" value="{{$data->tanggal}}">
                         </div>
+                        @if ($data->tipe_pengembalian == 'transfer')
+                            <div class="form-group">
+                                <label>Bank</label>
+                                <input type="text" class="form-control" name="tanggal" readonly class="form-control" value="{{$data->user['bank']}}">
+                            </div>
+                        @endif
 
                         <div class="form-group">
                             <label>Total</label>
@@ -109,14 +132,16 @@
                 </table>
                 <div class="btn-group float-right">
                     @if ($data->status == 'Diajukan')
+                        <a href="{{route($urlSendEmail,$data->id)}}" class="btn btn-info"> Kirim Email</a>
                         <form action="{{route($urlTolak,$data->id)}}" method="POST" >
                             @csrf
                             @method('PUT')
-                            <button type="submit" class="btn btn-danger" title="Tolak Pengajuan Reimburstment">Tolak</button>
+                            <button type="submit" class="btn btn-danger ml-1" title="Tolak Pengajuan Reimburstment">Tolak</button>
                         </form>
                         <button type="button" class="btn btn-success ml-1" data-toggle="modal" data-target="#exampleModalCenter" title="Terima reimburstment">
                             Terima
                         </button>
+
 
                         {{-- <a href="{{ route($urlTerima,$data->id) }}" class="btn btn-success" >Terima</a> --}}
                     @endif

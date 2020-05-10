@@ -35,11 +35,6 @@ Route::prefix('reimburstment')->group(function () {
     Route::get('allreimburstement', 'ReimbursementController@allreimburstement')->name('reimburstment.allreimburstement');
     Route::get('create', 'ReimbursementController@create')->name('reimburstment.create');
     Route::post('store', 'ReimbursementController@store')->name('reimburstment.store');
-    Route::get('pengembalian', 'ReimbursementController@pengembalian')->name('reimburstment.pengembalian');
-    Route::post('pengembalian/store', 'ReimbursementController@pengembalianStore')->name('reimburstment.pengembalian.store');
-    Route::get('{pengembalian}/pengembalian/view', 'ReimbursementController@pengembalianShow')->name('reimburstment.pengembalian.show');
-    Route::get('{pengembalian}/pengembalian/edit', 'ReimbursementController@pengembalianEdit')->name('reimburstment.pengembalian.edit');
-    Route::get('{pengembalian}/pengembalian/update', 'ReimbursementController@pengembalianupdate')->name('reimburstment.pengembalian.update');
     Route::get('{reimburst}/show', 'ReimbursementController@show')->name('reimburstment.show');
     Route::get('{reimburst}/edit', 'ReimbursementController@edit')->name('reimburstment.edit');
     Route::put('{reimburst}/update', 'ReimbursementController@update')->name('reimburstment.update');
@@ -48,6 +43,7 @@ Route::prefix('reimburstment')->group(function () {
     Route::put('{reimburst}/tolak', 'ReimbursementController@tolak')->name('reimburstment.tolak');
     Route::post('getUser', 'ReimbursementController@getUser')->name('reimburstment.get.user');
     Route::get('total', 'ReimbursementController@total')->name('total');
+    Route::get('{reimburst}/sendEmail', 'ReimbursementController@sendEmail')->name('reimburstment.send.email');
 });
 
 Route::prefix('pengembalian')->group(function () {
