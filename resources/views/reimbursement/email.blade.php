@@ -331,7 +331,10 @@
                                     <tr>
                                         <td>Tipe Pengembalian</td>
                                         <td>: {{$data->tipe_pengembalian}}</td>
-
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>: {{$data->status}}</td>
                                     </tr>
                                     @if ($data->tipe_pengembalian == 'transfer')
                                         <tr>

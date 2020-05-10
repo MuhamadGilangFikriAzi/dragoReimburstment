@@ -191,6 +191,12 @@
                           <p>Permission</p>
                         </a>
                       </li>
+                      <li class="nav-item">
+                        <a href="{{ route('setting.index') }}" class="nav-link {{ (request()->is('settings/setting*')) ? 'active' : '' }}">
+                            <i class="fas fa-users-cog"></i>
+                          <p>Setting</p>
+                        </a>
+                      </li>
                     </ul>
                 </li>
                 @endhasanyrole

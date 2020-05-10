@@ -98,4 +98,11 @@ Route::prefix('settings')->group(function () {
         Route::post('store', 'PermissionController@store')->name('permission.store');
         Route::delete('{permission}/delete', 'PermissionController@delete')->name('permission.delete');
     });
+
+    Route::prefix('setting')->group(function () {
+        Route::get('index', 'SettingController@index')->name('setting.index');
+        Route::get('langsung', 'SettingController@langsung')->name('setting.langsung');
+        Route::get('transfer', 'SettingController@transfer')->name('setting.transfer');
+        Route::get('email', 'SettingController@email')->name('setting.email');
+    });
 });
