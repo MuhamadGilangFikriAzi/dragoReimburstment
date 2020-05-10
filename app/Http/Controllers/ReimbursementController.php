@@ -24,7 +24,7 @@ class ReimbursementController extends Controller
 
     public function index(Request $request)
     {
-        if (Auth::user()->roles()->first()->name == 'Admin') {
+        if (Auth::user()->roles()->first()->name == 'Admin' || Auth::user()->roles()->first()->name == 'Super Admin') {
             $list = Reimbursement::query()->with('user');
         } else {
             $list = Reimbursement::query()->where('id_user', Auth::user()->id);
