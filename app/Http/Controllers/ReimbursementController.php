@@ -324,7 +324,7 @@ class ReimbursementController extends Controller
 
                 Mail::send('reimbursement.email', ['nama' => 'admin', 'pesan' => 'Coba', 'data' => $reimburst], function ($message) use ($email) {
                     $message->subject('Pengajuan Reimburstment');
-                    $message->from('ganangf27@gmail.com', 'Admin');
+                    $message->from('admin@gmail.com', 'Admin');
                     $message->to($email);
                 });
             }
