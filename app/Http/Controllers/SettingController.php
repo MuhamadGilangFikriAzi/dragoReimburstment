@@ -10,34 +10,32 @@ use DB;
 class SettingController extends Controller
 {
     protected $index = 'setting.index';
-    protected $langsung = 'setting.langsung';
-    protected $transfer = 'setting.transfer';
-    protected $email = 'setting.email';
+    protected $edit = 'setting.edit';
+    protected $update = 'setting.update';
 
     public function index()
     {
-        $langsung = Setting::where('nama', 'langsung')->get()->first();
-        $transfer = Setting::where('nama', 'transfer')->get()->first();
-        $email = Setting::where('nama', 'email')->get()->first();
+        $data['pageTitle'] = 'Settings Index';
+        $data['urlEdit'] = $this->edit;
+        $data['all'] = Setting::all();
 
-        $data['langsung'] = json_decode($langsung->value);
-        $data['transfer'] = json_decode($transfer->value);
-        $data['email'] = json_decode($email->value);
         return view('setting.index', $data);
     }
 
-    public function langsung()
+    public function edit(Setting $setting)
     {
-        dd('langsung');
+        $data['pageTitle'] = 'Edit Setting';
+        $data['urlIndex'] = $this->index;
+        $data['urlUpdate'] = $this->update;
+        $data['data'] = $setting;
+        return view('setting.edit', $data);
     }
 
-    public function transfer()
+    public function update(Setting $setting, Request $request)
     {
-        dd('transfer');
-    }
+        $setting->value = json_encode($request->nama);
+        $setting->save();
 
-    public function email()
-    {
-        dd('email');
+        return redirect()->route($this->index)->with(['success' => 'Edit ' . $setting->nama . ' berhasil']);
     }
 }

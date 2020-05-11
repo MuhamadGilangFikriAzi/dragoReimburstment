@@ -174,12 +174,12 @@
                         <select name="asal_dana" class="form-control">
                             <option value="">Pilih asal dana</option>
                             @if ($data->tipe_pengembalian == 'langsung')
-                                @foreach ($langsung as $key => $value)
-                                    <option value="{{$key}}">{{$value}}</option>
+                                @foreach (json_decode($langsung->value) as $key => $value)
+                                    <option value="{{$value}}">{{$value}}</option>
                                 @endforeach
                             @else
-                                @foreach ($transfer as $key => $value)
-                                    <option value="{{$key}}">{{$value}}</option>
+                                @foreach (json_decode($transfer->value) as $key => $value)
+                                    <option value="{{$value}}">{{$value}}</option>
                                 @endforeach
                             @endif
                         </select>

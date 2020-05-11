@@ -60,9 +60,6 @@
                             <div class="form-group" id="awal">
                             </div>
 
-                            <div class="form-group" id="bank">
-                            </div>
-
                             <div class="form-group" id="no_rek">
                             </div>
 
@@ -77,32 +74,8 @@
                             @endif
                           </div>
 
-                          @if ($data->tipe_pengembalian == 'langsung')
-                            <div class="form-group" id="origin">
-                                <label>Asal Dana</label>
-                                <select name="asal_dana" class="custom-select" id="origin_funds">
-                                    <option value="">Pilih...</option>
-                                    @foreach ($langsung as $key => $value)
-                                        <option value="{{$key}}" @if($key == $data->asal_dana) selected @endif>{{$value}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group" id="bank">
                             </div>
-                          @elseif($data->tipe_pengembalian == 'transfer')
-                            <div class="form-group" id="origin">
-                                <label>Asal Dana</label>
-                                <select name="asal_dana" class="custom-select" id="origin_funds">
-                                    <option value="">Pilih...</option>
-                                    @foreach ($transfer as $key => $value)
-                                        <option value="{{$key}}" @if($key == $data->asal_dana) selected @endif>{{$value}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @else
-                            <div class="form-group" id="origin">
-                                <label>Uang Yang Digunakan</label>
-                                <input type="number" class="form-control" name="digunakan">
-                                </div>
-                          @endif
 
                           <div class="form-group">
                               <label>Total</label>

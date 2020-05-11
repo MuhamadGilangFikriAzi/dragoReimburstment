@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reimbursement;
 use App\Models\ReimburstmentDetail;
+use App\Models\Setting;
 use App\User;
 use Image, DB, Auth, Mail;
 
@@ -159,14 +160,9 @@ class ReimbursementController extends Controller
         $data['urlTerima'] = $this->terima;
         $data['urlTolak'] = $this->tolak;
         $data['urlSendEmail'] = $this->sendEmail;
-        $data['langsung'] = array(
-            'petty cash' => 'Petty Cash',
-            'uang pribadi' => 'Uang Pribadi'
-        );
-        $data['transfer'] = array(
-            'BCA' => 'BCA',
-            'Cimb Niaga' => 'cimb Niaga'
-        );
+        $data['langsung'] = Setting::where('nama', 'langsung')->get()->first();
+        $data['transfer'] = Setting::where('nama', 'transfer')->get()->first();
+
         return view('reimbursement.view', $data);
     }
 
@@ -322,13 +318,17 @@ class ReimbursementController extends Controller
     public function sendEmail(Reimbursement $reimburst, Request $request)
     {
         try {
-            $email = $reimburst->user['email'];
+            $setting = Setting::where('nama', 'email')->get()->first();
+            foreach (json_decode($setting->value) as $key => $value) {
+                $email = $value;
 
-            Mail::send('reimbursement.email', ['nama' => 'admin', 'pesan' => 'Coba', 'data' => $reimburst], function ($message) use ($email) {
-                $message->subject('Pengajuan Reimburstment');
-                $message->from('ganangf27@gmail.com', 'Ganang');
-                $message->to($email);
-            });
+                Mail::send('reimbursement.email', ['nama' => 'admin', 'pesan' => 'Coba', 'data' => $reimburst], function ($message) use ($email) {
+                    $message->subject('Pengajuan Reimburstment');
+                    $message->from('ganangf27@gmail.com', 'Admin');
+                    $message->to($email);
+                });
+            }
+
             return back()->with('alert-success', 'Berhasil Kirim Email');
         } catch (Exception $e) {
             return response(['status' => false, 'errors' => $e->getMessage()]);

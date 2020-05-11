@@ -101,8 +101,7 @@ Route::prefix('settings')->group(function () {
 
     Route::prefix('setting')->group(function () {
         Route::get('index', 'SettingController@index')->name('setting.index');
-        Route::get('langsung', 'SettingController@langsung')->name('setting.langsung');
-        Route::get('transfer', 'SettingController@transfer')->name('setting.transfer');
-        Route::get('email', 'SettingController@email')->name('setting.email');
+        Route::get('{setting}/edit', 'SettingController@edit')->name('setting.edit');
+        Route::put('{setting}/update', 'SettingController@update')->name('setting.update');
     });
 });
