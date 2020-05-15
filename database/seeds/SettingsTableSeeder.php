@@ -15,6 +15,7 @@ class SettingsTableSeeder extends Seeder
         $data['langsung'] = ['petty cash', 'uang pribadi'];
         $data['transfer'] = ['BCA', 'Cimb Niaga'];
         $data['email'] = ['mgfa9802@gmail.com'];
+        $data['asal_dana'] = ['petty cash', 'uang pribadi', 'BCA', 'Cimb Niaga'];
 
         foreach ($data as $key => $value) {
             DB::table('settings')->insert([

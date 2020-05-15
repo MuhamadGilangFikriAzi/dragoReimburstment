@@ -23,8 +23,8 @@
 				{{-- <a href="{{ route('trash')}}">
 					<button type="button" class="btn btn-outline-dark">Trash</button>
                 </a> --}}
-                @hasanyrole('Super Admin|User')
-                <a href="{{ route($urlCreate) }}" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Pengembalian Dana</a>
+                @hasanyrole('Super Admin|Admin')
+                <a href="{{ route($urlCreate) }}" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Pemberian Dana</a>
                 @endhasanyrole
 			</div>
 			<div class="card-body">
@@ -37,7 +37,7 @@
                                 <th><b>Tanggal</b></th>
                                 <th><b>Asal Dana</b></th>
                                 <th><b>Status</b></th>
-								<th class="text-right"><b>Total Dikembalikan</b></th>
+								<th class="text-right"><b>Pemberian Dana</b></th>
 								<th class="text-center"><b>Action</b></th>
 							</tr>
 						</thead>
@@ -69,14 +69,11 @@
                         </form>
                             @foreach( $list as $key => $value )
                             @php
-                                if($value->status == 'Diajukan'){
+                                if($value->status == 'Diberikan'){
                                     $badge = 'badge-info';
                                 }
-                                elseif($value->status == 'Diterima'){
-                                    $badge = 'badge-success';
-                                }
                                 else{
-                                    $badge = 'badge-danger';
+                                    $badge = 'badge-success';
                                 }
                             @endphp
 							<tr>
@@ -88,16 +85,14 @@
                                 <td>
                                     <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
                                 </td>
-								<td class="text-right">{{number_format($value->total_dikembalikan,0,",",".")}}</td>
+								<td class="text-right">{{number_format($value->total_asal_dana,0,",",".")}}</td>
 								<td class="text-center">
 						 			<div class="btn-group">
-                                        @hasanyrole('Super Admin|Admin')
+                                        @hasanyrole('Super Admin|User')
                                         <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">Lihat</a>
                                         @endhasanyrole
-                                        @hasanyrole('Super Admin|User')
-                                        @if ($value->status != 'Diajukan')
+                                        @hasanyrole('Super Admin|Admin')
                                             <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah data">Edit</a>
-                                        @endif
                                         <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
                                             @csrf
                                             @method('delete')

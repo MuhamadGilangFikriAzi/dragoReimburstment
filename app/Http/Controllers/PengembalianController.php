@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pengembalian;
 use App\Models\PengembalianDetail;
+use App\Models\Setting;
 use App\User;
 use Image, DB, Auth;
 
@@ -45,7 +46,7 @@ class PengembalianController extends Controller
         }
 
         $data['pageTitle'] = 'Pengembalian Dana';
-        $data['status'] = ['Diajukan', 'Diterima', 'Ditolak'];
+        $data['status'] = ['Diberikan', 'Dikembalikan'];
         $data['list'] = $list->paginate('10');
         $data['data'] = Pengembalian::all()->count();
         $data['urlIndex'] = $this->index;
@@ -57,68 +58,31 @@ class PengembalianController extends Controller
     }
     public function create()
     {
-        $data['page_title'] = "Ajukan Reimburstment";
+        $data['pageTitle'] = 'Pemberian Dana';
         $data['data'] = User::all();
         $data['urlIndex'] = $this->index;
         $data['urlStore'] = $this->store;
-        $data['asalDana'] = ['Petty Cash', 'Uang Pribadi', 'BCA', 'Cimb Niaga'];
-        $data['pageTitle'] = 'Pengembalian Dana';
+        $data['asalDana'] = Setting::where('nama', 'asal_dana')->first();
         return view('Pengembalian.create', $data);
     }
 
     public function store(Request $request)
     {
         $message = [
-            'user_id.required' => 'Nama harus diisi',
+            'id_user.required' => 'Nama harus diisi',
             'tanggal.required' => 'Tanggal harus diisi',
-            'Detail.*.prihal.required' => 'Prihal harus diisi',
-            'Detail.*.digunakan.required' => 'Total harus diisi',
-            'Detail.*.foto.required' => 'Foto harus diisi',
-            'Detail.*.deskripsi.required' => 'Deskripsi harus diisi'
         ];
 
         $rules = [
-            'user_id' => 'required',
+            'id_user' => 'required',
             'tanggal' => 'required',
-            'Detail.*.prihal' => 'required',
-            'Detail.*.digunakan' => 'required',
-            'Detail.*.foto' => 'required',
-            'Detail.*.deskripsi' => 'required'
         ];
         $this->validate($request, $rules, $message);
 
         DB::beginTransaction();
         try {
-
-            $pengembalian = new Pengembalian;
-            $pengembalian->id_user = $request->user_id;
-            $pengembalian->tanggal = $request->tanggal;
-            $pengembalian->status = "Diajukan";
-            $pengembalian->total_digunakan = $request->total_digunakan;
-            $pengembalian->asal_dana = $request->asal_dana;
-            $pengembalian->total_asal_dana = $request->total_asal_dana;
-            $pengembalian->total_dikembalikan = $request->total_dikembalikan;
-            $pengembalian->save();
-
-            $detail = $request->Detail;
-            $path = public_path('/img/bukti/');
-
-            foreach ($detail as $key => $value) {
-                $originalImage = $value['foto'];
-                $Image = Image::make($originalImage);
-                $Image->resize(540, 360);
-                $fileName = time() . $originalImage->getClientOriginalName();
-                $Image->save($path . $fileName);
-
-                $reDetail = new PengembalianDetail();
-                $reDetail->id_pengembalian = $pengembalian->id;
-                $reDetail->prihal = $value['prihal'];
-                $reDetail->digunakan = $value['digunakan'];
-                $reDetail->foto = $fileName;
-                $reDetail->deskripsi = $value['deskripsi'];
-                $reDetail->save();
-            }
-
+            $data = $request->except('_token', 'submit');
+            Pengembalian::create($data);
             DB::commit();
         } catch (Exception $e) {
 
@@ -130,7 +94,6 @@ class PengembalianController extends Controller
 
     public function show(Pengembalian $pengembalian)
     {
-        // dd($reimburst);
         $data['data'] = $pengembalian;
         $data['pageTitle'] = 'Pengembalian Dana';
         $data['urlIndex'] = $this->index;
@@ -141,14 +104,15 @@ class PengembalianController extends Controller
 
     public function edit(pengembalian $pengembalian)
     {
-        // dd($reimburst->detail);
         $data['pageTitle'] = 'Edit Pengembalian Dana';
         $data['urlIndex'] = $this->index;
         $data['urlUpdate'] = $this->update;
         $data['data'] = $pengembalian;
         $data['user'] = User::pluck('name', 'id');
         $data['count'] = count($pengembalian->detail);
-        $data['asalDana'] = ['Petty Cash', 'Uang Pribadi', 'BCA', 'Cimb Niaga'];
+        $data['status'] = ['Diberikan', 'Dikembalikan'];
+        $data['asalDana'] = Setting::where('nama', 'asal_dana')->first();
+        $data['tipePengembalian'] = ['langsung', 'transfer'];
         return view('pengembalian.edit', $data);
     }
 
@@ -156,39 +120,44 @@ class PengembalianController extends Controller
     {
         DB::beginTransaction();
         try {
+
             $pengembalian->detail->each->delete();
 
-            $pengembalian->id_user = $request->user_id;
+            $pengembalian->id_user = $request->id_user;
             $pengembalian->tanggal = $request->tanggal;
-            $pengembalian->status = "Diajukan";
+            $pengembalian->status = $request->status;
             $pengembalian->total_digunakan = $request->total_digunakan;
             $pengembalian->asal_dana = $request->asal_dana;
+            $pengembalian->tipe_pengembalian = $request->tipe_pengembalian;
             $pengembalian->total_asal_dana = $request->total_asal_dana;
             $pengembalian->total_dikembalikan = $request->total_dikembalikan;
+            $pengembalian->tipe_pengembalian = $request->tipe_pengembalian;
             $pengembalian->save();
 
-            $detail = $request->Detail;
             $path = public_path('/img/bukti/');
 
-            foreach ($detail as $key => $value) {
-                $pengembalianDetail = new PengembalianDetail();
+            if ($request->Detail) {
+                foreach ($request->Detail as $key => $value) {
+                    $pengembalianDetail = new PengembalianDetail();
 
-                if ($value['foto']) {
-                    $originalImage = $value['foto'];
-                    $Image = Image::make($originalImage);
-                    $Image->resize(540, 360);
-                    $fileName = time() . $originalImage->getClientOriginalName();
-                    $Image->save($path . $fileName);
-                    $pengembalianDetail->foto = $fileName;
-                } else {
-                    $pengembalianDetail->foto = $value['foto_awal'];
+                    if (isset($value['foto'])) {
+                        $originalImage = $value['foto'];
+                        $Image = Image::make($originalImage);
+                        $Image->resize(540, 360);
+                        $fileName = time() . $originalImage->getClientOriginalName();
+                        $Image->save($path . $fileName);
+                        $pengembalianDetail->foto = $fileName;
+                    } else {
+                        $pengembalianDetail->foto = $value['foto_awal'];
+                    }
+                    $pengembalianDetail->id_pengembalian = $pengembalian->id;
+                    $pengembalianDetail->prihal = $value['prihal'];
+                    $pengembalianDetail->digunakan = $value['digunakan'];
+                    $pengembalianDetail->deskripsi = $value['deskripsi'];
+                    $pengembalianDetail->save();
                 }
-                $pengembalianDetail->id_pengembalian = $pengembalian->id;
-                $pengembalianDetail->prihal = $value['prihal'];
-                $pengembalianDetail->digunakan = $value['digunakan'];
-                $pengembalianDetail->deskripsi = $value['deskripsi'];
-                $pengembalianDetail->save();
             }
+
 
             DB::commit();
         } catch (Exception $e) {

@@ -29,29 +29,30 @@
                             <div class="form-group">
                                 <label>Nama</label>
                                 <div class="input-group mb-3">
-                                    <select name="user_id" class="custom-select" id="user">
-                                        <option selected>Pilih...</option>
-                                        @foreach( $user as $key => $value )
-                                        <option value="{{ $key }}" @if($key == $data->id_user) selected @endif>{{ $value}}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" id="user" class="form-control" value="{{$data->user['name']}}" readonly>
+                                    <input type="hidden" name="id_user" id="user" class="form-control" value="{{$data->id_user}}">
                                 </div>
-                                @if($errors->has('user_id'))
-                                <span class="text-danger">{{ $errors->first('user_id') }}</span>
+                                @if($errors->has('id_user'))
+                                <span class="text-danger">{{ $errors->first('id_user') }}</span>
                                 @endif
                             </div>
 
                             <div class="form-group origin" id="origin">
-                                <label>Asal Dana</label>
-                                <select name="asal_dana" class="custom-select" id="origin_funds">
+                                <label>Status</label>
+                                <select name="status" class="custom-select" id="origin_funds">
                                     <option value="">Pilih...</option>
-                                    @foreach ($asalDana as $value)
-                                        <option value="{{$value}}" @if($value == $data->asal_dana) selected @endif >{{$value}}</option>
+                                    @foreach ($status as $key => $value)
+                                        <option value="{{$value}}" @if($value == $data->status) selected @endif >{{$value}}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->has('asal_dana'))
                                 <span class="text-danger">{{ $errors->first('asal_dana') }}</span>
                                 @endif
+                            </div>
+
+                            <div class="form-group origin" id="origin">
+                                <label>Asal Dana</label>
+                                <input type="text" name="asal_dana" class="form-control" value="{{$data->asal_dana}}" readonly>
                             </div>
 
                             <div class="form-group">
@@ -61,23 +62,37 @@
                         </div>
 
                         <div class="col">
-                          <div class="form-group">
-                            <label>Tanggal</label>
-                            <input type="date" class="form-control" name="tanggal" class="form-control" value="{{$data->tanggal}}">
-                            @if($errors->has('tanggal'))
-                            <span class="text-danger">{{ $errors->first('tanggal') }}</span>
-                            @endif
-                          </div>
-
-                          <div class="form-group origin">
-                            <label>Awal Dana</label>
-                            <input type="number" class="form-control text-right" name="total_asal_dana" id="awal" value="{{$data->total_asal_dana}}">
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" class="form-control" name="tanggal" class="form-control" value="{{$data->tanggal}}" readonly>
+                                @if($errors->has('tanggal'))
+                                <span class="text-danger">{{ $errors->first('tanggal') }}</span>
+                                @endif
                             </div>
 
-                          <div class="form-group">
-                              <label>Total</label>
-                              <input type="number" name="total_digunakan" class="form-control text-right" id="total" readonly>
-                          </div>
+                            <div class="form-group origin">
+                                <label>Tipe Pengembalian</label>
+                                <select name="tipe_pengembalian" class="custom-select" id="origin_funds">
+                                    <option value="">Pilih...</option>
+                                    @foreach ($tipePengembalian as $key => $value)
+                                        <option value="{{$value}}" @if($value == $data->tipe_pengemblian) selected @endif >{{$value}}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('tipe_pengemblian'))
+                                <span class="text-danger">{{ $errors->first('asal_dana') }}</span>
+                                @endif
+                            </div>
+
+
+                            <div class="form-group origin">
+                                <label>Dana Diberikan</label>
+                                <input type="number" class="form-control text-right" name="total_asal_dana" id="awal" value="{{$data->total_asal_dana}}" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Total</label>
+                                <input type="number" name="total_digunakan" class="form-control text-right" id="total" readonly>
+                            </div>
                         </div>
                     </div>
 
@@ -166,7 +181,6 @@
                     </tfoot>
                 </table>
                 <div class="text-right">
-                    <input class="btn btn-dark" type="reset" name="reset" value="reset">
                     <input class="btn btn-primary" type="submit" name="submit" value="Simpan">
                 </div>
             </div>

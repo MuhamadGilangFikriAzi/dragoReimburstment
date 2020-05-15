@@ -18,8 +18,9 @@ class CreatePengembalianTable extends Migration
             $table->bigInteger('id_user');
             $table->string('asal_dana', 50)->nullable();
             $table->date('tanggal')->nullable();
-            $table->enum('status', ['Diajukan', 'Diterima', 'Ditolak']);
-            $table->double('total_dikembalikan');
+            $table->enum('tipe_pengembalian', ['langsung', 'transfer'])->nullable();
+            $table->enum('status', ['Diberikan', 'Dikembalikan']);
+            $table->double('total_dikembalikan')->nullable();
             $table->double('total_asal_dana')->nullable();
             $table->double('total_digunakan')->nullable();
             $table->timestamps();

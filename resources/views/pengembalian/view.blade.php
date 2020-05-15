@@ -28,6 +28,10 @@
                                 <input type="text" name="" class="form-control" readonly value="{{$data->user['name']}}" >
                             </div>
                             <div class="form-group">
+                                <label>Status</label>
+                                <input type="text" name="status" id="" class="form-control" value="{{$data->status}}" readonly>
+                            </div>
+                            <div class="form-group">
                                 <label>Asal Dana</label>
                                 <input type="text" name="" class="form-control" readonly value="{{$data->asal_dana}}" >
                             </div>
@@ -43,6 +47,11 @@
                             <label>Tanggal</label>
                             <input type="date" class="form-control" name="tanggal" readonly class="form-control" value="{{$data->tanggal}}">
                         </div>
+                        <div class="col">
+                            <div class="form-group">
+                              <label>Tipe Pengembalian</label>
+                              <input type="text" class="form-control" name="tipe_pengembalian" readonly class="form-control" value="{{$data->tipe_pengembalian}}">
+                          </div>
 
                         <div class="form-group origin">
                             <label>Awal Dana</label>
@@ -102,24 +111,7 @@
                         </tr>
                         @endforeach
                     </tbody>
-
                 </table>
-                <div class="float-right btn-group">
-                    @if ($data->status == 'Diajukan')
-                        <form action="{{route($urlTolak,$data->id)}}" method="POST" >
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-danger" title="Tolak Pengembalian dana">Tolak</button>
-                        </form>
-                        <form action="{{route($urlTerima,$data->id)}}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-success ml-1" title="Terima Pengembalian dana">Terima</button>
-                        </form>
-                        {{-- <a href="{{ route($urlTolak,$data->id) }}" class="btn btn-danger">Tolak</a>
-                        <a href="{{ route($urlTerima,$data->id) }}" class="btn btn-success" >Terima</a> --}}
-                    @endif
-                </div>
             </div>
 
         </div>
