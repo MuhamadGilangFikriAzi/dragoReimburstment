@@ -69,7 +69,7 @@ class userController extends Controller
                 $path = public_path('/img/user/');
                 $originalImage = $request->foto;
                 $Image = Image::make($originalImage);
-                $Image->resize(380, 400);
+                $Image->resize(840, 859);
                 $fileName = time() . $originalImage->getClientOriginalName();
                 $Image->save($path . $fileName);
 
@@ -133,7 +133,7 @@ class userController extends Controller
                 $path = public_path('/img/user/');
                 $originalImage = $request->foto;
                 $Image = Image::make($originalImage);
-                $Image->resize(380, 400);
+                $Image->resize(840, 859);
                 $fileName = time() . $originalImage->getClientOriginalName();
                 $Image->save($path . $fileName);
 

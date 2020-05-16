@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reimbursement;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\User;
 use Image;
 
@@ -53,7 +51,6 @@ class HomeController extends Controller
             'password' => 'sometimes|nullable',
         ]);
 
-        $update = $request->except('_token', '_method', 'submit', 'password', 'foto_awal', 'foto');
         if ($request->password != null) {
             $user['password'] = bcrypt($data['password']);
         }
@@ -62,8 +59,8 @@ class HomeController extends Controller
             $path = public_path('/img/user/');
             $originalImage = $request->foto;
             $Image = Image::make($originalImage);
-            $Image->resize(540, 360);
-            $fileName = time() . $originalImage->getClientOriginalName();
+            $Image->resize(840, 859);
+            $fileName = $user->name . time();
             $Image->save($path . $fileName);
             $user['foto'] = $fileName;
         }
@@ -79,18 +76,5 @@ class HomeController extends Controller
         }
 
         return redirect('/home');
-    }
-    public function filter()
-    {
-
-        $currentMonth = date('m');
-        //mengambil data berdasarkan bulan ini
-        $month = Reimbursement::whereRaw('MONTH(date) = ?', [$currentMonth])->get();
-        //menjumlahkan seluruh isi dari table total berdasarkan bulan ini
-        $sum = $month->sum('total');
-        //menghitung jumlah data yang ada pada bulan ini
-        $countmonth = $month->count();
-
-        return view('reimbursement.filter_reimburse', compact('month', 'sum', 'countmonth'));
     }
 }

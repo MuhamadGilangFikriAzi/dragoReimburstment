@@ -31,6 +31,10 @@ class ReimbursementController extends Controller
             $list = Reimbursement::query()->where('id_user', Auth::user()->id);
         }
 
+        if ($request->bulan) {
+            $list = $list->where('status', 'Diterima')->whereRaw('MONTH(tanggal) = ?', $request->bulan);
+        }
+
         if ($request->nama) {
             $user = User::where('name', 'like', '%' . $request->nama . '%')->first();
             if ($user != null) {

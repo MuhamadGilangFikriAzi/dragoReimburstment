@@ -32,7 +32,6 @@ Route::prefix('home')->group(function () {
 
 Route::prefix('reimburstment')->group(function () {
     Route::get('index', 'ReimbursementController@index')->name('reimburstment.index');
-    Route::get('allreimburstement', 'ReimbursementController@allreimburstement')->name('reimburstment.allreimburstement');
     Route::get('create', 'ReimbursementController@create')->name('reimburstment.create');
     Route::post('store', 'ReimbursementController@store')->name('reimburstment.store');
     Route::get('{reimburst}/show', 'ReimbursementController@show')->name('reimburstment.show');
@@ -42,7 +41,6 @@ Route::prefix('reimburstment')->group(function () {
     Route::put('{reimburst}/terima', 'ReimbursementController@terima')->name('reimburstment.terima');
     Route::put('{reimburst}/tolak', 'ReimbursementController@tolak')->name('reimburstment.tolak');
     Route::post('getUser', 'ReimbursementController@getUser')->name('reimburstment.get.user');
-    Route::get('total', 'ReimbursementController@total')->name('total');
     Route::get('{reimburst}/sendEmail', 'ReimbursementController@sendEmail')->name('reimburstment.send.email');
 });
 

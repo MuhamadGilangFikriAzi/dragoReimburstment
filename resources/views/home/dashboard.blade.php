@@ -98,7 +98,7 @@
 										<h6 class=" title my-2">TOTAL REIMBURSEMENT DITERIMA</h6>
 										<h3 class="text-center"><b>{{ count($totalDiterima->get()) }}</b></h3>
 										<h6>Total:<b> Rp. {{ number_format($totalDiterima->sum('total'),2,",",".") }}</b></h6><hr>
-										<a href="{{ route('reimburstment.allreimburstement')}}"><i>View Details</i></a>
+										<a href="{{ route('reimburstment.index')}}"><i>View Details</i></a>
 								</div>
 							</div>
 						</div>
@@ -115,7 +115,7 @@
 										<h6 class="title my-2">TOTAL REIMBURSEMENT PADA BULAN INI</h6>
 										<h3 class="text-center"><b>{{ count($bulanIni->get()) }}</b></h3>
 										<h6>Total:<b> Rp. {{ number_format($bulanIni->sum('total'),2,",",".") }}</b></h6><hr>
-										<a href="{{route('total')}}"><i>View Details</i></a>
+										<a href="{{route('reimburstment.index',['bulan' => date('m')])}}"><i>View Details</i></a>
 								</div>
 							</div>
 						</div>
@@ -127,7 +127,7 @@
           		<div class="col-sm-12">
             		<div class="card">
               			<div class="card-header">
-               				 <h3 class="card-title">list 5 transaksi terkhir</h3>
+               				 <h3 class="card-title">list 5 reimburstment terkhir</h3>
               			</div>
 
               			<div class="card-body">
