@@ -127,7 +127,7 @@
           		<div class="col-sm-12">
             		<div class="card">
               			<div class="card-header">
-               				 <h3 class="card-title">list 5 reimburstment terkhir</h3>
+               				 <h3 class="card-title">list 5 reimburstment terakhir</h3>
               			</div>
 
               			<div class="card-body">
