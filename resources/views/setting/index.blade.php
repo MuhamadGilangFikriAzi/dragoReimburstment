@@ -20,6 +20,8 @@
                             <div class="card-header bg-light">
                                 @if ($item->nama == 'langsung' || $item->nama == 'transfer')
                                     Asal dana :
+                                @elseif($item->nama == 'asal_dana')
+                                    Pengembalian :
                                 @endif
                                 {{$item->nama}}
                                 <a href="{{route($urlEdit,$item->id)}}" class="btn btn-primary float-right ">Edit</a>

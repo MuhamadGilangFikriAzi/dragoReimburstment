@@ -105,8 +105,8 @@
                 <button type="button" class="close text-right" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p class="font-weight-light"><b>* wajib diisi</b></p>
-                <p class="font-weight-light"><b>Password default <span class="text-danger">drago123456</span></b></p>
+                <p><b>* wajib diisi</b></p>
+                <p><b>Password default : <span class="text-danger">drago123456</span></b></p>
                 <form action="{{route($urlStore)}}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
