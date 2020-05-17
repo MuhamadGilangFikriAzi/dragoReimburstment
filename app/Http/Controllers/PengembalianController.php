@@ -23,7 +23,7 @@ class PengembalianController extends Controller
 
     public function index(Request $request)
     {
-        if (Auth::user()->roles()->first()->name == 'Admin') {
+        if (Auth::user()->roles()->first()->name == 'Admin' || Auth::user()->roles()->first()->name == 'Super Admin') {
             $list = Pengembalian::query()->with('user');
         } else {
             $list = Pengembalian::query()->where('id_user', Auth::user()->id);
