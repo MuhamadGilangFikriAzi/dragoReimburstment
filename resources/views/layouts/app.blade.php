@@ -154,7 +154,7 @@
                     </a>
                 </li>
 
-                @hasanyrole('Super Admin|Admin')
+                {{-- @hasanyrole('Super Admin|Admin')
                 <li class="nav-item has-treeview {{ (request()->is('report*')) ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-sliders-h"></i>
@@ -174,6 +174,31 @@
                             <a href="{{ route('report.pengembalian.index') }}" class="nav-link {{ (request()->is('report/pengembalian*')) ? 'active' : '' }}">
                                 <i class="fas fa-clipboard-list nav-icon"></i>
                                 <p>Laporan Pengembalian Dana</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endhasanyrole --}}
+                @hasanyrole('Super Admin|Admin')
+                <li class="nav-item has-treeview {{ (request()->is('report*')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
+                      <i class="nav-icon fas fa-list-ul"></i>
+                      <p>
+                        Laporan
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    <ul class="nav-item nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('report.reimburstment.index') }}" class="nav-link {{ (request()->is('report/reimburstment*')) ? 'active' : '' }}">
+                                <i class="fas fa-clipboard-list nav-icon"></i>
+                                <p>Reimburstment</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('report.pengembalian.index') }}" class="nav-link {{ (request()->is('report/pengembalian*')) ? 'active' : '' }}">
+                                <i class="fas fa-clipboard-list nav-icon"></i>
+                                <p>Pengembalan dana</p>
                             </a>
                         </li>
                     </ul>

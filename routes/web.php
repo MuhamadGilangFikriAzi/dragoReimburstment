@@ -61,9 +61,12 @@ Route::middleware('auth:web')->group(function () {
     Route::prefix('report')->group(function () {
         Route::get('reimburstment/index', 'ReportController@index')->name('report.reimburstment.index');
         Route::get('reimburstment/result', 'ReportController@report')->name('report.reimburstment.result');
-        Route::get('reimburstment/exportExcel', 'ReportController@exportExcel')->name('report.reimburstment.excel');
+        Route::get('reimburstment/excel', 'ReportController@exportExcel')->name('report.reimburstment.excel');
+        Route::get('reimburstment/pdf', 'ReportController@exportPdf')->name('report.reimburstment.pdf');
         Route::get('pengembalian/index', 'ReportController@pengembalianIndex')->name('report.pengembalian.index');
-        Route::get('exportPdf', 'ReportController@exportPdf')->name('report.export.pdf');
+        Route::get('pengembalian/result', 'ReportController@pengembalianReport')->name('report.pengembalian.result');
+        Route::get('pengembalian/Excel', 'ReportController@pengembalianExcel')->name('report.pengembalian.excel');
+        Route::get('pengembalian/pdf', 'ReportController@pengembalian@pengembalianPdf')->name('report.pengembalian.pdf');
     });
 
     Route::prefix('settings')->group(function () {

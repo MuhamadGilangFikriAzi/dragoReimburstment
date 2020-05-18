@@ -26,28 +26,26 @@
                             <tr>
                                 <td>No</td>
                                 <td>User</td>
-                                <td>Tipe pengembalian</td>
-                                <td>Asal dana</td>
                                 <td>Tanggal</td>
+                                <td>Asal dana</td>
                                 <td>Status</td>
+                                <td>Tipe pengembalian</td>
                                 <td class="text-right">Total asal dana</td>
-                                <td class="text-right">Total</td>
+                                <td class="text-right">Digunakan</td>
+                                <td class="text-right">Dikembalikan</td>
                             </tr>
 
                             @foreach($data as $key => $value)
                              <tr>
                                 <td>{{ $key +1 }}</td>
                                 <td>{{ $value->user['name'] }}</td>
-                                <td>{{$value->tipe_pengembalian}}</td>
-                                <td>{{$value->asal_dana}}</td>
                                 <td>{{ $value->tanggal }}</td>
+                                <td>{{$value->asal_dana}}</td>
                                 <td>{{$value->status}}</td>
-                                @if ($value->tipe_pengembalian == 'pengembalian')
-                                    <td class="text-right">{{ number_format($value->total_asal_dana,0,",",".") }}</td>
-                                @else
-                                    <td></td>
-                                @endif
-                                <td class="text-right">{{ number_format($value->total,0,",",".") }}</td>
+                                <td>{{$value->tipe_pengembalian}}</td>
+                                <td class="text-right">{{ number_format($value->total_asal_dana,0,",",".") }}</td>
+                                <td class="text-right">{{ number_format($value->total_digunakan,0,",",".") }}</td>
+                                <td class="text-right">{{ number_format($value->total_dikembalikan,0,",",".") }}</td>
                              </tr>
                             @endforeach
                             {{-- <tr>
