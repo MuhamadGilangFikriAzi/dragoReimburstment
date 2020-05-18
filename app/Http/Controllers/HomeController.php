@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Reimbursement;
 use Spatie\Permission\Models\Role;
 use App\User;
-use Image;
+use Image, Auth;
 
 class HomeController extends Controller
 {
@@ -23,10 +23,11 @@ class HomeController extends Controller
     {
         $data['ditolak'] = count(Reimbursement::where('status', 'Ditolak')->get());
         $data['diterima'] = count(Reimbursement::where('status', 'Diterima')->get());
-        $data['diajukan'] = count(Reimbursement::all());
+        $data['diajukan'] = count(Reimbursement::where('status', 'Diajukan')->get());
         $data['totalDiterima'] = Reimbursement::where('status', 'Diterima');
         $data['bulanIni'] = Reimbursement::where('status', 'Diterima')->whereRaw('MONTH(tanggal) = ?', date('m'));
         $data['limit'] = Reimbursement::orderBy('id', 'DESC')->limit(5)->get();
+        $data['user']  = Reimbursement::where('id_user', Auth::user()->id)->get();
 
         return view('home.dashboard', $data);
     }

@@ -53,11 +53,12 @@
 <section class="content">
 	<div class="container-fluid">
 
+        @hasanyrole('Super Admin|Admin')
             <div class="row mt-4">
                 <div class="col-sm-4">
                     <div class="card text-white bg-info mb-3">
                         <div class="card-header text-center">
-                            Total Pengajuan Reimburstment
+                            Total Reimburstment Diajukan
                         </div>
                         <div class="card-body text-center">
                         <h1 class="card-text"><b><h1>{{$diajukan}}</h1></b></h1>
@@ -112,7 +113,7 @@
 									<i class="fa fa-strikethrough" aria-hidden="true"></i>
 								</div>
 								<div class="info">
-										<h6 class="title my-2">TOTAL REIMBURSEMENT PADA BULAN INI</h6>
+										<h6 class="title my-2">TOTAL REIMBURSEMENT DITERIMA PADA BULAN INI</h6>
 										<h3 class="text-center"><b>{{ count($bulanIni->get()) }}</b></h3>
 										<h6>Total:<b> Rp. {{ number_format($bulanIni->sum('total'),2,",",".") }}</b></h6><hr>
 										<a href="{{route('reimburstment.index',['bulan' => date('m')])}}"><i>View Details</i></a>
@@ -172,8 +173,63 @@
 						</div>
               		</div>
             	</div>
-			</div>
-		</>
+            </div>
+            @endhasanyrole
+
+            @hasanyrole('Super Admin|User')
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="card">
+                        <div class="card-header">
+                              <h3 class="card-title">list reimburstment {{ Auth::user()->name }}</h3>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-hover">
+                                  <tr>
+                                      <td>#</td>
+                                      <td>User</td>
+                                      <td>Tipe pengembalian</td>
+                                      <td>Asal dana</td>
+                                      <td>Tanggal</td>
+                                      <td>Status</td>
+                                      <td class="text-right">Total</td>
+                                  </tr>
+
+                                  @foreach($user as $key => $value)
+                                  @php
+                                      if($value->status == 'Diajukan'){
+                                          $badge = 'badge-info';
+                                      }
+                                      elseif($value->status == 'Diterima'){
+                                          $badge = 'badge-success';
+                                      }
+                                      else{
+                                          $badge = 'badge-danger';
+                                      }
+                                  @endphp
+                                   <tr>
+                                      <td>{{ $key +1 }}</td>
+                                      <td>{{ $value->user['name'] }}</td>
+                                      <td>{{$value->tipe_pengembalian}}</td>
+                                      <td>{{$value->asal_dana}}</td>
+                                      <td>{{ $value->tanggal }}</td>
+                                      <td>
+                                          <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
+                                      </td>
+                                      <td class="text-right">{{ number_format($value->total,0,",",".") }}</td>
+                                   </tr>
+                                  @endforeach
+                              </table>
+                          </div>
+                      </div>
+                    </div>
+              </div>
+          </div>
+          @endhasanyrole
+
+
 	</section>
 
 @endsection
