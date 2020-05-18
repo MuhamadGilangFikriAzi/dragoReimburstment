@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Image, DB;
 
 class userController extends Controller
@@ -36,15 +35,6 @@ class userController extends Controller
 
         return view('user.index', $data);
     }
-
-    // public function create()
-    // {
-    //     $data['pageTitle'] = 'Tambah User';
-    //     $data['urlIndex'] = $this->index;
-    //     $data['urlStore'] = $this->store;
-
-    //     return view('user.create', $data);
-    // }
 
     public function store(Request $request)
     {

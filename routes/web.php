@@ -59,9 +59,10 @@ Route::middleware('auth:web')->group(function () {
     });
 
     Route::prefix('report')->group(function () {
-        Route::get('index', 'ReportController@index')->name('report.index');
-        Route::get('result', 'ReportController@report')->name('report.result');
-        Route::get('exportExcel', 'ReportController@exportExcel')->name('report.export.excel');
+        Route::get('reimburstment/index', 'ReportController@index')->name('report.reimburstment.index');
+        Route::get('reimburstment/result', 'ReportController@report')->name('report.reimburstment.result');
+        Route::get('reimburstment/exportExcel', 'ReportController@exportExcel')->name('report.reimburstment.excel');
+        Route::get('pengembalian/index', 'ReportController@pengembalianIndex')->name('report.pengembalian.index');
         Route::get('exportPdf', 'ReportController@exportPdf')->name('report.export.pdf');
     });
 

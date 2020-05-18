@@ -155,11 +155,28 @@
                 </li>
 
                 @hasanyrole('Super Admin|Admin')
-                <li class="nav-item">
-                    <a href="{{ route('report.index') }}" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
-                        <i class="fas fa-clipboard-list nav-icon"></i>
-                        <p>Laporan</p>
+                <li class="nav-item has-treeview {{ (request()->is('report*')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-sliders-h"></i>
+                        <p>
+                            Laporan
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
                     </a>
+                    <ul class="nav-item nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('report.reimburstment.index') }}" class="nav-link {{ (request()->is('report/reimburstment*')) ? 'active' : '' }}">
+                                <i class="fas fa-clipboard-list nav-icon"></i>
+                                <p>Laporan Reimbursement</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('report.pengembalian.index') }}" class="nav-link {{ (request()->is('report/pengembalian*')) ? 'active' : '' }}">
+                                <i class="fas fa-clipboard-list nav-icon"></i>
+                                <p>Laporan Pengembalian Dana</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @endhasanyrole
 

@@ -10,9 +10,9 @@ use App\Exports\ReimburstExport;
 
 class ReportController extends Controller
 {
-    protected $index = 'report.index';
-    protected $result = 'report.result';
-    protected $exportExcel = 'report.export.excel';
+    protected $index = 'report.reimburstment.index';
+    protected $result = 'report.reimburstment.result';
+    protected $exportExcel = 'report.reimburstment.excel';
     protected $exportPdf = 'report.export.pdf';
 
     public function index()
@@ -52,5 +52,10 @@ class ReportController extends Controller
 
 
         // return (new ReimburstExport($data))->download('reimburstment.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function pengembalianIndex()
+    {
+        dd('masuk');
     }
 }
