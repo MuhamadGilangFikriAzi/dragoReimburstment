@@ -7,6 +7,7 @@ use App\Models\Pengembalian;
 use App\Models\PengembalianDetail;
 use App\Models\Setting;
 use App\User;
+
 use Image, DB, Auth;
 
 class PengembalianController extends Controller
@@ -28,6 +29,7 @@ class PengembalianController extends Controller
         } else {
             $list = Pengembalian::query()->where('id_user', Auth::user()->id);
         }
+
 
         if ($request->nama) {
             $user = User::where('name', 'like', '%' . $request->nama . '%')->first();
