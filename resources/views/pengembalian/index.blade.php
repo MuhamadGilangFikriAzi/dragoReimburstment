@@ -89,14 +89,14 @@
 								<td class="text-center">
 						 			<div class="btn-group">
                                         @hasanyrole('Super Admin|User')
-                                        <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat detail">Lihat</a>
+                                        <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat Pengembalian dana"><i class="fas fa-eye"></i></a>
                                         @endhasanyrole
                                         @hasanyrole('Super Admin|Admin')
-                                            <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah data">Edit</a>
+                                            <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah pengembalian dana"><i class="fas fa-edit"></i></a>
                                         <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-sm btn-link text-danger" title="Hapus reimburstment">Hapus</button>
+                                            <button type="submit" class="btn btn-sm btn-link text-danger" title="Hapus pengembalian dana"><i class="fas fa-trash-alt"></i></button>
                                         </form>
                                         @endhasanyrole
                                         {{-- <a href="{{ route($urlDelete,$value->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus data">Hapus</a> --}}
