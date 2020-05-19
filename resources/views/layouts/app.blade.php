@@ -151,7 +151,7 @@
                             <li class="nav-item {{ (request()->is('pengembalian/*')) ? 'menu-open' : '' }}">
                                 <a href="{{ route('pengembalian.index') }}" class="nav-link {{ (request()->is('pengembalian*')) ? 'active' : '' }}">
                                     <i class="fas fa-hand-holding-usd nav-icon"></i>
-                                    <p>Pengembalian Data</p>
+                                    <p>Pengembalian Dana</p>
                                 </a>
                             </li>
 
