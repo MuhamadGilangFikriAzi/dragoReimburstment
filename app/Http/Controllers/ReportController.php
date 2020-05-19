@@ -7,6 +7,7 @@ use App\Models\Reimbursement;
 use App\Models\Pengembalian;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ReimburstExport;
+use App\Exports\PengembalianExport;
 
 class ReportController extends Controller
 {
@@ -85,14 +86,14 @@ class ReportController extends Controller
     {
         $data['start'] = $request->start;
         $data['end'] = $request->end;
-        return Excel::download(new ReimburstExport($data), 'pengembalian_dana.xlsx');
+        return Excel::download(new PengembalianExport($data), 'pengembalian_dana.xlsx');
     }
 
     public function pengembalianPdf(Request $request)
     {
         $data['start'] = $request->start;
         $data['end'] = $request->end;
-        return Excel::download(new ReimburstExport($data), 'pengembalian_dana.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+        return Excel::download(new PengembalianExport($data), 'pengembalian_dana.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
 
         // return (new ReimburstExport($data))->download('reimburstment.pdf', \Maatwebsite\Excel\Excel::DOMPDF);

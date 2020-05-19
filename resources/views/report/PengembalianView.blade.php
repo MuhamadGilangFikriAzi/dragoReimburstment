@@ -1,21 +1,22 @@
-<table class="table table-hover">
-    <thead>
+<table>
+    <thead align="center">
         <tr>
-            <td colspan="8" align="center">Laporan Reimburstment</td>
+            <td colspan="9" >Laporan Pengembalian Dana</td>
         </tr>
         <tr>
-            <td colspan="8" align="center">{{$start}} - {{$end}}</td>
+            <td colspan="9" >{{$start}} - {{$end}}</td>
         </tr>
         <tr></tr>
         <tr>
-            <td>#</td>
+            <td>No</td>
             <td>User</td>
-            <td>Tipe pengembalian</td>
-            <td>Asal dana</td>
             <td>Tanggal</td>
+            <td>Asal dana</td>
             <td>Status</td>
-            <td class="text-right">Total asal dana</td>
-            <td class="text-right">Total</td>
+            <td>Tipe pengembalian</td>
+            <td align="right">Total asal dana</td>
+            <td align="right">Digunakan</td>
+            <td align="right">Dikembalikan</td>
         </tr>
     </thead>
 
@@ -24,16 +25,13 @@
         <tr>
             <td>{{ $key +1 }}</td>
             <td>{{ $value->user['name'] }}</td>
-            <td>{{$value->tipe_pengembalian}}</td>
-            <td>{{$value->asal_dana}}</td>
             <td>{{ $value->tanggal }}</td>
+            <td>{{$value->asal_dana}}</td>
             <td>{{$value->status}}</td>
-            @if ($value->tipe_pengembalian == 'pengembalian')
-                <td class="text-right">{{ $value->total_asal_dana }}</td>
-            @else
-                <td></td>
-            @endif
-            <td class="text-right">{{ $value->total }}</td>
+            <td>{{$value->tipe_pengembalian}}</td>
+            <td align="right">{{ number_format($value->total_asal_dana,0,",",".") }}</td>
+            <td align="right">{{ number_format($value->total_digunakan,0,",",".") }}</td>
+            <td align="right">{{ number_format($value->total_dikembalikan,0,",",".") }}</td>
         </tr>
         @endforeach
     </tbody>

@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <b>Laporan Reimburstment</b>
+                    <b>Laporan Pengembalian Dana </b>
                     <a href="{{route($excel,$date)}}" class="btn btn-link float-right"><i class="fas fa-file-excel"></i>Download Excel</a>
                     {{-- <a href="{{route($pdf,$date)}}" class="btn btn-link float-right"><i class="fas fa-file-pdf"></i>Download Pdf</a> --}}
                 </div>
