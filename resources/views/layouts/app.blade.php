@@ -272,7 +272,7 @@
             <!-- Dragokreatif 2019 -->
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2020 <a href="#">PT.Drago Digital Kreatifindo Reimbursement</a>.</strong>
+            <strong>Copyright &copy; 2020 <a href="#">Reimbursement</a>.</strong>
         </footer>
     </div>
 </div>
