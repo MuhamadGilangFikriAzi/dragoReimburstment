@@ -59,12 +59,12 @@
                                     <td><span class="badge badge-pill badge-secondary">{{$value->roles->first()->name}}</span></td>
                                     <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#show{{$key}}">Lihat</button>
-                                            <a href="{{ route($urlEdit, $value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah data">Edit</a>
+                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#show{{$key}}" title="Lihat user"><i class="fas fa-eye"></i></button>
+                                            <a href="{{ route($urlEdit, $value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Edit user"><i class="fas fa-edit"></i></a>
                                             <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit" class="btn btn-sm btn-link text-red">Hapus</button>
+                                                <button type="submit" class="btn btn-sm btn-link text-red" title="hapus user"><i class="fas fa-trash-alt"></i></button>
                                             </form>
                                         </div>
                                     </td>

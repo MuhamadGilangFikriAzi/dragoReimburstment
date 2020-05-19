@@ -102,7 +102,7 @@
                                         @endhasanyrole
                                         @hasanyrole('Super Admin|User')
                                         @if ($value->status == 'Diajukan')
-                                            <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah reimburstment"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Edit reimburstment"><i class="fas fa-edit"></i></a>
                                         @endif
                                         <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
                                             @csrf

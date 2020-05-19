@@ -47,7 +47,7 @@
                                 <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-sm btn-link text-red">Hapus</button>
+                                    <button type="submit" class="btn btn-sm btn-link text-red" title="Hapus permission"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </div>
                         </td>

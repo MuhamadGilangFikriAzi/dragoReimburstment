@@ -92,7 +92,7 @@
                                         <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat Pengembalian dana"><i class="fas fa-eye"></i></a>
                                         @endhasanyrole
                                         @hasanyrole('Super Admin|Admin')
-                                            <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="Ubah pengembalian dana"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="edit pengembalian dana"><i class="fas fa-edit"></i></a>
                                         <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
                                             @csrf
                                             @method('delete')
