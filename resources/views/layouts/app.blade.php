@@ -32,17 +32,14 @@
   {{-- <script src="{{ url('adminlte/build/js/AdminLTE.js')}}"></script> --}}
 
   <!-- Core JS files -->
-  <script src="{{ asset('limitless/global_assets/js/main/jquery.min.js') }}"></script>
-  <script src="{{ url('limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ url('limitless/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
-  {{-- <script src="{{ url('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script> --}}
-  <!-- /core JS files -->
+  <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url('adminlte/plugins/select2/js/select2.min.js') }}"></script>
 
   <!-- Theme JS files -->
-  <script src="{{ url('limitless/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
   @yield('script_before_app')
+  <script src="{{ url('js/app.js') }}"></script>
 
-  <script src="{{ url('limitless/assets/js/app.js') }}"></script>
   @yield('head_theme_script')
   <!-- /theme JS files -->
 
@@ -79,24 +76,46 @@
                         </li>
                     @endif
                     @else
-          <!-- Messages Dropdown Menu -->
-          {{-- <li class="nav-item dropdown">
-            <div class="user-panel d-flex">
-                <div class="image">
-                    @if (Auth::user()->foto != null)
-                      <img src="{{asset('img/user/'.Auth::user()->foto)}}" class="img-circle elevation-2" alt="User Image">
-                    @else
-                      <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
-                    @endif
 
-                </div>
-                <div class="info">
-                  <a href="#" class="d-block"></a>
-                </div>
-            <a class="nav-link" href="{{ route('home.edit', Auth::user()->id) }}">
-              {{ Auth::user()->name }}
-            </a>
-          </li> --}}
+                        {{-- dropdown pojok kanan atas --}}
+                        <div class="user-panel d-flex">
+                            <div class="image">
+                                @if (Auth::user()->foto != null)
+                                <img src="{{asset('img/user/'.Auth::user()->foto)}}" class="img-circle elevation-2" alt="User Image">
+                                @else
+                                <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
+                                @endif
+
+                            </div>
+                            <div class="info">
+                            <a href="#" class="d-block"></a>
+                            </div>
+                        </div>
+                        <li class="nav-item dropdown dropdown-user">
+
+                            <a href="#" class="text-white navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{{ route('home.edit', Auth::user()->id) }}" title="Edit Profile">
+                                    <i class="fas fa-user-edit"></i>
+                                    &nbsp;
+                                    Edit Profile
+                                </a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-power-off nav-icon"></i>
+                                    &nbsp;&nbsp;
+                                    <i class="icon-switch2"></i> {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                     @endguest
                 </ul>
             </nav>
@@ -112,22 +131,6 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="image">
-                            @if (Auth::user()->foto != null)
-                                <img src="{{asset('img/user/'.Auth::user()->foto)}}" class="img-circle elevation-2" alt="User Image">
-                            @else
-                                <img src="{{asset('img/user/user.png')}}" class="img-circle elevation-2" alt="User Image">
-                            @endif
-                        </div>
-                        <a class="nav-link" href="{{ route('home.edit', Auth::user()->id) }}" title="Edit Profile">
-                            {{ Auth::user()->name }}
-                        </a>
-                        <div class="info">
-                            <a href="#" class="d-block"></a>
-                        </div>
-                    </div>
-
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -155,31 +158,6 @@
                                 </a>
                             </li>
 
-                {{-- @hasanyrole('Super Admin|Admin')
-                <li class="nav-item has-treeview {{ (request()->is('report*')) ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-sliders-h"></i>
-                        <p>
-                            Laporan
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav-item nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('report.reimburstment.index') }}" class="nav-link {{ (request()->is('report/reimburstment*')) ? 'active' : '' }}">
-                                <i class="fas fa-clipboard-list nav-icon"></i>
-                                <p>Laporan Reimbursement</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('report.pengembalian.index') }}" class="nav-link {{ (request()->is('report/pengembalian*')) ? 'active' : '' }}">
-                                <i class="fas fa-clipboard-list nav-icon"></i>
-                                <p>Laporan Pengembalian Dana</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @endhasanyrole --}}
                             @hasanyrole('Super Admin|Admin')
                             <li class="nav-item has-treeview {{ (request()->is('report*')) ? 'menu-open' : '' }}">
                                 <a href="#" class="nav-link {{ (request()->is('report*')) ? 'active' : '' }}">
@@ -224,19 +202,19 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('role.index') }}" class="nav-link {{ (request()->is('settings/role*')) ? 'active' : '' }}">
-                                            <i class="fas fa-users-cog"></i>
+                                            <i class="fas fa-user-tie"></i>
                                             <p>Role</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('permission.index') }}" class="nav-link {{ (request()->is('settings/permission*')) ? 'active' : '' }}">
-                                            <i class="fas fa-users-cog"></i>
+                                            <i class="fas fa-user-shield"></i>
                                             <p>Permission</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('setting.index') }}" class="nav-link {{ (request()->is('settings/setting*')) ? 'active' : '' }}">
-                                            <i class="fas fa-users-cog"></i>
+                                            <i class="fas fa-cog"></i>
                                             <p>Setting</p>
                                         </a>
                                     </li>
@@ -244,19 +222,6 @@
                             </li>
                             @endhasanyrole
                             <br>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                    <i class="fas fa-power-off nav-icon"></i>
-                                    <p>
-                                        {{ __('Logout') }}
-                                    </p>
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -269,7 +234,6 @@
         <footer class="main-footer">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
-            <!-- Dragokreatif 2019 -->
             </div>
             <!-- Default to the left -->
             <strong>Copyright &copy; 2020 <a href="#">Reimbursement</a>.</strong>
@@ -309,8 +273,6 @@
 <!-- AdminLTE App -->
 <script src="{{ url('adminlte/dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-{{-- <script src="{{ asset('limitless/global_assets/js/plugins/visualization/d3.min.js')}}"></script>
-<script src="{{ asset('limitless/global_assets/js/demo_pages/dashboard.js')}}"></script> --}}
 
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url('adminlte/dist/js/demo.js')}}"></script><!-- ./wrapper -->
