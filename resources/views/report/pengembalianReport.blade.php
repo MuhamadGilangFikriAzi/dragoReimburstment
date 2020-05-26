@@ -43,9 +43,9 @@
                                 <td>{{$value->asal_dana}}</td>
                                 <td>{{$value->status}}</td>
                                 <td>{{$value->tipe_pengembalian}}</td>
-                                <td class="text-right">{{ number_format($value->total_asal_dana,0,",",".") }}</td>
-                                <td class="text-right">{{ number_format($value->total_digunakan,0,",",".") }}</td>
-                                <td class="text-right">{{ number_format($value->total_dikembalikan,0,",",".") }}</td>
+                                <td class="text-right">{{ $value->total_asal_dana }}</td>
+                                <td class="text-right">{{ $value->total_digunakan }}</td>
+                                <td class="text-right">{{ $value->total_dikembalikan }}</td>
                              </tr>
                             @endforeach
                             {{-- <tr>
