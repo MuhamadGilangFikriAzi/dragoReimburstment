@@ -20,7 +20,6 @@ class PengembalianController extends Controller
     protected $update = 'pengembalian.update';
     protected $delete = 'pengembalian.delete';
     protected $terima = 'pengembalian.terima';
-    protected $tolak = 'pengembalian.tolak';
 
     public function index(Request $request)
     {
@@ -56,6 +55,9 @@ class PengembalianController extends Controller
         $data['urlShow'] = $this->show;
         $data['urlEdit'] = $this->edit;
         $data['urlDelete'] = $this->delete;
+        $data['urlStore'] = $this->store;
+        $data['asalDana'] = Setting::where('nama', 'asal_dana')->first();
+        $data['data'] = User::all();
         return view('pengembalian.index', $data);
     }
     public function create()
@@ -91,7 +93,7 @@ class PengembalianController extends Controller
             DB::rollback();
         }
 
-        return redirect()->route($this->index)->with(['success' => 'Pengembalian berhasil ditambahkan']);
+        return redirect()->route($this->index)->with(['success' => 'Pemberian dana berhasil diberikan']);
     }
 
     public function show(Pengembalian $pengembalian)
@@ -100,7 +102,7 @@ class PengembalianController extends Controller
         $data['pageTitle'] = 'Pengembalian Dana';
         $data['urlIndex'] = $this->index;
         $data['urlTerima'] = $this->terima;
-        $data['urlTolak'] = $this->tolak;
+
         return view('pengembalian.view', $data);
     }
 
@@ -122,24 +124,43 @@ class PengembalianController extends Controller
     {
         DB::beginTransaction();
         try {
-
+            //menghapus pengembalian detail
             $pengembalian->detail->each->delete();
 
+            //mengupdate pengembalian dana
             $pengembalian->id_user = $request->id_user;
             $pengembalian->tanggal = $request->tanggal;
-            $pengembalian->status = $request->status;
             $pengembalian->total_digunakan = $request->total_digunakan;
             $pengembalian->asal_dana = $request->asal_dana;
             $pengembalian->tipe_pengembalian = $request->tipe_pengembalian;
             $pengembalian->total_asal_dana = $request->total_asal_dana;
             $pengembalian->total_dikembalikan = $request->total_dikembalikan;
             $pengembalian->tipe_pengembalian = $request->tipe_pengembalian;
+
+            //jika detail diisi, status menjadi dikembalikan
+            if ($request->Detail) {
+                $pengembalian->status = 'Dikembalikan';
+            }
+
+            //jika status == transfer dan  ada bukti transfer
+            if ($request->bukti) {
+                $path_bukti_transfer = public_path('/img/bukti_transfer/');
+
+                $originalImage = $request->bukti;
+                $Image = Image::make($originalImage);
+                $Image->resize(540, 360);
+                $fileName = time() . $originalImage->getClientOriginalName();
+                $Image->save($path_bukti_transfer . $fileName);
+                $pengembalian->bukti = $fileName;
+            }
+
             $pengembalian->save();
 
             $path = public_path('/img/bukti/');
 
             if ($request->Detail) {
                 foreach ($request->Detail as $key => $value) {
+                    //membuat pengembalian detail
                     $pengembalianDetail = new PengembalianDetail();
 
                     if (isset($value['foto'])) {
@@ -190,13 +211,5 @@ class PengembalianController extends Controller
             DB::rollback();
         }
         return redirect()->route($this->index)->with(['success' => 'pengembalian dana ' . $pengembalian->user['name'] . ' Diterima']);
-    }
-
-    public function tolak(Pengembalian $pengembalian)
-    {
-        $pengembalian->status = 'Ditolak';
-        $pengembalian->save();
-
-        return redirect()->route($this->index)->with(['danger' => 'pengembalian dana ' . $pengembalian->user['name'] . ' Ditolak']);
     }
 }

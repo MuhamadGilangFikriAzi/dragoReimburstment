@@ -39,14 +39,9 @@
 
                             <div class="form-group origin" id="origin">
                                 <label>Status</label>
-                                <select name="status" class="custom-select" id="origin_funds">
-                                    <option value="">Pilih...</option>
-                                    @foreach ($status as $key => $value)
-                                        <option value="{{$value}}" @if($value == $data->status) selected @endif >{{$value}}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('asal_dana'))
-                                <span class="text-danger">{{ $errors->first('asal_dana') }}</span>
+                                <input type="text" name="status" class="form-control" value="{{ $data->status }}" readonly>
+                                @if($errors->has('status'))
+                                <span class="text-danger">{{ $errors->first('status') }}</span>
                                 @endif
                             </div>
 
@@ -57,7 +52,34 @@
 
                             <div class="form-group">
                                 <label>Dikembalikan</label>
-                            <input type="number" name="total_dikembalikan" class="form-control text-right" id="kembali" readonly value="{{$data->total_dikembalikan}}">
+                                <input type="number" name="total_dikembalikan" class="form-control text-right" id="kembali" readonly value="{{$data->total_dikembalikan}}">
+                            </div>
+
+                            <div class="form-group" id="bukti">
+                                <div>
+                                    @if ($data->tipe_pengembalian == 'transfer')
+                                    <label>Bukti Transfer</label><br>
+                                        <img src="{{ asset('img/bukti/'.$data->bukti) }}" alt="..." class="img-thumbnail"  data-toggle="modal" data-target="#exampleModal" style="width: 130px; height: 100px;">
+
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img src="{{ asset('img/bukti/'.$data->bukti) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="bukti_awal" value="{{$data->bukti}}">
+                                        <input type="file" class="form-control image" name="bukti">
+                                    @endif
+
+                                </div>
                             </div>
                         </div>
 
@@ -72,10 +94,10 @@
 
                             <div class="form-group origin">
                                 <label>Tipe Pengembalian</label>
-                                <select name="tipe_pengembalian" class="custom-select" id="origin_funds">
+                                <select name="tipe_pengembalian" class="custom-select" id="tipe_pengembalian">
                                     <option value="">Pilih...</option>
                                     @foreach ($tipePengembalian as $key => $value)
-                                        <option value="{{$value}}" @if($value == $data->tipe_pengemblian) selected @endif >{{$value}}</option>
+                                        <option value="{{$value}}" @if($value == $data->tipe_pengembalian) selected @endif >{{$value}}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->has('tipe_pengemblian'))
@@ -200,6 +222,22 @@
       $(document).ready(function() {
         var i = 0;
         count();
+
+        $('#tipe_pengembalian').on('change', function(){
+            type = $(this).children("option:selected").val();
+            if(type == 'transfer'){
+                $('#bukti').append('\
+                    <div>\
+                        <label>Bukti Transfer</label>\
+                        <input type="file" class="form-control image" name="bukti">\
+                    </div>\
+                ');
+            }else{
+                $('#bukti').children().remove();
+            }
+
+        });
+
         $('#awal').on('change',function() {
             count();
         });
@@ -232,10 +270,6 @@
                 e.preventDefault();
                 $(this).parent().parent().remove();
                 count();
-            });
-
-            $( "#append_detail" ).on('change','.description', function() {
-                row = $(this);
             });
 
             $('#append_detail').on('change', '.used',function() {

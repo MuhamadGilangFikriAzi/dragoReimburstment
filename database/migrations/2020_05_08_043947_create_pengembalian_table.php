@@ -19,10 +19,11 @@ class CreatePengembalianTable extends Migration
             $table->string('asal_dana', 50)->nullable();
             $table->date('tanggal')->nullable();
             $table->enum('tipe_pengembalian', ['langsung', 'transfer'])->nullable();
-            $table->enum('status', ['Diberikan', 'Dikembalikan']);
+            $table->enum('status', ['Diberikan', 'Dikembalikan','Diterima']);
             $table->double('total_dikembalikan')->nullable();
             $table->double('total_asal_dana')->nullable();
             $table->double('total_digunakan')->nullable();
+            $table->string('bukti', 255)->nullable();
             $table->timestamps();
         });
     }

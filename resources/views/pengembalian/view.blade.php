@@ -40,6 +40,31 @@
                                 <label>Dikembalikan</label>
                             <input type="number" name="total_dikembalikan" class="form-control text-right" id="kembali" readonly value="{{$data->total_dikembalikan}}">
                             </div>
+
+                            <div class="form-group" id="bukti">
+                                <div>
+                                    @if ($data->tipe_pengembalian == 'transfer')
+                                    <label>Bukti Transfer</label><br>
+                                        <img src="{{ asset('img/bukti_transfer/'.$data->bukti) }}" alt="..." class="img-thumbnail"  data-toggle="modal" data-target="#exampleModal" style="width: 130px; height: 100px;">
+
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img src="{{ asset('img/bukti_transfer/'.$data->bukti) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col">
@@ -70,7 +95,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                Detail Reimburstment
+                Detail Penggunaan Dana
             </div>
             <div class="card-body">
                 <table class="table">
@@ -112,6 +137,16 @@
                         @endforeach
                     </tbody>
                 </table>
+                @hasanyrole('Super Admin|Admin')
+                <div class="btn-group float-right">
+                        <form action="{{route($urlTerima,$data->id)}}" method="POST" >
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-success ml-1" title="Terima">Terima</button>
+                        </form>
+                        {{-- <a href="{{ route($urlTerima,$data->id) }}" class="btn btn-success" >Terima</a> --}}
+                </div>
+                @endhasanyrole
             </div>
 
         </div>

@@ -24,7 +24,7 @@
 					<button type="button" class="btn btn-outline-dark">Trash</button>
                 </a> --}}
                 @hasanyrole('Super Admin|Admin')
-                <a href="{{ route($urlCreate) }}" class="btn btn-sm btn-link"><i class="fas fa-plus"></i>&nbsp;Pemberian Dana</a>
+                <button type="button" class="btn btn-link btn-sm float-right" data-toggle="modal" data-target="#add_role"><i class="fas fa-plus"></i>&nbsp;Pemberian dana</button>
                 @endhasanyrole
 			</div>
 			<div class="card-body">
@@ -70,9 +70,11 @@
                             @foreach( $list as $key => $value )
                             @php
                                 if($value->status == 'Diberikan'){
-                                    $badge = 'badge-info';
+                                    $badge = 'badge-secondary';
                                 }
-                                else{
+                                elseif($value->status == 'Dikembalikan'){
+                                    $badge = 'badge-info';
+                                }else{
                                     $badge = 'badge-success';
                                 }
                             @endphp
@@ -88,12 +90,12 @@
 								<td class="text-right">{{number_format($value->total_asal_dana,0,",",".")}}</td>
 								<td class="text-center">
 						 			<div class="btn-group">
-                                        @hasanyrole('Super Admin|User')
                                         <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat Pengembalian dana"><i class="fas fa-eye"></i></a>
-                                        @endhasanyrole
-                                        @hasanyrole('Super Admin|Admin')
+                                        @if ($value->status != 'Diterima')
                                             <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="edit pengembalian dana"><i class="fas fa-edit"></i></a>
-                                        <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
+                                        @endif
+                                        @hasanyrole('Super Admin|Admin')
+                                            <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-sm btn-link text-danger" title="Hapus pengembalian dana"><i class="fas fa-trash-alt"></i></button>
@@ -123,6 +125,69 @@
 		</div>
 	</div>
 </div>
+</div>
+
+<div class="modal fade" id="add_role" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Form pemberian</h4>
+                <button type="button" class="close text-right" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route($urlStore)}}" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <div class="input-group mb-3">
+                            <select name="id_user" class="custom-select" id="user">
+                                <option selected>Pilih...</option>
+                                @foreach( $data as $key => $value )
+                                <option value="{{ $value->id }}" @if(Auth::user()->id == $value->id) selected @endif>{{ $value->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @if($errors->has('id_user'))
+                        <span class="text-danger">{{ $errors->first('id_user') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group origin" id="origin">
+                        <label>Asal Dana</label>
+                        <select name="asal_dana" class="custom-select" id="origin_funds">
+                            <option value="">Pilih...</option>
+                            @foreach (json_decode($asalDana->value) as $key => $value)
+                                <option value="{{$value}}">{{$value}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('asal_dana'))
+                        <span class="text-danger">{{ $errors->first('asal_dana') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tanggal</label>
+                        <input type="date" class="form-control" name="tanggal" class="form-control">
+                        @if($errors->has('tanggal'))
+                            <span class="text-danger">{{ $errors->first('tanggal') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group origin">
+                        <label>Dana Diberikan</label>
+                        <input type="number" class="form-control" name="total_asal_dana" id="awal">
+                    </div>
+
+                    <input type="hidden" name="status" value="Diberikan">
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-info pull-right btn-save">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </section>
 @endsection

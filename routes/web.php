@@ -48,13 +48,11 @@ Route::middleware('auth:web')->group(function () {
 
     Route::prefix('pengembalian')->group(function () {
         Route::get('index', 'PengembalianController@index')->name('pengembalian.index');
-        Route::get('create', 'PengembalianController@create')->name('pengembalian.create')->middleware(['permission:Memberikan Pengembalian Dana']);
-        Route::post('store', 'PengembalianController@store')->name('pengembalian.store')->middleware(['permission:Memberikan Pengembalian Dana']);
-        Route::get('{pengembalian}/show', 'PengembalianController@show')->name('pengembalian.show')->middleware(['permission:Lihat Pengembalian Dana']);
+        Route::post('store', 'PengembalianController@store')->name('pengembalian.store')->middleware(['permission:Memberikan Dana']);
+        Route::get('{pengembalian}/show', 'PengembalianController@show')->name('pengembalian.show')->middleware(['permission:Melihat Pengembalian Dana']);
         Route::get('{pengembalian}/edit', 'PengembalianController@edit')->name('pengembalian.edit')->middleware(['permission:Edit Pengembalian Dana']);
         Route::put('{pengembalian}/update', 'PengembalianController@update')->name('pengembalian.update')->middleware(['permission:Edit Pengembalian Dana']);
-        Route::put('{pengembalian}/terima', 'PengembalianController@terima')->name('pengembalian.terima');
-        Route::put('{pengembalian}/tolak', 'PengembalianController@tolak')->name('pengembalian.tolak');
+        Route::put('{pengembalian}/terima', 'PengembalianController@terima')->name('pengembalian.terima')->middleware(['permission:Terima Pengembalian Dana']);
         Route::delete('{pengembalian}/delete', 'PengembalianController@delete')->name('pengembalian.delete')->middleware(['permission:Hapus Pengembalian Dana']);
     });
 
