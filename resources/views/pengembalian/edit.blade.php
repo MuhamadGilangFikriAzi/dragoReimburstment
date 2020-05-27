@@ -94,16 +94,24 @@
 
                             <div class="form-group origin">
                                 <label>Tipe Pengembalian</label>
-                                <select name="tipe_pengembalian" class="custom-select" id="tipe_pengembalian">
-                                    <option value="">Pilih...</option>
-                                    @foreach ($tipePengembalian as $key => $value)
-                                        <option value="{{$value}}" @if($value == $data->tipe_pengembalian) selected @endif >{{$value}}</option>
-                                    @endforeach
-                                </select>
+
+                                @hasanyrole('Super Admin|Admin')
+                                    <select name="tipe_pengembalian" class="custom-select" id="tipe_pengembalian">
+                                        <option value="">Pilih...</option>
+                                        @foreach ($tipePengembalian as $key => $value)
+                                            <option value="{{$value}}" @if($value == $data->tipe_pengembalian) selected @endif >{{$value}}</option>
+                                        @endforeach
+                                    </select>
+                                @endhasanyrole
+                                @role('User')
+                                    <input type="text" name="tipe_pengembalian" class="form-control" readonly value="{{ $data->tipe_pengembalian }}">
+                                @endrole
                                 @if($errors->has('tipe_pengemblian'))
                                 <span class="text-danger">{{ $errors->first('asal_dana') }}</span>
                                 @endif
                             </div>
+
+
 
 
                             <div class="form-group origin">
@@ -124,7 +132,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                Detail Pengembalian
+                Detail Penggunaan Dana
                 <div class="input-group input-group-sm float-right" style="width: 150px;">
                     <div class="input-group-btn pul">
                       <button type="submit" class="btn btn-default float-right" id="add_detail"><i class="fa fa-plus"></i>&nbsp;Tambah Detail</button>

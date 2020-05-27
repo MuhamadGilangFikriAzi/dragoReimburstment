@@ -37,6 +37,7 @@
                                 <th><b>Tanggal</b></th>
                                 <th><b>Asal Dana</b></th>
                                 <th><b>Status</b></th>
+                                <th><b>Tipe Pengembalian Dana</b></th>
 								<th class="text-right"><b>Pemberian Dana</b></th>
 								<th class="text-center"><b>Action</b></th>
 							</tr>
@@ -61,6 +62,7 @@
                                     </select>
                                 </td>
                                 <td></td>
+                                <td></td>
 								<td class="text-center">
                                     <a href="{{route($urlIndex)}}" class="btn btn-sm btn-outline-dark mr-2">Reset</a>
 									<input type="submit" value="Search" name="submit" class="btn btn-sm btn-outline-dark">
@@ -83,16 +85,20 @@
                                 <td>{{ $value->user['name'] }}</td>
                                 <td>{{ $value->tanggal }}</td>
                                 <td>{{ $value->asal_dana}}</td>
-
                                 <td>
                                     <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
                                 </td>
+                                <td>{{ $value->tipe_pengembalian }}</td>
 								<td class="text-right">{{number_format($value->total_asal_dana,0,",",".")}}</td>
 								<td class="text-center">
 						 			<div class="btn-group">
                                         <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat Pengembalian dana"><i class="fas fa-eye"></i></a>
-                                        @if ($value->status != 'Diterima')
+                                        @if ($value->tipe_pengembalian == 'transfer' && $value->status != 'Diterima')
                                             <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="edit pengembalian dana"><i class="fas fa-edit"></i></a>
+                                        @elseif($value->tipe_pengembalian == null)
+                                            @hasanyrole('Super Admin|Admin')
+                                                <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="edit pengembalian dana"><i class="fas fa-edit"></i></a>
+                                            @endhasanyrole
                                         @endif
                                         @hasanyrole('Super Admin|Admin')
                                             <form action="{{route($urlDelete,$value->id)}}" method="POST" class="formDelete">

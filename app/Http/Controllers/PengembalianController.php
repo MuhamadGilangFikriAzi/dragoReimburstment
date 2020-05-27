@@ -58,6 +58,7 @@ class PengembalianController extends Controller
         $data['urlStore'] = $this->store;
         $data['asalDana'] = Setting::where('nama', 'asal_dana')->first();
         $data['data'] = User::all();
+
         return view('pengembalian.index', $data);
     }
     public function create()
