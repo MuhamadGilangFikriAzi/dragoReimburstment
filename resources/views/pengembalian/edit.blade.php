@@ -111,9 +111,6 @@
                                 @endif
                             </div>
 
-
-
-
                             <div class="form-group origin">
                                 <label>Dana Diberikan</label>
                                 <input type="number" class="form-control text-right" name="total_asal_dana" id="awal" value="{{$data->total_asal_dana}}" readonly>
@@ -128,8 +125,9 @@
 
 			</div>
         </div>
-	</div>
-    <div class="container-fluid">
+    </div>
+    @hasanyrole('Super Admin|User')
+    <div class="container-fluid" id="detail">
         <div class="card">
             <div class="card-header">
                 Detail Penggunaan Dana
@@ -210,13 +208,17 @@
                         </tr>
                     </tfoot>
                 </table>
-                <div class="text-right">
-                    <input class="btn btn-primary" type="submit" name="submit" value="Simpan">
-                </div>
+
             </div>
-
         </div>
-
+    </div>
+    @endhasanyrole
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body text-right">
+                <input class="btn btn-primary" type="submit" name="submit" value="Simpan">
+            </div>
+        </div>
     </div>
 </form>
 
@@ -235,15 +237,103 @@
             type = $(this).children("option:selected").val();
             if(type == 'transfer'){
                 $('#bukti').append('\
-                    <div>\
-                        <label>Bukti Transfer</label>\
-                        <input type="file" class="form-control image" name="bukti">\
-                    </div>\
+                    @hasanyrole('Super Admin|Admin')\
+                        <div>\
+                            <label>Bukti Transfer</label>\
+                            <input type="file" class="form-control image" name="bukti">\
+                        </div>\
+                    @endhasanyrole\
                 ');
+
+                $('#detail').children().remove();
             }else{
                 $('#bukti').children().remove();
-            }
 
+                $('#detail').append('\
+                <div class="card">\
+                    <div class="card-header">\
+                        Detail Penggunaan Dana\
+                        <div class="input-group input-group-sm float-right" style="width: 150px;">\
+                            <div class="input-group-btn pul">\
+                            <button type="submit" class="btn btn-default float-right" id="add_detail"><i class="fa fa-plus"></i>&nbsp;Tambah Detail</button>\
+                            </div>\
+                        </div>\
+                    </div>\
+                    <div class="card-body">\
+                        <table class="table">\
+                            <thead>\
+                                <tr>\
+                                    <th>Prihal</th>\
+                                    <Th>Digunakan</Th>\
+                                    <th>Bukti</th>\
+                                    <th width="500px">Deskripsi</th>\
+                                    <th></th>\
+                                </tr>\
+                            </thead>\
+                            <tbody id="append_detail">\
+                                @foreach ($data->detail as $key => $detail)\
+                                <tr class="row_detail">\
+                                    <td><input type="text" class="form-control title" name="Detail[{{$key}}][prihal]" value="{{$detail->prihal}}"></td>\
+                                    <td><input type="number" class="form-control text-right used" name="Detail[{{$key}}][digunakan]" value="{{$detail->digunakan}}"></td>\
+                                    <td>\
+                                        <img src="{{ asset('img/bukti/'.$detail->foto) }}" alt="..." class="img-thumbnail"  data-toggle="modal" data-target="#exampleModal" style="width: 130px; height: 100px;">\
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\
+                                            <div class="modal-dialog" role="document">\
+                                                <div class="modal-content">\
+                                                    <div class="modal-header">\
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+                                                        <span aria-hidden="true">&times;</span>\
+                                                        </button>\
+                                                        </div>\
+                                                        <div class="modal-body">\
+                                                            <img src="{{ asset('img/bukti/'.$detail->foto) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">\
+                                                        </div>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                        <input type="hidden" name="Detail[{{$key}}][foto_awal]" value="{{$detail->foto}}">\
+                                        <input type="file" class="form-control image" name="Detail[{{$key}}][foto]">\
+                                    </td>\
+                                    <td><textarea class="form-control description" name="Detail[{{$key}}][deskripsi]" rows="1">{{$detail->deskripsi}}</textarea></td>\
+                                    <td width="25px"><button class="btn btn-xs btn-danger btn-remove btn-flat"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></button></td>\
+                                </tr>\
+                                @endforeach\
+                            </tbody>\
+                            <tfoot>\
+                                <tr>\
+                                    <td>\
+                                        <div class="form-group">\
+                                            <span class="help-block" style="color: red;"> {!! $errors->first('Detail.*.prihal') !!} </span>\
+                                        </div>\
+                                    </td>\
+                                    <td>\
+                                        <div class="form-group">\
+                                            <span class="help-block" style="color: red;"> {!! $errors->first('Detail.*.digunakan') !!} </span>\
+                                        </div>\
+                                    </td>\
+                                    <td>\
+                                        <div class="form-group">\
+                                            <span class="help-block" style="color: red;"> {!! $errors->first('Detail.*.foto') !!} </span>\
+                                        </div>\
+                                    </td>\
+                                    <td>\
+                                        <div class="form-group">\
+                                            <span class="help-block" style="color: red;"> {!! $errors->first('Detail.*.deskripsi') !!} </span>\
+                                        </div>\
+                                    </td>\
+                                </tr>\
+                                <tr>\
+                                    <td></td>\
+                                    <td><input type="number" class="form-control" name="sum" id="sum" readonly></td>\
+                                </tr>\
+                            </tfoot>\
+                        </table>\
+                    </div>\
+                </div>\
+            </div>\
+                ');
+            }
         });
 
         $('#awal').on('change',function() {

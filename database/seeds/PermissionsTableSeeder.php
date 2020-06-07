@@ -8,7 +8,7 @@ class PermissionsTableSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
+     * @return void\
      */
     public function run()
     {
@@ -16,8 +16,31 @@ class PermissionsTableSeeder extends Seeder
 
         $permissions = ['Index', 'Create', 'Read', 'Update', 'Delete'];
 
-        $users = ['Ajukan Reimburstment', 'Edit Reimburstment', 'Hapus Reimburstment', 'Melihat Reimburstment', 'Melihat Pengembalian Dana', 'Edit Pengembalian Dana'];
-        $admins = ['Lihat Reimburstment', 'Terima Reimburstment', 'Tolak Reimburstment', 'Memberikan Dana', 'Edit Pengembalian Dana', 'Hapus Pengembalian Dana', 'Melihat Pengembalian Dana', 'Mencari Laporan Reimburstment', 'Melihat Laporan Reimburstment', 'Eksport Laporan Reimburstment', 'Mencari Laporan Pengembalian Dana', 'Melihat Laporan Pengembalian Dana', 'Eksport Laporan Pengembalian Dana', 'Kirim Email Reimburstment', 'Terima Pengembalian Dana'];
+        $users = [
+            'Ajukan Reimburstment',
+            'Edit Reimburstment',
+            'Hapus Reimburstment',
+            'Melihat Reimburstment',
+            'Melihat Pengembalian Dana',
+            'Edit Pengembalian Dana'
+        ];
+        $admins = [
+            'Lihat Reimburstment',
+            'Terima Reimburstment',
+            'Tolak Reimburstment',
+            'Memberikan Dana',
+            'Edit Pengembalian Dana',
+            'Hapus Pengembalian Dana',
+            'Melihat Pengembalian Dana',
+            'Mencari Laporan Reimburstment',
+            'Melihat Laporan Reimburstment',
+            'Eksport Laporan Reimburstment',
+            'Mencari Laporan Pengembalian Dana',
+            'Melihat Laporan Pengembalian Dana',
+            'Eksport Laporan Pengembalian Dana',
+            'Kirim Email Reimburstment',
+            'Terima Pengembalian Dana'
+        ];
 
         foreach ($access as $acc) {
             foreach ($permissions as $permission) {

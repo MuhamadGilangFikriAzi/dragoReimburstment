@@ -48,7 +48,7 @@ class PengembalianController extends Controller
 
         $data['pageTitle'] = 'Pengembalian Dana';
         $data['status'] = ['Diberikan', 'Dikembalikan'];
-        $data['list'] = $list->paginate('10');
+        $data['list'] = $list->orderBy('id', 'desc')->paginate('10');
         $data['data'] = Pengembalian::all()->count();
         $data['urlIndex'] = $this->index;
         $data['urlCreate'] = $this->create;

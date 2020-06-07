@@ -284,38 +284,10 @@
                 <!-- START CENTERED WHITE CONTAINER -->
                 <span class="preheader">Pengajuan Reimburstment</span>
                 <table class="main">
-
                     <!-- START MAIN CONTENT AREA -->
                     <tr>
                         <td class="wrapper">
                             <table border="0" cellpadding="0" cellspacing="0">
-                                        {{-- <p>Hi {{ $nama }}</p>
-                                        <p>Terimakasih telah mengirimkan email :)</p> --}}
-
-                                        {{-- <table border="0" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                            <tr>
-                                                <td align="left">
-                                                    <table border="0" cellpadding="0" cellspacing="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td> <div class="container">
-                                                                    <center><p>Pesanmu Yaitu :</p></center>
-                                                                    <hr>
-                                                                    <center><p>{{ $pesan }}</p></center>
-                                                                    <hr>
-                                                                    <center><p>Telah Disampaikan! <br> Terimakasih telah menghubungi kami!</p></center>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table> --}}
-                                        {{--<p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>--}}
-                                        {{--<p>Good luck! Hope it works.</p>--}}
                                     <tr>
                                         <th colspan="2">Pengajuan Reimburstment <hr></th>
                                     </tr>
@@ -383,7 +355,6 @@
                         <tr>
                             <td class="content-block">
                                 <span class="apple-link">PT Drago Kreatifindo Digital</span>
-                                {{--<br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.--}}
                             </td>
                         </tr>
                     </table>
