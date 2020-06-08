@@ -77,13 +77,6 @@ Route::middleware('auth:web')->group(function () {
             Route::get('{user}/edit', 'UserController@edit')->name('user.edit')->middleware(['permission:Update User']);
             Route::put('{user}/update', 'UserController@update')->name('user.update')->middleware(['permission:Update User']);
             Route::delete('{user}/delete', 'UserController@delete')->name('user.delete')->middleware(['permission:Delete User']);
-
-
-            Route::get('trash', 'UserController@trash')->name('user.trash');
-            Route::get('restore/{id}', 'UserController@restore')->name('user.trash.store');
-            Route::get('del_permanent/{id}', 'UserController@delete')->name('user.trash.delete');
-            Route::get('restore_all', 'UserController@restore_all')->name('user.trash.restoreAll');
-            Route::get('delete_all', 'UserController@delete_all')->name('user.trash.deleteAll');
         });
 
         Route::prefix('role')->group(function () {

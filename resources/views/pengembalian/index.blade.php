@@ -64,8 +64,10 @@
                                 <td></td>
                                 <td></td>
 								<td class="text-center">
+                                    <div class="btn-group">
                                     <a href="{{route($urlIndex)}}" class="btn btn-sm btn-outline-dark mr-2">Reset</a>
-									<input type="submit" value="Search" name="submit" class="btn btn-sm btn-outline-dark">
+                                    <input type="submit" value="Search" name="submit" class="btn btn-sm btn-outline-dark">
+                                </div>
 								</td>
                             </tr>
                         </form>
@@ -94,8 +96,14 @@
 						 			<div class="btn-group">
                                         <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat Pengembalian dana"><i class="fas fa-eye"></i></a>
                                         @if ($value->tipe_pengembalian == 'transfer' && $value->status != 'Diterima')
-                                            <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="edit pengembalian dana"><i class="fas fa-edit"></i></a>
+                                            @hasanyrole('Super Admin|User')
+                                                <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="edit pengembalian dana"><i class="fas fa-edit"></i></a>
+                                            @endhasanyrole
                                         @elseif($value->tipe_pengembalian == null)
+                                            @hasanyrole('Super Admin|Admin')
+                                                <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="edit pengembalian dana"><i class="fas fa-edit"></i></a>
+                                            @endhasanyrole
+                                        @elseif($value->tipe_pengembalian == 'langsung' && $value->status != 'Diterima')
                                             @hasanyrole('Super Admin|Admin')
                                                 <a href="{{ route($urlEdit,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="edit pengembalian dana"><i class="fas fa-edit"></i></a>
                                             @endhasanyrole
