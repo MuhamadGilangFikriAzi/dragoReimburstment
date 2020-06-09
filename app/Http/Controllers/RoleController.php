@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\User;
 
 class RoleController extends Controller
 {
@@ -13,14 +12,9 @@ class RoleController extends Controller
     public function index()
     {
         $role = Role::query()->get();
-        // dd($role->first()->permissions);
         $permission = Permission::query()->get();
-        return view('role.index', compact('role', 'permission'));
-    }
 
-    public function create()
-    {
-        return view('role.create');
+        return view('role.index', compact('role', 'permission'));
     }
 
     public function store(Request $request)
@@ -31,27 +25,8 @@ class RoleController extends Controller
 
     public function show(Role $role)
     {
-        // dd($role->permissions);
         $permission = Permission::all()->pluck('name', 'id');
         return view('role.show', compact('role', 'permission'));
-    }
-
-    public function edit(Role $role)
-    {
-        $permission = Permission::all();
-        return view('role.edit', compact('permission', 'role'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $data = request()->validate(
-            ['name' => 'required',]
-        );
-
-        $role = Role::find($id);
-
-        $role->update($data);
-        return redirect(route('role'));
     }
 
     public function delete(Role $role)
@@ -70,15 +45,5 @@ class RoleController extends Controller
             $role->revokePermissionTo($permission);
         }
         return with(['success' => 'Data Berhasil Disimpan']);
-    }
-
-    public function hasPermissionstore(Request $request)
-    {
-        $role = Role::findOrFail($request->role);
-        $permission = Permission::findOrFail($request->permission);
-
-        $role->givePermissionTo($permission);
-
-        return redirect('/role');
     }
 }

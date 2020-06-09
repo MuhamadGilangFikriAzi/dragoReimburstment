@@ -11,6 +11,7 @@ class PermissionController extends Controller
     protected $index = 'permission.index';
     protected $store = 'permission.store';
     protected $delete = 'permission.delete';
+
     public function index()
     {
         $data['permissions'] = Permission::query()->get();

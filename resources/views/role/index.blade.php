@@ -53,7 +53,7 @@
                             @endforelse
                         </td>
                         <td>
-                            <div>
+                            <div class="btn-group">
                                 <a href="{{ route('role.show',$roles->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat role"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route('role.delete',$roles->id)}}" class="btn btn-link btn-sm text-danger" data-toggle="tooltip" title="Hapus role"><i class="fas fa-trash-alt"></i></a>
                             </div>

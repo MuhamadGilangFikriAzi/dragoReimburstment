@@ -12,29 +12,29 @@
 
         <div class="card">
             <div class="card-header">
-                <label>Show Role</label>
+                <label>Role : {{$role->name}}</label>
                 <div class="header-elements float-right">
                     <a href="{{ route('role.index') }}" class=" btn-link" ><i class="fas fa-arrow-left"></i>&nbsp;Kembali</a>
                 </div>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <label>Role : {{$role->name}}</label>
-                </div>
-
-                <div class="card col-sm-6">
+                <div class="card col-sm-12">
                     <div class="card-header"><label>Permission</label></div>
                     <div class="card-body">
                         <div class="col-sm-6">
                             <div>
                                 <table class="table">
                                     <tbody>
-                                        @foreach ($permission as $key => $value)
                                         <tr class="input-group-sm">
+                                        @foreach ($permission as $key => $value)
                                             <td>{{$value}}</td>
                                             <td><input type="checkbox" name="permission" class="permission" value="{{$value}}" @if($role->hasPermissionTo($value)) checked @endif></td>
+                                            @if($loop->iteration%6 == 0)
                                         </tr>
+                                        <tr class="input-group-sm">
+                                            @endif
                                         @endforeach
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
