@@ -74,7 +74,7 @@
 								</td>
                             </tr>
                         </form>
-                            @foreach( $list as $key => $value )
+                            @forelse( $list as $key => $value )
                             @php
                                 if($value->status == 'Diajukan'){
                                     $badge = 'badge-info';
@@ -114,7 +114,11 @@
 									</div>
 								</td>
                             </tr>
-							@endforeach
+                            @empty
+                            <tr>
+                                <td colspan="7" class="text-center"> Tidak Ada Reimburstment</td>
+                            </tr>
+                            @endforelse
 						</tbody>
 						<tfoot>
                             <tr>

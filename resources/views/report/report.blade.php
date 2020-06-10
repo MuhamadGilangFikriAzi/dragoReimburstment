@@ -34,7 +34,7 @@
                                 <td class="text-right">Total</td>
                             </tr>
 
-                            @foreach($data as $key => $value)
+                            @forelse($data as $key => $value)
                              <tr>
                                 <td>{{ $key +1 }}</td>
                                 <td>{{ $value->user['name'] }}</td>
@@ -49,7 +49,12 @@
                                 @endif
                                 <td class="text-right">{{ number_format($value->total,0,",",".") }}</td>
                              </tr>
-                            @endforeach
+
+                             @empty
+                             <tr>
+                                 <td colspan="8" class="text-center"> Tidak Ada Reimburstment</td>
+                             </tr>
+                             @endforelse
                             {{-- <tr>
                                 <td colspan="4">Jumlah</td>
                                 <td class="text-right"><b>Rp. {{ number_format($sum,2,",",".")}}</b></td>

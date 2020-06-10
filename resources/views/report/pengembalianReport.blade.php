@@ -35,7 +35,7 @@
                                 <td class="text-right">Dikembalikan</td>
                             </tr>
 
-                            @foreach($data as $key => $value)
+                            @forelse($data as $key => $value)
                              <tr>
                                 <td>{{ $key +1 }}</td>
                                 <td>{{ $value->user['name'] }}</td>
@@ -47,11 +47,11 @@
                                 <td class="text-right">{{ $value->total_digunakan }}</td>
                                 <td class="text-right">{{ $value->total_dikembalikan }}</td>
                              </tr>
-                            @endforeach
-                            {{-- <tr>
-                                <td colspan="4">Jumlah</td>
-                                <td class="text-right"><b>Rp. {{ number_format($sum,2,",",".")}}</b></td>
-                            </tr> --}}
+                             @empty
+                             <tr>
+                                 <td colspan="9" class="text-center"> Tidak Ada Pengembalian Dana</td>
+                             </tr>
+                             @endforelse
                         </table>
                     </div>
                     </form>

@@ -29,7 +29,6 @@ class PengembalianController extends Controller
             $list = Pengembalian::query()->where('id_user', Auth::user()->id);
         }
 
-
         if ($request->nama) {
             $user = User::where('name', 'like', '%' . $request->nama . '%')->first();
             if ($user != null) {
