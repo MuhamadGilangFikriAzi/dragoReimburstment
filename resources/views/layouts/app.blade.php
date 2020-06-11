@@ -215,7 +215,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('setting.index') }}" class="nav-link {{ (request()->is('settings/setting*')) ? 'active' : '' }}">
                                             <i class="fas fa-cog"></i>
-                                            <p>Setting</p>
+                                            <p>Helper</p>
                                         </a>
                                     </li>
                                 </ul>
