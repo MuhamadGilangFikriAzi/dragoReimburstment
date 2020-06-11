@@ -193,17 +193,17 @@
 
                 <div class="form-group">
                     <label for="">Alamat</label>
-                    <textarea name="alamat" id="" class="form-control">{{$value->alamat}}</textarea>
+                    <textarea name="alamat" id="" class="form-control" readonly>{{$value->alamat}}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label">Bank</label>
-                    <input type="text" name="no_rekening" class="form-control" value="{{$value->bank}}">
+                    <input type="text" name="no_rekening" class="form-control" readonly value="{{$value->bank}}">
                 </div>
 
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label">No Rekening</label>
-                    <input type="number" name="no_rekening" class="form-control" value="{{$value->no_rekening}}">
+                    <input type="number" name="no_rekening" class="form-control" readonly value="{{$value->no_rekening}}">
                 </div>
 
                 <div class="form-group">
