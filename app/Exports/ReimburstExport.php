@@ -5,7 +5,6 @@ namespace App\Exports;
 use App\Models\Reimbursement;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 
@@ -27,19 +26,4 @@ class ReimburstExport implements FromView, ShouldAutoSize
         $data['end'] = $this->end;
         return view('report.view', $data);
     }
-    // public function headings(): array
-    // {
-    //     return [
-    //         'id',
-    //         '#',
-    //         'User',
-    //         'Tipe pengembalian',
-    //         'Asal dana',
-    //         'Tanggal',
-    //         'Status',
-    //         'Total asal dana',
-    //         'Total'
-    //     ];
-    // }
-
 }

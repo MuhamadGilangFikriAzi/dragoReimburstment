@@ -72,7 +72,7 @@
 
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="text-center">No data evailable</td>
+                                    <td colspan="5" class="text-center">No data evailable</td>
                                 </tr>
 
                                 @endforelse

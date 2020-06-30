@@ -72,7 +72,7 @@
 			dataType : 'JSON',
 			data : dataSend,
 			success : function(data){
-
+                    alert(data.massage);
                 }
             });
     }

@@ -182,14 +182,11 @@
                                     </li>
                                 </ul>
                             </li>
-                            @endhasanyrole
-
-                            @hasanyrole('Super Admin|Admin')
                             <li class="nav-item has-treeview {{ (request()->is('settings*')) ? 'menu-open' : '' }}">
                                 <a href="#" class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-sliders-h"></i>
                                     <p>
-                                        Settings
+                                        Setting
                                         <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>

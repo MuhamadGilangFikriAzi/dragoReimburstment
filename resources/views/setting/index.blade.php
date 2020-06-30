@@ -24,7 +24,7 @@
                                     Pengembalian :
                                 @endif
                                 {{$item->nama}}
-                                <a href="{{route($urlEdit,$item->id)}}" class="btn btn-primary float-right ">Edit</a>
+                                <a href="{{route($urlEdit,$item->id)}}" class="btn btn-primary btn-sm float-right ">Edit</a>
                             </div>
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
