@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    function format($n)
+    {
+        return number_format($n,0,',','.');
+    }
+@endphp
 <section class="content">
     <div class="container-fluid">
     <div class="row justify-content-center">
@@ -25,7 +31,7 @@
                          <table class="table table-hover">
                             <tr>
                                 <td>No</td>
-                                <td>User</td>
+                                <td>Nama</td>
                                 <td>Tanggal</td>
                                 <td>Asal dana</td>
                                 <td>Status</td>
@@ -34,24 +40,39 @@
                                 <td class="text-right">Digunakan</td>
                                 <td class="text-right">Dikembalikan</td>
                             </tr>
-
+                            @php
+                                $total_asal_dana = 0;
+                                $total_digunakan = 0;
+                                $total_dikembalikan = 0;
+                            @endphp
                             @forelse($data as $key => $value)
+                            @php
+                                $total_asal_dana += $value->total_asal_dana;
+                                $total_digunakan += $value->total_digunakan;
+                                $total_dikembalikan += $value->total_dikembalikan;
+                            @endphp
                              <tr>
                                 <td>{{ $key +1 }}</td>
                                 <td>{{ $value->user['name'] }}</td>
-                                <td>{{ $value->tanggal }}</td>
+                                <td>{{date('d-m-Y',strtotime($value->tanggal)) }}</td>
                                 <td>{{$value->asal_dana}}</td>
                                 <td>{{$value->status}}</td>
                                 <td>{{$value->tipe_pengembalian}}</td>
-                                <td class="text-right">{{ number_format($value->total_asal_dana,0,",",".") }}</td>
-                                <td class="text-right">{{ number_format($value->total_digunakan,0,",",".") }}</td>
-                                <td class="text-right">{{ number_format($value->total_dikembalikan,0,",",".") }}</td>
+                                <td class="text-right">{{ format($value->total_asal_dana) }}</td>
+                                <td class="text-right">{{ format($value->total_digunakan) }}</td>
+                                <td class="text-right">{{ format($value->total_dikembalikan) }}</td>
                              </tr>
                              @empty
                              <tr>
                                  <td colspan="9" class="text-center"> Tidak Ada Pengembalian Dana</td>
                              </tr>
                              @endforelse
+                             <tr>
+                                 <td colspan="6" class="text-right">Jumlah : </td>
+                                 <td class="text-right">{{ format($total_asal_dana) }}</td>
+                                 <td class="text-right">{{ format($total_digunakan) }}</td>
+                                 <td class="text-right">{{ format($total_dikembalikan) }}</td>
+                             </tr>
                         </table>
                     </div>
                     </form>

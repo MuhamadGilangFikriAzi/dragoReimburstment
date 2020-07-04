@@ -50,6 +50,12 @@
 </style>
 
 <!-- content -->
+@php
+    function format($n)
+    {
+        return number_format($n,0,',','.');
+    }
+@endphp
 <section class="content">
 	<div class="container-fluid">
 
@@ -98,8 +104,8 @@
 								<div class="info">
 										<h6 class=" title my-2">TOTAL REIMBURSEMENT DITERIMA</h6>
 										<h3 class="text-center"><b>{{ count($totalDiterima->get()) }}</b></h3>
-										<h6>Total:<b> Rp. {{ number_format($totalDiterima->sum('total'),2,",",".") }}</b></h6><hr>
-										<a href="{{ route('reimburstment.index')}}"><i>View Details</i></a>
+										<h6>Total:<b> Rp. {{ format($totalDiterima->sum('total')) }}</b></h6><hr>
+										<a href="{{ route('reimburstment.index')}}"><i>Lihat Rincian</i></a>
 								</div>
 							</div>
 						</div>
@@ -115,8 +121,43 @@
 								<div class="info">
 										<h6 class="title my-2">TOTAL REIMBURSEMENT DITERIMA PADA BULAN INI</h6>
 										<h3 class="text-center"><b>{{ count($bulanIni->get()) }}</b></h3>
-										<h6>Total:<b> Rp. {{ number_format($bulanIni->sum('total'),2,",",".") }}</b></h6><hr>
-										<a href="{{route('reimburstment.index',['bulan' => date('m')])}}"><i>View Details</i></a>
+										<h6>Total:<b> Rp. {{ format($bulanIni->sum('total')) }}</b></h6><hr>
+										<a href="{{route('reimburstment.index',['bulan' => date('m')])}}"><i>Lihat Rincian</i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+
+            <div class="row">
+				<div class="col-sm-6">
+					<div class="card my-2">
+						<div class="box">
+							<div class="icon">
+                                <div class="image">
+									<i class="fa fa-strikethrough" aria-hidden="true"></i>
+								</div>
+								<div class="info">
+										<h6 class=" title my-2">TOTAL DANA DIBERIKAN</h6>
+										<h6>Total:<b> Rp. {{ format($total_asal_dana) }}</b></h6><hr>
+										<a href="{{ route('pengembalian.index')}}"><i>Lihat Rincian</i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-lg-6">
+					<div class="card my-2">
+						<div class="box">
+							<div class="icon">
+								<div class="image">
+									<i class="fa fa-strikethrough" aria-hidden="true"></i>
+								</div>
+								<div class="info">
+                                        <h6 class="title my-2">TOTAL DANA DIKEMBALIAN</h6>
+                                        <h6>Total:<b> Rp. {{ format($total_dikembalikan) }}</b></h6><hr>
+										<a href="{{route('pengembalian.index')}}"><i>Lihat Rincian</i></a>
 								</div>
 							</div>
 						</div>

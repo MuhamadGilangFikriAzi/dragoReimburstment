@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reimbursement;
 use Spatie\Permission\Models\Role;
+use App\Models\Pengembalian;
 use App\User;
 use Image, Auth;
 
@@ -28,6 +29,8 @@ class HomeController extends Controller
         $data['bulanIni'] = Reimbursement::where('status', 'Diterima')->whereRaw('MONTH(tanggal) = ?', date('m'));
         $data['limit'] = Reimbursement::orderBy('id', 'DESC')->limit(5)->get();
         $data['user']  = Reimbursement::where('id_user', Auth::user()->id)->get();
+        $data['total_asal_dana'] = Pengembalian::all()->sum('total_asal_dana');
+        $data['total_dikembalikan'] = Pengembalian::all()->sum('total_dikembalikan');
 
         return view('home.dashboard', $data);
     }

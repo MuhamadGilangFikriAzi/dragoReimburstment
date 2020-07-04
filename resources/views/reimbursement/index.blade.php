@@ -90,7 +90,7 @@
 								<td><b>{{ $key +1 }}</b></td>
                                 <td>{{ $value->user['name'] }}</td>
                                 <td>{{ $value->tipe_pengembalian}}</td>
-                                <td>{{ $value->tanggal }}</td>
+                                <td>{{ date('d-m-Y',strtotime($value->tanggal)) }}</td>
                                 <td>
                                     <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
                                 </td>

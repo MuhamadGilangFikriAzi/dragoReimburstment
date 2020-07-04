@@ -225,7 +225,6 @@
             </aside>
         <div class="content-wrapper">
             @yield('content')
-
         </div>
         <!-- Main Footer -->
         <footer class="main-footer">

@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    function format($n)
+    {
+        return number_format($n,0,',','.');
+    }
+@endphp
 <section class="content">
     <div class="container-fluid">
     <div class="row justify-content-center">
@@ -25,29 +31,28 @@
                          <table class="table table-hover">
                             <tr>
                                 <td>No</td>
-                                <td>User</td>
+                                <td>Nama</td>
                                 <td>Tipe pengembalian</td>
                                 <td>Asal dana</td>
                                 <td>Tanggal</td>
                                 <td>Status</td>
-                                <td class="text-right">Total asal dana</td>
                                 <td class="text-right">Total</td>
                             </tr>
-
+                            @php
+                                $total = 0;
+                            @endphp
                             @forelse($data as $key => $value)
+                            @php
+                                $total += $value->total;
+                            @endphp
                              <tr>
                                 <td>{{ $key +1 }}</td>
                                 <td>{{ $value->user['name'] }}</td>
                                 <td>{{$value->tipe_pengembalian}}</td>
                                 <td>{{$value->asal_dana}}</td>
-                                <td>{{ $value->tanggal }}</td>
+                                <td>{{date('d-m-Y',strtotime($value->tanggal)) }}</td>
                                 <td>{{$value->status}}</td>
-                                @if ($value->tipe_pengembalian == 'pengembalian')
-                                    <td class="text-right">{{ number_format($value->total_asal_dana,0,",",".") }}</td>
-                                @else
-                                    <td></td>
-                                @endif
-                                <td class="text-right">{{ number_format($value->total,0,",",".") }}</td>
+                                <td class="text-right">Rp. {{ format($value->total) }}</td>
                              </tr>
 
                              @empty
@@ -55,10 +60,10 @@
                                  <td colspan="8" class="text-center"> Tidak Ada Reimburstment</td>
                              </tr>
                              @endforelse
-                            {{-- <tr>
-                                <td colspan="4">Jumlah</td>
-                                <td class="text-right"><b>Rp. {{ number_format($sum,2,",",".")}}</b></td>
-                            </tr> --}}
+                            <tr>
+                                <td colspan="6" class="text-right">Jumlah : </td>
+                                <td class="text-right"><b>Rp. {{ format($total)}}</b></td>
+                            </tr>
                         </table>
                     </div>
                     </form>
