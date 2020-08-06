@@ -59,7 +59,7 @@
                                 <div>
                                     @if ($data->tipe_pengembalian == 'transfer')
                                     <label>Bukti Transfer</label><br>
-                                        <img src="{{ asset('img/bukti/'.$data->bukti) }}" alt="..." class="img-thumbnail"  data-toggle="modal" data-target="#exampleModal" style="width: 130px; height: 100px;">
+                                        <img src="{{ asset('img/bukti_transfer/'.$data->bukti) }}" alt="..." class="img-thumbnail"  data-toggle="modal" data-target="#exampleModal" style="width: 130px; height: 100px;">
 
                                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -70,7 +70,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <img src="{{ asset('img/bukti/'.$data->bukti) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">
+                                                        <img src="{{ asset('img/bukti_transfer/'.$data->bukti) }}" alt="..." class="img-thumbnail" style="width: 500px; height: 500px;">
                                                     </div>
                                                 </div>
                                             </div>

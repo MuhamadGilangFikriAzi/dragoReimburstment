@@ -122,6 +122,7 @@ class PengembalianController extends Controller
 
     public function update(Request $request, Pengembalian $pengembalian)
     {
+
         DB::beginTransaction();
         try {
             //menghapus pengembalian detail
