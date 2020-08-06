@@ -175,6 +175,10 @@
             }
         });
 
+        $('#append_detail').on('keyup', '.used',function() {
+                count();
+        });
+
         count();
         $('#return_type').change(function(){
             val = $(this).children("option:selected").val();
@@ -207,7 +211,7 @@
                 row = $(this);
             });
 
-            $('#append_detail').on('change', '.used',function() {
+            $('#append_detail').on('keyup', '.used',function() {
                 count();
             });
 

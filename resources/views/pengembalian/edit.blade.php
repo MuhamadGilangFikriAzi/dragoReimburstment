@@ -133,8 +133,8 @@
             <div class="card-header">
                 Detail Penggunaan Dana
                 <div class="input-group input-group-sm float-right" style="width: 150px;">
-                    <div class="input-group-btn pul">
-                      <button type="submit" class="btn btn-default float-right" id="add_detail"><i class="fa fa-plus"></i>&nbsp;Tambah Detail</button>
+                    <div class="input-group-btn pull">
+                      <a class="btn btn-default float-right" id="add_detail"><i class="fa fa-plus"></i>&nbsp;Tambah Detail</a>
                     </div>
                   </div>
             </div>
@@ -342,7 +342,7 @@
                         Detail Penggunaan Dana\
                         <div class="input-group input-group-sm float-right" style="width: 150px;">\
                             <div class="input-group-btn pul">\
-                            <button type="submit" class="btn btn-default float-right" id="add_detail"><i class="fa fa-plus"></i>&nbsp;Tambah Detail</button>\
+                            <button type="button" class="btn btn-default float-right" id="add_detail"><i class="fa fa-plus"></i>&nbsp;Tambah Detail</button>\
                             </div>\
                         </div>\
                     </div>\
@@ -421,13 +421,54 @@
             </div>\
                 ');
             }
+
+            $('#awal').on('change',function() {
+            count();
+        });
+
+        $('#append_detail').on('keyup', '.used',function() {
+            count();
+        });
+
+        $('#append_detail').on('click', '.btn-remove', function(e){
+            e.preventDefault();
+            $(this).parent().parent().remove();
+            count();
+        });
+
+        $('#add_detail').click(function(e){
+          e.preventDefault();
+
+          $('#append_detail').append(
+            '<tr class="row_detail">\
+              <td><input type="text" class="form-control text-right title" name="Detail['+i+'][prihal]"></td>\
+              <td><input type="number" class="form-control used text-right" name="Detail['+i+'][digunakan]"></td>\
+              <td><input type="file" class="form-control image" name="Detail['+i+'][foto]"></td>\
+              <td><textarea class="form-control description" name="Detail['+i+'][deskripsi]" rows="1"></textarea></td>\
+              <td width="25px"><button class="btn btn-xs btn-danger btn-remove btn-flat"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></button></td>\
+            </tr>'
+          );
+            i++;
+
+            $('#append_detail').on('click', '.btn-remove', function(e){
+                e.preventDefault();
+                $(this).parent().parent().remove();
+                count();
+            });
+
+            $('#append_detail').on('keyup', '.used',function() {
+                count();
+
+            });
+
+        });
         });
 
         $('#awal').on('change',function() {
             count();
         });
 
-        $('#append_detail').on('change', '.used',function() {
+        $('#append_detail').on('keyup', '.used',function() {
             count();
         });
 

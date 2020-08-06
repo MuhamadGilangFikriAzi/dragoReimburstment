@@ -63,7 +63,7 @@ class HomeController extends Controller
             $path = public_path('/img/user/');
             $originalImage = $request->foto;
             $Image = Image::make($originalImage);
-            $Image->resize(840, 859);
+            $Image->resize(900, 850);
             $fileName = $user->name . time();
             $Image->save($path . $fileName);
             $user['foto'] = $fileName;

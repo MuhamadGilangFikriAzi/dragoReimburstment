@@ -65,6 +65,7 @@ class ReimbursementController extends Controller
         $data['urlShow'] = $this->show;
         $data['urlEdit'] = $this->edit;
         $data['urlDelete'] = $this->delete;
+
         return view('reimbursement.index', $data);
     }
 
@@ -79,6 +80,7 @@ class ReimbursementController extends Controller
         $data['urlIndex'] = $this->index;
         $data['urlStore'] = $this->store;
         $data['pageTitle'] = 'Ajukan Reimburstment';
+
         return view('reimbursement.create', $data);
     }
 
@@ -104,7 +106,6 @@ class ReimbursementController extends Controller
             'Detail.*.deskripsi' => 'required'
         ];
         $this->validate($request, $rules, $message);
-        // dd($request);
 
         DB::beginTransaction();
         try {
@@ -157,7 +158,6 @@ class ReimbursementController extends Controller
 
     public function show(Reimbursement $reimburst)
     {
-        // dd($reimburst);
         $data['data'] = $reimburst;
         $data['pageTitle'] = 'Pengajuan Reimburstment';
         $data['urlIndex'] = $this->index;
@@ -172,7 +172,6 @@ class ReimbursementController extends Controller
 
     public function edit(Reimbursement $reimburst)
     {
-        // dd($reimburst->detail);
         $data['pageTitle'] = 'Edit Pengajuann Reimburstment';
         $data['urlIndex'] = $this->index;
         $data['urlUpdate'] = $this->update;
@@ -229,7 +228,6 @@ class ReimbursementController extends Controller
             $reimburst->total = $request->total;
             $reimburst->save();
 
-
             $detail = $request->Detail;
             $path = public_path('/img/bukti/');
 
@@ -271,13 +269,14 @@ class ReimbursementController extends Controller
 
     public function terima(Reimbursement $reimburst, Request $request)
     {
+        $rules = [
+            'asal_dana' => 'required',
+        ];
+
         $message = [
             'asal_dana.required' => 'Asal dana harus diisi'
         ];
 
-        $rules = [
-            'asal_dana' => 'required',
-        ];
         $this->validate($request, $rules, $message);
         DB::beginTransaction();
         try {

@@ -98,7 +98,7 @@
 								<td class="text-center">
 						 			<div class="btn-group">
                                         @hasanyrole('Super Admin|Admin')
-                                        <a href="{{ route($urlShow,$value->id)}}" class="btn btn-link btn-sm" data-toggle="tooltip" title="lihat reimburstment"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route($urlShow,$value->id)}}" class="btn btn-info btn-sm" data-toggle="tooltip" title="lihat reimburstment"><i class="fas fa-eye"></i></a>
                                         @endhasanyrole
                                         @hasanyrole('Super Admin|User')
                                         @if ($value->status == 'Diajukan')

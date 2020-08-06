@@ -36,7 +36,7 @@
         @php
             $t_asal += $value->total_asal_dana;
             $t_digunakan += $value->total_digunakan;
-            $t_dikembalikan += $value->total_digunakan;
+            $t_dikembalikan += $value->total_dikembalikan;
         @endphp
         <tr>
             <td>{{ $key +1 }}</td>
@@ -51,10 +51,10 @@
         </tr>
         @endforeach
         <tr>
-            <td colspan="6" style="text-align:right">Jumlah : </td>
-            <td>{{ $t_asal }}</td>
-            <td>{{ $t_digunakan }}</td>
-            <td>{{ $t_dikembalikan }}</td>
+            <td colspan="6" style="text-align:right"><b>Jumlah : </b></td>
+            <td style="text-align:right"><b> {{ $t_asal }}</b></td>
+            <td style="text-align:right"><b>{{ $t_digunakan }}</b></td>
+            <td style="text-align:right"><b>{{ $t_dikembalikan }}</b></td>
         </tr>
     </tbody>
 </table>

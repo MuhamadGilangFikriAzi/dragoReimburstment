@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reimbursement extends Model
 {
-
     protected $table = "reimburstment";
     public $timestamps = false;
     protected $guarded = [];

@@ -202,7 +202,7 @@
                                         <td>{{ $value->user['name'] }}</td>
                                         <td>{{$value->tipe_pengembalian}}</td>
                                         <td>{{$value->asal_dana}}</td>
-                                        <td>{{ $value->tanggal }}</td>
+                                        <td>{{ date('d-m-Y',strtotime($value->tanggal)) }}</td>
                                         <td>
                                             <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
                                         </td>
@@ -255,7 +255,7 @@
                                       <td>{{ $value->user['name'] }}</td>
                                       <td>{{$value->tipe_pengembalian}}</td>
                                       <td>{{$value->asal_dana}}</td>
-                                      <td>{{ $value->tanggal }}</td>
+                                      <td>{{date('d-m-Y',strtotime($value->tanggal))}}</td>
                                       <td>
                                           <span class="badge badge-pill {{$badge}}">{{$value->status}}</span>
                                       </td>

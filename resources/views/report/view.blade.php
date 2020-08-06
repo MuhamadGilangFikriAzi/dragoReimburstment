@@ -47,8 +47,8 @@
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="6" style="text-align:right">Jumlah : </td>
-                    <td>{{ $total }}</td>
+                    <td colspan="6" style="text-align:right"><b> Jumlah : </b></td>
+                    <td style="text-align:right"><b> {{ $total }}</b></td>
                 </tr>
             </tbody>
         </table>
