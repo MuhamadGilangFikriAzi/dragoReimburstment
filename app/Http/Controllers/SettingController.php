@@ -13,7 +13,7 @@ class SettingController extends Controller
 
     public function index()
     {
-        $data['pageTitle'] = 'Settings Index';
+        $data['pageTitle'] = 'Helper Index';
         $data['urlEdit'] = $this->edit;
         $data['all'] = Setting::all();
 
@@ -22,7 +22,7 @@ class SettingController extends Controller
 
     public function edit(Setting $setting)
     {
-        $data['pageTitle'] = 'Edit Setting';
+        $data['pageTitle'] = 'Edit Helper';
         $data['urlIndex'] = $this->index;
         $data['urlUpdate'] = $this->update;
         $data['data'] = $setting;
