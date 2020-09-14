@@ -5,7 +5,6 @@
 // Logo style
 .logo-xs,
 .logo-xl {
-  margin: 0;
   opacity: 1;
   position: absolute;
   visibility: visible;
@@ -34,7 +33,7 @@
 .brand-link {
   &.logo-switch {
     &::before {
-      content: '\00a0';
+      content: "\00a0";
     }
   }
 }
@@ -42,20 +41,61 @@
 // Add sidebar-mini class to the body tag to activate this feature
 .sidebar-mini {
   @include media-breakpoint-up(lg) {
-    @include sidebar-mini-breakpoint;
+    @include sidebar-mini-breakpoint ();
+  }
+}
+@include media-breakpoint-down(md) {
+  .sidebar-mini.sidebar-collapse .main-sidebar {
+    box-shadow: none !important;
   }
 }
 
 .sidebar-mini-md {
   @include media-breakpoint-up(md) {
-    @include sidebar-mini-breakpoint;
+    @include sidebar-mini-breakpoint ();
+  }
+}
+@include media-breakpoint-down(sm) {
+  .sidebar-mini-md.sidebar-collapse .main-sidebar {
+    box-shadow: none !important;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }
 
 .sidebar-collapse {
+  .main-sidebar.sidebar-focused,
+  .main-sidebar:hover {
+    .nav-header {
+      display: inline-block;
+    }
+  }
+
   .sidebar-no-expand.main-sidebar.sidebar-focused,
   .sidebar-no-expand.main-sidebar:hover {
     width: $sidebar-mini-width;
+
+    .nav-header {
+      display: none;
+    }
 
     .brand-link {
       width: $sidebar-mini-width !important;
@@ -65,11 +105,31 @@
       float: none !important;
     }
 
+    .logo-xs {
+      animation-name: fadeIn;
+      animation-duration: $transition-speed;
+      animation-fill-mode: both;
+      visibility: visible;
+    }
+
+    .logo-xl {
+      animation-name: fadeOut;
+      animation-duration: $transition-speed;
+      animation-fill-mode: both;
+      visibility: hidden;
+    }
+
+    .nav-sidebar.nav-child-indent .nav-treeview {
+      padding-left: 0;
+    }
+
     .brand-text,
     .user-panel > .info,
     .nav-sidebar .nav-link p {
       margin-left: -10px;
-      opacity: 0;
+      animation-name: fadeOut;
+      animation-duration: $transition-speed;
+      animation-fill-mode: both;
       visibility: hidden;
       width: 0;
     }
@@ -110,5 +170,5 @@
 .main-sidebar .logo-xs,
 .main-sidebar .logo-xl,
 .sidebar .user-panel .info {
-  @include transition(margin-left $transition-speed linear, opacity $transition-speed ease, visibility $transition-speed ease)
+  @include transition(margin-left $transition-speed linear, opacity $transition-speed ease, visibility $transition-speed ease);
 }

@@ -1,17 +1,18 @@
 //
 // Component: Info Box
 //
- 
+
 .info-box {
-  @extend .d-flex;
-  @extend .mb-3;
   @include box-shadow($card-shadow);
   @include border-radius($border-radius);
 
-  background: $white;
+  background-color: $white;
+  display: flex;
+  margin-bottom: map-get($spacers, 3);
   min-height: 80px;
   padding: .5rem;
   position: relative;
+  width: 100%;
 
   .progress {
     background-color: rgba($black, .125);
@@ -24,16 +25,14 @@
   }
 
   .info-box-icon {
-    @extend .d-flex;
-    @extend .align-items-center;
-    @extend .justify-content-center;
-
     @if $enable-rounded {
       border-radius: $border-radius;
     }
 
-    display: block;
+    align-items: center;
+    display: flex;
     font-size: 1.875rem;
+    justify-content: center;
     text-align: center;
     width: 70px;
 
@@ -43,12 +42,17 @@
   }
 
   .info-box-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 120%;
     flex: 1;
-    padding: 5px 10px;
+    padding: 0 10px;
   }
 
   .info-box-number {
     display: block;
+    margin-top: .25rem;
     font-weight: $font-weight-bold;
   }
 

@@ -12,9 +12,25 @@
 //  }
 //}
 
+.text-sm {
+  .dropdown-menu {
+    font-size: $font-size-sm !important;
+  }
+
+  .dropdown-toggle::after {
+    vertical-align: .2rem;
+  }
+}
+
 .dropdown-item-title {
   font-size: $font-size-base;
   margin: 0;
+}
+
+.dropdown-icon {
+  &::after {
+    margin-left: 0;
+  }
 }
 
 // Dropdown Sizes
@@ -41,8 +57,8 @@
 .dropdown-submenu {
   position: relative;
 
-  & > a:after {
-    @include caret-right;
+  & > a::after {
+    @include caret-right ();
     float: right;
     margin-left: .5rem;
     margin-top: .5rem;
@@ -50,8 +66,8 @@
 
   & > .dropdown-menu {
     left: 100%;
-    margin-left: 0px;
-    margin-top: 0px;
+    margin-left: 0;
+    margin-top: 0;
     top: 0;
   }
 }
@@ -67,7 +83,6 @@
     }
   }
 }
-
 
 
 // Dropdown Sizes
@@ -99,7 +114,7 @@
   text-align: center;
 }
 
-// Add fade animation to dropdown menus by appending 
+// Add fade animation to dropdown menus by appending
 // the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)
 .open:not(.dropup) > .animated-dropdown-menu {
   @include animation(flipInX .7s both);
@@ -154,7 +169,7 @@
         right: 5%;
         left: auto;
         border: 1px solid #ddd;
-        background: $white;
+        background-color: $white;
       }
     }
   }
@@ -162,14 +177,13 @@
 
 // User Menu
 .navbar-nav > .user-menu {
-  > .nav-link:after {
-    content:none;
+  > .nav-link::after {
+    content: none;
   }
 
   > .dropdown-menu {
     @include border-top-radius(0);
     padding: 0;
-    border-top-width: 0;
     width: 280px;
 
     &,
@@ -190,7 +204,7 @@
         width: 90px;
         border: 3px solid;
         border-color: transparent;
-        border-color: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, .2);
       }
 
       > p {
@@ -208,14 +222,14 @@
 
     // Menu Body
     > .user-body {
-      @include clearfix;
+      @include clearfix ();
       border-bottom: 1px solid $gray-700;
       border-top: 1px solid $gray-300;
       padding: 15px;
 
       a {
         @include media-breakpoint-up(sm) {
-          background: $white !important;
+          background-color: $white !important;
           color: $gray-700 !important;
         }
       }
@@ -223,7 +237,7 @@
 
     // Menu Footer
     > .user-footer {
-      @include clearfix;
+      @include clearfix ();
       background-color: $gray-100;
       padding: 10px;
 
@@ -243,15 +257,15 @@
     @include media-breakpoint-up(sm) {
       float: none;
       line-height: 10px;
-      margin-right: 0;
+      margin-right: .4rem;
       margin-top: -8px;
     }
 
     border-radius: 50%;
     float: left;
-    height: 25px;
+    height: $sidebar-user-image-width;
     margin-right: 10px;
     margin-top: -2px;
-    width: 25px;
+    width: $sidebar-user-image-width;
   }
 }
